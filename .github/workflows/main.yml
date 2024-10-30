@@ -36,8 +36,8 @@ jobs:
         run: |
           choco install -y openjdk11
           choco install -y android-sdk
-          echo "sdkmanager.bat --licenses" | call
-          sdkmanager.bat "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+          cmd.exe /c "sdkmanager.bat --licenses"
+          cmd.exe /c "sdkmanager.bat \"platform-tools\" \"platforms;android-33\" \"build-tools;33.0.0\""
 
       - name: Install dependencies
         run: flutter pub get
@@ -55,6 +55,6 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: "build\\app\\outputs\\flutter-apk\\app-release.apk"
-          tag: v1.0.29
+          tag: v1.0.0
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
