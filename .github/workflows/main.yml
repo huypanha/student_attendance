@@ -1,4 +1,4 @@
-name: Flutter Android Release Build
+name: Flutter Android Release Build on Windows
 
 on:
   push:
@@ -11,11 +11,11 @@ permissions:
 
 jobs:
   build-android:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     env:
-      ANDROID_HOME: /opt/android-sdk
-      PATH: $PATH:/opt/flutter/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools
+      ANDROID_HOME: C:\Android\Sdk
+      PATH: ${{ env.ANDROID_HOME }}\cmdline-tools\latest\bin;${{ env.ANDROID_HOME }}\platform-tools;C:\flutter\bin;${{ env.PATH }}
 
     steps:
       - name: Checkout repository
@@ -28,12 +28,12 @@ jobs:
           flutter-version: 3.24.3
       - run: flutter --version
 
-      - name: Install Android SDK
+      - name: Install Android SDK Command-Line Tools
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openjdk-11-jdk
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+          choco install -y openjdk11
+          choco install -y android-sdk
+          echo "sdkmanager.bat --licenses" | call
+          sdkmanager.bat "platform-tools" "platforms;android-33" "build-tools;33.0.0"
 
       - name: Install dependencies
         run: flutter pub get
@@ -45,12 +45,12 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build\app\outputs\flutter-apk\app-release.apk
 
       - name: Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+          artifacts: "build\app\outputs\flutter-apk\app-release.apk"
           tag: v1.0.0
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
