@@ -13,9 +13,6 @@ jobs:
   build-android:
     runs-on: windows-latest
 
-    env:
-      ANDROID_HOME: C:\Android\Sdk
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
@@ -27,23 +24,21 @@ jobs:
           flutter-version: 3.24.3
       - run: flutter --version
 
-      - name: Set up PATH for Android SDK
-        run: |
-          echo "Adding Android SDK to PATH"
-          echo "${{ env.ANDROID_HOME }}\cmdline-tools\latest\bin;${{ env.ANDROID_HOME }}\platform-tools;C:\flutter\bin" >> $env:GITHUB_PATH
-
-      - name: Install Java and Android SDK
+      - name: Install Java and Android SDK Command-Line Tools
         run: |
           choco install -y openjdk11
           mkdir -p C:\Android\Sdk\cmdline-tools\latest
           curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip
           tar -xf commandlinetools.zip -C C:\Android\Sdk\cmdline-tools\latest --strip-components=1
-          echo "Installed Android SDK command-line tools."
+          echo "ANDROID_HOME=C:\Android\Sdk" >> $env:GITHUB_ENV
+          echo "PATH=C:\Android\Sdk\cmdline-tools\latest\bin;C:\Android\Sdk\platform-tools;C:\flutter\bin;$env:PATH" >> $env:GITHUB_ENV
+          echo "Android SDK and Java installed successfully."
 
       - name: Accept Licenses and Install SDK Packages
+        shell: cmd
         run: |
-          cmd.exe /c "C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat --licenses"
-          cmd.exe /c "C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat platform-tools platforms;android-33 build-tools;33.0.0"
+          C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat --licenses
+          C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat "platform-tools" "platforms;android-33" "build-tools;33.0.0"
 
       - name: Install dependencies
         run: flutter pub get
