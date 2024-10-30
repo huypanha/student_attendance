@@ -50,7 +50,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: "build\app\outputs\flutter-apk\app-release.apk"
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
           tag: v1.0.0
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
