@@ -1,17 +1,16 @@
-# .github/workflows/build-android.yml
-
-name: Build Flutter Android APK
+name: Flutter Android Release Build
 
 on:
   push:
     branches:
-      - main  # Trigger on push to main branch
-  pull_request:
-    branches:
-      - main  # Trigger on pull requests to main
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
 
     env:
@@ -20,27 +19,26 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.0
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git tar curl unzip xz-utils openjdk-11-jdk
-          
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2.14.0
         with:
-          flutter-version: '3.24.3'  # Specify Flutter version 3.24.3
+          channel: stable
+          flutter-version: 3.24.3
+      - run: flutter --version
 
       - name: Install Android SDK
         run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
 
-      - name: Install Flutter Dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
+      - name: Build Android release
         run: flutter build apk --release
 
       - name: Upload APK
@@ -48,3 +46,11 @@ jobs:
         with:
           name: app-release.apk
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
+          tag: v1.0.0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
