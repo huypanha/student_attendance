@@ -36,8 +36,8 @@ jobs:
         run: |
           choco install -y openjdk11
           choco install -y android-sdk
-          cmd.exe /c "sdkmanager.bat --licenses"
-          cmd.exe /c "sdkmanager.bat \"platform-tools\" \"platforms;android-33\" \"build-tools;33.0.0\""
+          cmd.exe /c 'sdkmanager.bat --licenses'
+          cmd.exe /c 'sdkmanager.bat platform-tools platforms;android-33 build-tools;33.0.0'
 
       - name: Install dependencies
         run: flutter pub get
