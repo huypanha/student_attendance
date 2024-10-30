@@ -32,12 +32,18 @@ jobs:
           echo "Adding Android SDK to PATH"
           echo "${{ env.ANDROID_HOME }}\cmdline-tools\latest\bin;${{ env.ANDROID_HOME }}\platform-tools;C:\flutter\bin" >> $env:GITHUB_PATH
 
-      - name: Install Android SDK Command-Line Tools
+      - name: Install Java and Android SDK
         run: |
           choco install -y openjdk11
-          choco install -y android-sdk
-          cmd.exe /c 'sdkmanager.bat --licenses'
-          cmd.exe /c 'sdkmanager.bat platform-tools platforms;android-33 build-tools;33.0.0'
+          mkdir -p C:\Android\Sdk\cmdline-tools\latest
+          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip
+          tar -xf commandlinetools.zip -C C:\Android\Sdk\cmdline-tools\latest --strip-components=1
+          echo "Installed Android SDK command-line tools."
+
+      - name: Accept Licenses and Install SDK Packages
+        run: |
+          cmd.exe /c "C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat --licenses"
+          cmd.exe /c "C:\Android\Sdk\cmdline-tools\latest\bin\sdkmanager.bat platform-tools platforms;android-33 build-tools;33.0.0"
 
       - name: Install dependencies
         run: flutter pub get
