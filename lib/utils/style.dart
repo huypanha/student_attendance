@@ -16,6 +16,7 @@ class Style {
   static TextStyle txt16PrimaryColor = TextStyle(fontSize: 16, color: primaryColor,);
   static TextStyle txt16Red = const TextStyle(fontSize: 16, color: Colors.red,);
   static TextStyle txt20 = const TextStyle(fontSize: 20, color: Colors.black,);
+  static TextStyle txt20Grey = const TextStyle(fontSize: 20, color: Colors.grey,);
   static TextStyle txt30Bold = const TextStyle(fontSize: 30, color: Colors.black, fontWeight: FontWeight.bold,);
 
   static TextStyle txtManrope16Red = const TextStyle(fontSize: 16, color: Colors.red, fontFamily: 'NotoSansKhmer');
@@ -29,7 +30,9 @@ class Style {
   static TextStyle txt16Bold = const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold,);
   static TextStyle txt16RedBold = const TextStyle(fontSize: 16, color: Colors.red, fontWeight: FontWeight.bold,);
   static TextStyle txt16PrimaryColorBold = TextStyle(fontSize: 16, color: primaryColor, fontWeight: FontWeight.bold,);
+  static TextStyle txt18White = const TextStyle(fontSize: 18, color: Colors.white,);
   static TextStyle txt18Bold = const TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold,);
+  static TextStyle txt18Grey = const TextStyle(fontSize: 18, color: Colors.grey,);
   static TextStyle txt18PrimaryColorBold = TextStyle(fontSize: 18, color: primaryColor, fontWeight: FontWeight.bold,);
   static TextStyle txt20Bold = const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold,);
   static TextStyle txt20GreyBold = const TextStyle(fontSize: 20, color: Colors.grey, fontWeight: FontWeight.bold,);
