@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
+import 'package:student_attendance/features/users/models/user_model.dart';
 
 class Singleton {
   Singleton.internal(){
@@ -26,7 +27,7 @@ class Singleton {
   // UserModel token = UserModel();
 
   /// context to pop from all pages
-  BuildContext? dashboardContext;
+  BuildContext? rootContext;
 
   /// Controlling dashboard menu children
   var selectingMenuId = StateProvider<int>((ref) => 1);
@@ -38,4 +39,6 @@ class Singleton {
 
   // app document directory
   String appDocPath = "";
+
+  UserModel user = UserModel();
 }

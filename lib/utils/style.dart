@@ -4,6 +4,9 @@ class Style {
   static Color primaryColor = const Color(0xff5a73e0);
   static Color primaryBackgroundColor = const Color.fromRGBO(249, 250, 251, 1);
 
+  static TextStyle txt12 = const TextStyle(fontSize: 12, color: Colors.black,);
+  static TextStyle txt12White = const TextStyle(fontSize: 12, color: Colors.white,);
+
   static TextStyle txt14Black = const TextStyle(fontSize: 14, color: Colors.black,);
   static TextStyle txt14Grey = const TextStyle(fontSize: 14, color: Colors.grey,);
   static TextStyle txt14White = const TextStyle(fontSize: 14, color: Colors.white,);
@@ -32,6 +35,7 @@ class Style {
   static TextStyle txt16PrimaryColorBold = TextStyle(fontSize: 16, color: primaryColor, fontWeight: FontWeight.bold,);
   static TextStyle txt18White = const TextStyle(fontSize: 18, color: Colors.white,);
   static TextStyle txt18Bold = const TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold,);
+  static TextStyle txt18WhiteBold = const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold,);
   static TextStyle txt18Grey = const TextStyle(fontSize: 18, color: Colors.grey,);
   static TextStyle txt18PrimaryColorBold = TextStyle(fontSize: 18, color: primaryColor, fontWeight: FontWeight.bold,);
   static TextStyle txt20Bold = const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold,);

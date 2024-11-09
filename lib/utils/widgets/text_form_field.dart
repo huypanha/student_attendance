@@ -36,6 +36,7 @@ Widget textFormField({
   maxLength: maxLength,
   textAlign: textAlign,
   decoration: InputDecoration(
+    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
     hintText: hintText,
     hintStyle: Style.txt16Grey,
     border: border ?? OutlineInputBorder(

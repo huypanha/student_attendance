@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/utils/models/feature_model.dart';
-import 'package:student_attendance/utils/widgets/custom_icons.dart';
-
-import '../../utils/style.dart';
+import 'package:student_attendance/utils/utils.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -30,6 +29,11 @@ class _DashboardState extends State<Dashboard> {
       routeName: '/courses',
     ),
     FeatureModel(
+      title: "Schedule",
+      icon: Icon(CupertinoIcons.calendar, color: Style.primaryColor, size: 70,),
+      routeName: '/courses',
+    ),
+    FeatureModel(
       title: "Reports",
       icon: Icon(CupertinoIcons.graph_square_fill, color: Style.primaryColor, size: 70,),
       routeName: '/courses',
@@ -39,6 +43,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    Singleton.instance.rootContext = context;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       timer = Timer.periodic(const Duration(seconds: 1), (_){
         setState(() {});
@@ -106,39 +111,109 @@ class _DashboardState extends State<Dashboard> {
                     color: Colors.grey[200],
                   ),
                   const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
+                  (){
+                    if(Singleton.instance.user.type == "S") {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          clockInIcon(),
-                          const SizedBox(height: 10,),
-                          Text("Clock In", style: Style.txt16Grey,),
-                          const SizedBox(height: 5,),
-                          Text("--:--", style: Style.txt16Grey,),
+                          Column(
+                            children: [
+                              clockInIcon(),
+                              const SizedBox(height: 10,),
+                              Text("Clock In", style: Style.txt16Grey,),
+                              const SizedBox(height: 5,),
+                              Text("--:--", style: Style.txt16Grey,),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              clockOutIcon(),
+                              const SizedBox(height: 10,),
+                              Text("Clock Out", style: Style.txt16Grey,),
+                              const SizedBox(height: 5,),
+                              Text("--:--", style: Style.txt16Grey,),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              clockCheckIcon(),
+                              const SizedBox(height: 10,),
+                              Text("Duration", style: Style.txt16Grey,),
+                              const SizedBox(height: 5,),
+                              Text("--:--", style: Style.txt16Grey,),
+                            ],
+                          ),
                         ],
-                      ),
-                      Column(
+                      );
+                    } else {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          clockOutIcon(),
-                          const SizedBox(height: 10,),
-                          Text("Clock Out", style: Style.txt16Grey,),
-                          const SizedBox(height: 5,),
-                          Text("--:--", style: Style.txt16Grey,),
+                          Column(
+                            children: [
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.all(7),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Text("Attendance", style: Style.txt16Grey,),
+                              const SizedBox(height: 5,),
+                              Text("999", style: Style.txt16Grey,),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.all(7),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Text("Absence", style: Style.txt16Grey,),
+                              const SizedBox(height: 5,),
+                              Text("999", style: Style.txt16Grey,),
+                            ],
+                          ),
                         ],
-                      ),
-                      Column(
-                        children: [
-                          clockCheckIcon(),
-                          const SizedBox(height: 10,),
-                          Text("Duration", style: Style.txt16Grey,),
-                          const SizedBox(height: 5,),
-                          Text("--:--", style: Style.txt16Grey,),
-                        ],
-                      ),
-                    ],
-                  ),
+                      );
+                    }
+                  }(),
+                  if(Singleton.instance.user.type == "S")
                   const SizedBox(height: 30,),
+                  if(Singleton.instance.user.type == "S")
                   Center(
                     child: BouncingButton(
                       onPressed: (){},
@@ -200,7 +275,7 @@ class _DashboardState extends State<Dashboard> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("Attendance", style: Style.txt18Bold,),
+        Text("Attendance", style: Style.txt25Bold,),
         const SizedBox(height: 20,),
         Row(
           children: [
@@ -286,44 +361,54 @@ class _DashboardState extends State<Dashboard> {
     ),
   );
 
-  Widget get _buildOptions => GridView.builder(
-    itemCount: options.length,
-    shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      mainAxisSpacing: 20,
-      crossAxisSpacing: 20,
-      crossAxisCount: MediaQuery.sizeOf(context).width ~/ 200,
-    ),
+  Widget get _buildExplore => Padding(
     padding: EdgeInsets.all(20),
-    itemBuilder: (context, index) {
-      return BouncingButton(
-        scaleFactor: .3,
-        onPressed: (){
-          context.push(CoursesView.routeName);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.grey[200]!,
-            ),
-            boxShadow: [
-              Style.defaultShadow,
-            ],
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Explore", style: Style.txt25Bold,),
+        const SizedBox(height: 20,),
+        GridView.builder(
+          itemCount: options.length,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            crossAxisCount: MediaQuery.sizeOf(context).width ~/ 200,
           ),
-          padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              options[index].icon,
-              Text(options[index].title, style: Style.txt16,),
-            ],
-          ),
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) {
+            return BouncingButton(
+              scaleFactor: .3,
+              onPressed: (){
+                context.push(CoursesView.routeName);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.grey[200]!,
+                  ),
+                  boxShadow: [
+                    Style.defaultShadow,
+                  ],
+                ),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    options[index].icon,
+                    Text(options[index].title, style: Style.txt16,),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
-      );
-    },
+      ],
+    ),
   );
 
   @override
@@ -342,10 +427,12 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           children: [
             _buildHeader,
+            if(Singleton.instance.user.type == "S")
             const SizedBox(height: 20,),
+            if(Singleton.instance.user.type == "S")
             _buildAttendance,
             const SizedBox(height: 20,),
-            _buildOptions,
+            _buildExplore,
             const SizedBox(height: 50,),
           ],
         ),

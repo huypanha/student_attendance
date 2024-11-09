@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_attendance/features/auth/register.dart';
 import 'package:student_attendance/features/dashboard/dashboard.dart';
+import 'package:student_attendance/features/users/models/user_model.dart';
+import 'package:student_attendance/utils/singleton.dart';
 import 'package:student_attendance/utils/style.dart';
 import 'package:student_attendance/utils/widgets/buttons.dart';
 
@@ -106,6 +108,12 @@ class _LoginPageState extends State<LoginPage> {
 // ;                          } else {
 //                             print(false);
 //                           }
+                          Singleton.instance.user = UserModel(
+                            id: 1,
+                            fistName: "Huy",
+                            lastName: "Panha",
+                            type: "T",
+                          );
                           context.go(Dashboard.routeName);
                         },
                         child: Text("LOGIN", style: Style.txt16WhiteBold,),

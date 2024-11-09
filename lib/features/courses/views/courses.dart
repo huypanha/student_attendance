@@ -1,10 +1,14 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:bouncing_button/bouncing_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:student_attendance/features/courses/models/course_model.dart';
+import 'package:student_attendance/features/courses/views/create_edit_course.dart';
+import 'package:student_attendance/features/courses/views/view_course_details.dart';
+import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/models/feature_model.dart';
 
 import '../../../utils/style.dart';
@@ -19,22 +23,110 @@ class CoursesView extends StatefulWidget {
 }
 
 class _CoursesViewState extends State<CoursesView> {
-  List<FeatureModel> courses = [
-    FeatureModel(
-      title: "Flutter",
-      icon: CachedNetworkImage(
-        imageUrl: 'https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png',
-        fit: BoxFit.contain,
+  List<CourseModel> courses = [
+    CourseModel(
+      id: 1,
+      courseName: "Flutter",
+      img: "https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png",
+      teacher: UserModel(
+        id: 1,
+        fistName: "Huy",
+        lastName: "Panha",
       ),
-      routeName: '/courses',
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam efficitur felis vitae lacus mattis suscipit. Cras sed tempus diam. Etiam sem massa, rutrum vitae sem malesuada, egestas congue nibh.",
     ),
-    FeatureModel(
-      title: "Python",
-      icon: CachedNetworkImage(
-        imageUrl: 'https://banner2.cleanpng.com/20190623/yp/kisspng-python-computer-icons-programming-language-executa-1713885634631.webp',
-        fit: BoxFit.contain,
+    CourseModel(
+      id: 1,
+      courseName: "Python",
+      img: "https://banner2.cleanpng.com/20190623/yp/kisspng-python-computer-icons-programming-language-executa-1713885634631.webp",
+      teacher: UserModel(
+        id: 1,
+        fistName: "Huy",
+        lastName: "Panha",
       ),
-      routeName: '/courses',
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam efficitur felis vitae lacus mattis suscipit. Cras sed tempus diam. Etiam sem massa, rutrum vitae sem malesuada, egestas congue nibh.",
+      students: [
+        UserModel(
+          id: 1,
+          fistName: "Huy",
+          lastName: "Samrech",
+        ),
+        UserModel(
+          id: 2,
+          fistName: "Om",
+          lastName: "Chanpiseth",
+        ),
+        UserModel(
+          id: 3,
+          fistName: "Kong",
+          lastName: "Leng",
+        ),
+        UserModel(
+          id: 4,
+          fistName: "Yuk",
+          lastName: "Chhunlay",
+        ),
+        UserModel(
+          id: 5,
+          fistName: "Huy",
+          lastName: "Samrech",
+        ),
+        UserModel(
+          id: 6,
+          fistName: "Om",
+          lastName: "Chanpiseth",
+        ),
+        UserModel(
+          id: 7,
+          fistName: "Kong",
+          lastName: "Leng",
+        ),
+        UserModel(
+          id: 8,
+          fistName: "Yuk",
+          lastName: "Chhunlay",
+        ),
+        UserModel(
+          id: 1,
+          fistName: "Huy",
+          lastName: "Samrech",
+        ),
+        UserModel(
+          id: 2,
+          fistName: "Om",
+          lastName: "Chanpiseth",
+        ),
+        UserModel(
+          id: 3,
+          fistName: "Kong",
+          lastName: "Leng",
+        ),
+        UserModel(
+          id: 4,
+          fistName: "Yuk",
+          lastName: "Chhunlay",
+        ),
+        UserModel(
+          id: 5,
+          fistName: "Huy",
+          lastName: "Samrech",
+        ),
+        UserModel(
+          id: 6,
+          fistName: "Om",
+          lastName: "Chanpiseth",
+        ),
+        UserModel(
+          id: 7,
+          fistName: "Kong",
+          lastName: "Leng",
+        ),
+        UserModel(
+          id: 8,
+          fistName: "Yuk",
+          lastName: "Chhunlay",
+        ),
+      ],
     ),
   ];
 
@@ -55,7 +147,7 @@ class _CoursesViewState extends State<CoursesView> {
       return BouncingButton(
         scaleFactor: .3,
         onPressed: (){
-          context.push(CoursesView.routeName);
+          context.push(Uri(path: ViewCourseDetails.routeName, queryParameters: {"item": jsonEncode(courses[index].toJson())}).toString());
         },
         child: Container(
           decoration: BoxDecoration(
@@ -72,8 +164,13 @@ class _CoursesViewState extends State<CoursesView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Expanded(child: courses[index].icon),
-              Text(courses[index].title, style: Style.txt16Bold,),
+              Expanded(
+                child: CachedNetworkImage(
+                  imageUrl: courses[index].img!,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Text(courses[index].courseName!, style: Style.txt16Bold,),
             ],
           ),
         ),
@@ -92,14 +189,14 @@ class _CoursesViewState extends State<CoursesView> {
           statusBarBrightness: Brightness.light,
         ),
         title: Text("Courses", style: Style.txt20Bold,),
-        // actions: [
-        //   IconButton(
-        //     onPressed: (){
-        //
-        //     },
-        //     icon: Icon(Icons.add_circle),
-        //   ),
-        // ],
+        actions: [
+          IconButton(
+            onPressed: (){
+              context.push(CreateEditCourse.routeName, extra: {"item": CourseModel()});
+            },
+            icon: Icon(Icons.add_circle),
+          ),
+        ],
       ),
       body: _buildCourses,
     );
