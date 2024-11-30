@@ -10,3 +10,9 @@ enum ProgressType {
   upload,
   download,
 }
+
+enum CalendarRepeatType {
+  none,
+  daily,
+  weekly,
+}

@@ -21,10 +21,10 @@ ScheduleModel _$ScheduleModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ScheduleModel {
   int? get id => throw _privateConstructorUsedError;
-  String? get day => throw _privateConstructorUsedError;
-  String? get startTime => throw _privateConstructorUsedError;
-  String? get endTime => throw _privateConstructorUsedError;
-  int? get courseId => throw _privateConstructorUsedError;
+  DateTime? get startTime => throw _privateConstructorUsedError;
+  DateTime? get endTime => throw _privateConstructorUsedError;
+  CourseModel? get course => throw _privateConstructorUsedError;
+  int? get colorCode => throw _privateConstructorUsedError;
   UserModel? get createdBy => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
 
@@ -46,13 +46,14 @@ abstract class $ScheduleModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? day,
-      String? startTime,
-      String? endTime,
-      int? courseId,
+      DateTime? startTime,
+      DateTime? endTime,
+      CourseModel? course,
+      int? colorCode,
       UserModel? createdBy,
       DateTime? createdDate});
 
+  $CourseModelCopyWith<$Res>? get course;
   $UserModelCopyWith<$Res>? get createdBy;
 }
 
@@ -72,10 +73,10 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
   @override
   $Res call({
     Object? id = freezed,
-    Object? day = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? courseId = freezed,
+    Object? course = freezed,
+    Object? colorCode = freezed,
     Object? createdBy = freezed,
     Object? createdDate = freezed,
   }) {
@@ -84,21 +85,21 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      day: freezed == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as String?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      courseId: freezed == courseId
-          ? _value.courseId
-          : courseId // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      course: freezed == course
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as CourseModel?,
+      colorCode: freezed == colorCode
+          ? _value.colorCode
+          : colorCode // ignore: cast_nullable_to_non_nullable
               as int?,
       createdBy: freezed == createdBy
           ? _value.createdBy
@@ -109,6 +110,20 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
           : createdDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
+  }
+
+  /// Create a copy of ScheduleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CourseModelCopyWith<$Res>? get course {
+    if (_value.course == null) {
+      return null;
+    }
+
+    return $CourseModelCopyWith<$Res>(_value.course!, (value) {
+      return _then(_value.copyWith(course: value) as $Val);
+    });
   }
 
   /// Create a copy of ScheduleModel
@@ -136,13 +151,15 @@ abstract class _$$ScheduleModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? day,
-      String? startTime,
-      String? endTime,
-      int? courseId,
+      DateTime? startTime,
+      DateTime? endTime,
+      CourseModel? course,
+      int? colorCode,
       UserModel? createdBy,
       DateTime? createdDate});
 
+  @override
+  $CourseModelCopyWith<$Res>? get course;
   @override
   $UserModelCopyWith<$Res>? get createdBy;
 }
@@ -161,10 +178,10 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? day = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? courseId = freezed,
+    Object? course = freezed,
+    Object? colorCode = freezed,
     Object? createdBy = freezed,
     Object? createdDate = freezed,
   }) {
@@ -173,21 +190,21 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      day: freezed == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as String?,
       startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      courseId: freezed == courseId
-          ? _value.courseId
-          : courseId // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      course: freezed == course
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as CourseModel?,
+      colorCode: freezed == colorCode
+          ? _value.colorCode
+          : colorCode // ignore: cast_nullable_to_non_nullable
               as int?,
       createdBy: freezed == createdBy
           ? _value.createdBy
@@ -206,10 +223,10 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
 class _$ScheduleModelImpl implements _ScheduleModel {
   _$ScheduleModelImpl(
       {this.id,
-      this.day,
       this.startTime,
       this.endTime,
-      this.courseId,
+      this.course,
+      this.colorCode,
       this.createdBy,
       this.createdDate});
 
@@ -219,13 +236,13 @@ class _$ScheduleModelImpl implements _ScheduleModel {
   @override
   final int? id;
   @override
-  final String? day;
+  final DateTime? startTime;
   @override
-  final String? startTime;
+  final DateTime? endTime;
   @override
-  final String? endTime;
+  final CourseModel? course;
   @override
-  final int? courseId;
+  final int? colorCode;
   @override
   final UserModel? createdBy;
   @override
@@ -233,7 +250,7 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
   @override
   String toString() {
-    return 'ScheduleModel(id: $id, day: $day, startTime: $startTime, endTime: $endTime, courseId: $courseId, createdBy: $createdBy, createdDate: $createdDate)';
+    return 'ScheduleModel(id: $id, startTime: $startTime, endTime: $endTime, course: $course, colorCode: $colorCode, createdBy: $createdBy, createdDate: $createdDate)';
   }
 
   @override
@@ -242,12 +259,12 @@ class _$ScheduleModelImpl implements _ScheduleModel {
         (other.runtimeType == runtimeType &&
             other is _$ScheduleModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.day, day) || other.day == day) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            (identical(other.courseId, courseId) ||
-                other.courseId == courseId) &&
+            (identical(other.course, course) || other.course == course) &&
+            (identical(other.colorCode, colorCode) ||
+                other.colorCode == colorCode) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
             (identical(other.createdDate, createdDate) ||
@@ -256,8 +273,8 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, day, startTime, endTime,
-      courseId, createdBy, createdDate);
+  int get hashCode => Object.hash(runtimeType, id, startTime, endTime, course,
+      colorCode, createdBy, createdDate);
 
   /// Create a copy of ScheduleModel
   /// with the given fields replaced by the non-null parameter values.
@@ -278,10 +295,10 @@ class _$ScheduleModelImpl implements _ScheduleModel {
 abstract class _ScheduleModel implements ScheduleModel {
   factory _ScheduleModel(
       {final int? id,
-      final String? day,
-      final String? startTime,
-      final String? endTime,
-      final int? courseId,
+      final DateTime? startTime,
+      final DateTime? endTime,
+      final CourseModel? course,
+      final int? colorCode,
       final UserModel? createdBy,
       final DateTime? createdDate}) = _$ScheduleModelImpl;
 
@@ -291,13 +308,13 @@ abstract class _ScheduleModel implements ScheduleModel {
   @override
   int? get id;
   @override
-  String? get day;
+  DateTime? get startTime;
   @override
-  String? get startTime;
+  DateTime? get endTime;
   @override
-  String? get endTime;
+  CourseModel? get course;
   @override
-  int? get courseId;
+  int? get colorCode;
   @override
   UserModel? get createdBy;
   @override

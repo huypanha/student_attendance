@@ -9,10 +9,16 @@ part of 'schedule.dart';
 _$ScheduleModelImpl _$$ScheduleModelImplFromJson(Map<String, dynamic> json) =>
     _$ScheduleModelImpl(
       id: (json['id'] as num?)?.toInt(),
-      day: json['day'] as String?,
-      startTime: json['startTime'] as String?,
-      endTime: json['endTime'] as String?,
-      courseId: (json['courseId'] as num?)?.toInt(),
+      startTime: json['startTime'] == null
+          ? null
+          : DateTime.parse(json['startTime'] as String),
+      endTime: json['endTime'] == null
+          ? null
+          : DateTime.parse(json['endTime'] as String),
+      course: json['course'] == null
+          ? null
+          : CourseModel.fromJson(json['course'] as Map<String, dynamic>),
+      colorCode: (json['colorCode'] as num?)?.toInt(),
       createdBy: json['createdBy'] == null
           ? null
           : UserModel.fromJson(json['createdBy'] as Map<String, dynamic>),
@@ -24,10 +30,10 @@ _$ScheduleModelImpl _$$ScheduleModelImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ScheduleModelImplToJson(_$ScheduleModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'day': instance.day,
-      'startTime': instance.startTime,
-      'endTime': instance.endTime,
-      'courseId': instance.courseId,
+      'startTime': instance.startTime?.toIso8601String(),
+      'endTime': instance.endTime?.toIso8601String(),
+      'course': instance.course,
+      'colorCode': instance.colorCode,
       'createdBy': instance.createdBy,
       'createdDate': instance.createdDate?.toIso8601String(),
     };

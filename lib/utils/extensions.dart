@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:student_attendance/features/courses/models/schedule.dart';
+import 'package:student_attendance/features/schedules/models/schedule.dart';
 
 import '../features/users/models/user_model.dart';
 import 'utils.dart';
@@ -71,17 +71,4 @@ extension StringExt on String {
 }
 
 extension ScheduleExt on ScheduleModel {
-  TimeOfDay get getStartTimeOfDay {
-    final parts = startTime!.split(':');
-    final hour = int.parse(parts[0]);
-    final minute = int.parse(parts[1]);
-    return TimeOfDay(hour: hour, minute: minute);
-  }
-
-  TimeOfDay get getEndTimeOfDay {
-    final parts = endTime!.split(':');
-    final hour = int.parse(parts[0]);
-    final minute = int.parse(parts[1]);
-    return TimeOfDay(hour: hour, minute: minute);
-  }
 }

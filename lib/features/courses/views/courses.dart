@@ -9,7 +9,6 @@ import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
 import 'package:student_attendance/features/courses/views/view_course_details.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
-import 'package:student_attendance/utils/models/feature_model.dart';
 
 import '../../../utils/style.dart';
 
@@ -186,7 +185,8 @@ class _CoursesViewState extends State<CoursesView> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.dark,
         ),
         title: Text("Courses", style: Style.txt20Bold,),
         actions: [

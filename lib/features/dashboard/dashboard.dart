@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
+import 'package:student_attendance/features/schedules/views/schedules_view.dart';
 import 'package:student_attendance/utils/models/feature_model.dart';
 import 'package:student_attendance/utils/utils.dart';
 
@@ -26,12 +26,12 @@ class _DashboardState extends State<Dashboard> {
     FeatureModel(
       title: "Courses",
       icon: Icon(Icons.class_rounded, color: Style.primaryColor, size: 70,),
-      routeName: '/courses',
+      routeName: CoursesView.routeName,
     ),
     FeatureModel(
       title: "Schedule",
       icon: Icon(CupertinoIcons.calendar, color: Style.primaryColor, size: 70,),
-      routeName: '/courses',
+      routeName: ScheduleView.routeName,
     ),
     FeatureModel(
       title: "Reports",
@@ -382,7 +382,7 @@ class _DashboardState extends State<Dashboard> {
             return BouncingButton(
               scaleFactor: .3,
               onPressed: (){
-                context.push(CoursesView.routeName);
+                context.push(options[index].routeName);
               },
               child: Container(
                 decoration: BoxDecoration(
