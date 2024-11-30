@@ -5,7 +5,6 @@ import 'package:student_attendance/features/auth/login.dart';
 import 'package:student_attendance/utils/style.dart';
 import 'package:student_attendance/utils/widgets/buttons.dart';
 
-import '../../utils/models/cache_model.dart';
 import '../../utils/singleton.dart';
 
 class OnboardScreen extends StatefulWidget {
@@ -108,12 +107,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                       onPressed: () async {
                         if(pageController.page == 3) {
                           // Save first installed state
-                          CacheModel data = CacheModel();
-                          data.key = "first_installed";
-                          data.value = true;
-                          Singleton.instance.cacheDB?.write((c) {
-                            c.cacheModels.put(data);
-                          });
+                          Singleton.instance.cacheDB?.put("first_installed", true);
 
                           // Go to login page
                           context.go(LoginPage.routeName);

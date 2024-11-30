@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:isar/isar.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:student_attendance/features/app/app.dart';
 
@@ -28,13 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
       log(Singleton.instance.appDocPath);
 
       // check if first installed
-      Singleton.instance.cacheDB = await Isar.openAsync(
-        schemas: [CacheModelSchema],
-        directory: Singleton.instance.appDocPath,
-      );
+      Hive.init(Singleton.instance.appDocPath);
+      Singleton.instance.cacheDB = await Hive.openBox('cache');
 
       // Check if it is installed for the first time or not to show onboarding screen
-      var isFirstInstalled = Singleton.instance.cacheDB?.cacheModels.get("first_installed");
+      var isFirstInstalled = Singleton.instance.cacheDB?.get("first_installed");
 
       if(isFirstInstalled == null) {
         context.go(OnboardScreen.routeName);

@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 
 class Singleton {
@@ -18,7 +18,7 @@ class Singleton {
   final totalProgress = StateProvider<double>((ref) => 1);
 
   /// Local db for store all app configurations that using key and values
-  Isar? cacheDB;
+  Box? cacheDB;
 
   /// Used for update riverpod widget state
   WidgetRef? widgetRef;

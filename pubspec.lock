@@ -434,6 +434,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  hive_ce:
+    dependency: "direct main"
+    description:
+      name: hive_ce
+      sha256: "2d66fa89a3e33e6d95edcf6c75409cf8f6442ab46229c9baf423af479f532e99"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0+2"
+  hive_ce_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_ce_flutter
+      sha256: e74e11d3ed622630ff1ee758037dab21a59d2182fa7b61378726c673742d2ab9
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  hive_ce_generator:
+    dependency: "direct dev"
+    description:
+      name: hive_ce_generator
+      sha256: "182fb88273055e05ef0e630b5e32e5a30268722ed3bf46fdf5986792862975af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.8.1"
   http:
     dependency: transitive
     description:
@@ -546,15 +570,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  isar:
-    dependency: "direct main"
-    description:
-      path: "packages/isar"
-      ref: HEAD
-      resolved-ref: "9e7624e243cdc653c72d86139b8b1e58c3ab4c6c"
-      url: "https://github.com/isar/isar.git"
-    source: git
-    version: "0.0.0-placeholder"
   js:
     dependency: transitive
     description:
@@ -1136,6 +1151,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  yaml_writer:
+    dependency: transitive
+    description:
+      name: yaml_writer
+      sha256: "2ae2cd5f5a612a930ef2b1b40df540c819ab85e301f26dfaf0b6201b857db825"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
 sdks:
   dart: ">=3.5.3 <4.0.0"
   flutter: ">=3.24.0"

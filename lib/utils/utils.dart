@@ -1,6 +1,5 @@
 export 'icons/icon_widget.dart';
 export 'icons/icon_data.dart';
-export 'models/cache_model.dart';
 export 'widgets/buttons.dart';
 export 'widgets/custom_icons.dart';
 export 'widgets/text_form_field.dart';
