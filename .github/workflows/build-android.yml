@@ -96,11 +96,13 @@ jobs:
         run: |
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
+          ls -la
         
         #13 Create Release
       - name: Create Release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: "*.apk,*.aab,*.tar.gz"
           tag: v${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
