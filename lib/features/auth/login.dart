@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:student_attendance/features/auth/register.dart';
 import 'package:student_attendance/features/dashboard/dashboard.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
+import 'package:student_attendance/utils/enums/enums.dart';
 import 'package:student_attendance/utils/singleton.dart';
 import 'package:student_attendance/utils/style.dart';
 import 'package:student_attendance/utils/widgets/buttons.dart';
@@ -103,16 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: primaryElevatedButton(
                         onPressed: () async {
-//                           if(RegExp(r"^\d{1,3}(,\d{3})*\.\d{2}$").hasMatch(txtUsername.text)){
-//                             print(true)
-// ;                          } else {
-//                             print(false);
-//                           }
                           Singleton.instance.user = UserModel(
                             id: 1,
                             fistName: "Huy",
                             lastName: "Panha",
-                            type: "T",
+                            type: UserType.teacher,
                           );
                           context.go(Dashboard.routeName);
                         },
@@ -124,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30,),
                 RichText(
                   text: TextSpan(
-                    text: "Don't have an account? ",
+                    text: "Don't have account yet? ",
                     style: Style.txt14Grey,
                     children: [
                       TextSpan(

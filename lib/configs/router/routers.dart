@@ -10,8 +10,12 @@ import 'package:student_attendance/features/courses/views/create_edit_course.dar
 import 'package:student_attendance/features/courses/views/view_course_details.dart';
 import 'package:student_attendance/features/dashboard/dashboard.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
+import 'package:student_attendance/features/students/views/students.dart';
+import 'package:student_attendance/features/students/views/view_student_details.dart';
+import 'package:student_attendance/features/users/models/user_model.dart';
 
 import '../../features/app/app.dart';
+import '../../features/students/views/edit_student.dart';
 
 final router = GoRouter(
   initialLocation: SplashScreen.routeName,
@@ -59,7 +63,7 @@ final router = GoRouter(
     GoRoute(
       path: CreateEditCourse.routeName,
       pageBuilder: (context, state) => CupertinoPage(
-        child: const CreateEditCourse(),
+        child: CreateEditCourse(data: state.uri.queryParameters['data'] != null ? CourseModel.fromJson(jsonDecode(state.uri.queryParameters['data']!)) : null,),
       ),
     ),
     GoRoute(
@@ -72,6 +76,24 @@ final router = GoRouter(
       path: ScheduleView.routeName,
       pageBuilder: (context, state) => CupertinoPage(
         child: const ScheduleView(),
+      ),
+    ),
+    GoRoute(
+      path: Students.routeName,
+      pageBuilder: (context, state) => CupertinoPage(
+        child: const Students(),
+      ),
+    ),
+    GoRoute(
+      path: ViewStudentDetails.routeName,
+      pageBuilder: (context, state) => CupertinoPage(
+        child: ViewStudentDetails(data: UserModel.fromJson(jsonDecode(state.uri.queryParameters['data']!)),),
+      ),
+    ),
+    GoRoute(
+      path: EditStudent.routeName,
+      pageBuilder: (context, state) => CupertinoPage(
+        child: EditStudent(data: UserModel.fromJson(jsonDecode(state.uri.queryParameters['data']!)),),
       ),
     ),
   ],

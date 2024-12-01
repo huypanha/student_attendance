@@ -49,17 +49,23 @@ Widget notFoundWidget() {
 
 Widget noImageWidget({
   double? size = 50,
+  Color? color,
 }) {
+  color ??= Colors.grey[300]!;
+
   return Center(
-    child: Text("\ue1b7", style: Style.txtFAS(size: size, color: Colors.grey[300]),),
+    child: Text("\ue1b7", style: Style.txtFAS(size: size, color: color),),
   );
 }
 
 Widget noProfileWidget({
   double size = 50,
+  Color? color,
 }) {
+  color ??= Colors.grey[300]!;
+
   return Center(
-    child: ASIcon.solid(ASIconData.user, size: size, color: Colors.grey[300]!),
+    child: ASIcon.solid(ASIconData.user, size: size, color: color),
   );
 }
 

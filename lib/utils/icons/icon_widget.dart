@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../enums.dart';
+import '../enums/enums.dart';
 
 class ASIcon extends StatelessWidget {
   final String ASIconData;

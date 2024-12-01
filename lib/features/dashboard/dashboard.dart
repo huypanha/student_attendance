@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:bouncing_button/bouncing_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bouncing_widgets/custom_bounce_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:student_attendance/features/auth/login.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
-import 'package:student_attendance/utils/models/feature_model.dart';
+import 'package:student_attendance/features/students/views/students.dart';
 import 'package:student_attendance/utils/utils.dart';
 
 class Dashboard extends StatefulWidget {
@@ -32,6 +32,11 @@ class _DashboardState extends State<Dashboard> {
       title: "Schedule",
       icon: Icon(CupertinoIcons.calendar, color: Style.primaryColor, size: 70,),
       routeName: ScheduleView.routeName,
+    ),
+    FeatureModel(
+      title: "Students",
+      icon: ASIcon.solid(ASIconData.educationCap, color: Style.primaryColor, size: 70,),
+      routeName: Students.routeName,
     ),
     FeatureModel(
       title: "Reports",
@@ -69,25 +74,39 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Row(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.grey[200]!,
-                    ),
-                  ),
-                  child: ClipOval(
-                    child: Image.asset("assets/images/sample_profile.jpeg", width: 50,),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.grey[200]!,
+                          ),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset("assets/images/sample_profile.jpeg", width: 50,),
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Hello,", style: Style.txt18White,),
+                          Text("Huy Panha", style: Style.txt20Bold.copyWith(color: Colors.white),),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 20,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Hello,", style: Style.txt18White,),
-                    Text("Huy Panha", style: Style.txt20Bold.copyWith(color: Colors.white),),
-                  ],
+                const SizedBox(width: 10,),
+                IconButton(
+                  onPressed: (){
+                    context.go(LoginPage.routeName);
+                  },
+                  tooltip: "Log Out",
+                  icon: ASIcon.solid(ASIconData.logout, color: Colors.white,),
                 ),
               ],
             ),
@@ -112,36 +131,42 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const SizedBox(height: 10,),
                   (){
-                    if(Singleton.instance.user.type == "S") {
+                    if(Singleton.instance.user.type == UserType.student) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Column(
-                            children: [
-                              clockInIcon(),
-                              const SizedBox(height: 10,),
-                              Text("Clock In", style: Style.txt16Grey,),
-                              const SizedBox(height: 5,),
-                              Text("--:--", style: Style.txt16Grey,),
-                            ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                clockInIcon(),
+                                const SizedBox(height: 10,),
+                                Text("Clock In", style: Style.txt16Grey,),
+                                const SizedBox(height: 5,),
+                                Text("--:--", style: Style.txt16Grey,),
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              clockOutIcon(),
-                              const SizedBox(height: 10,),
-                              Text("Clock Out", style: Style.txt16Grey,),
-                              const SizedBox(height: 5,),
-                              Text("--:--", style: Style.txt16Grey,),
-                            ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                clockOutIcon(),
+                                const SizedBox(height: 10,),
+                                Text("Clock Out", style: Style.txt16Grey,),
+                                const SizedBox(height: 5,),
+                                Text("--:--", style: Style.txt16Grey,),
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              clockCheckIcon(),
-                              const SizedBox(height: 10,),
-                              Text("Duration", style: Style.txt16Grey,),
-                              const SizedBox(height: 5,),
-                              Text("--:--", style: Style.txt16Grey,),
-                            ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                clockCheckIcon(),
+                                const SizedBox(height: 10,),
+                                Text("Duration", style: Style.txt16Grey,),
+                                const SizedBox(height: 5,),
+                                Text("--:--", style: Style.txt16Grey,),
+                              ],
+                            ),
                           ),
                         ],
                       );
@@ -149,73 +174,77 @@ class _DashboardState extends State<Dashboard> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Column(
-                            children: [
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
-                                  Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
                                         ),
+                                        padding: EdgeInsets.all(7),
                                       ),
-                                      padding: EdgeInsets.all(7),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10,),
-                              Text("Attendance", style: Style.txt16Grey,),
-                              const SizedBox(height: 5,),
-                              Text("999", style: Style.txt16Grey,),
-                            ],
+                                  ],
+                                ),
+                                const SizedBox(height: 10,),
+                                Text("Present", style: Style.txt16Grey,),
+                                const SizedBox(height: 5,),
+                                Text("999", style: Style.txt16Grey,),
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
-                                  Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Text('\uf0c0', style: Style.txtFAS(size: 40, color: Colors.grey[400]),),
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
                                         ),
+                                        padding: EdgeInsets.all(7),
                                       ),
-                                      padding: EdgeInsets.all(7),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10,),
-                              Text("Absence", style: Style.txt16Grey,),
-                              const SizedBox(height: 5,),
-                              Text("999", style: Style.txt16Grey,),
-                            ],
+                                  ],
+                                ),
+                                const SizedBox(height: 10,),
+                                Text("Absence", style: Style.txt16Grey,),
+                                const SizedBox(height: 5,),
+                                Text("999", style: Style.txt16Grey,),
+                              ],
+                            ),
                           ),
                         ],
                       );
                     }
                   }(),
-                  if(Singleton.instance.user.type == "S")
+                  if(Singleton.instance.user.type == UserType.student)
                   const SizedBox(height: 30,),
-                  if(Singleton.instance.user.type == "S")
+                  if(Singleton.instance.user.type == UserType.student)
                   Center(
-                    child: BouncingButton(
+                    child: CustomBounceWidget(
                       onPressed: (){},
                       scaleFactor: .5,
                       child: Container(
@@ -379,8 +408,9 @@ class _DashboardState extends State<Dashboard> {
           ),
           padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
-            return BouncingButton(
+            return CustomBounceWidget(
               scaleFactor: .3,
+              isScrollable: true,
               onPressed: (){
                 context.push(options[index].routeName);
               },
@@ -415,21 +445,14 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
-        ),
-      ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           children: [
             _buildHeader,
-            if(Singleton.instance.user.type == "S")
+            if(Singleton.instance.user.type == UserType.student)
             const SizedBox(height: 20,),
-            if(Singleton.instance.user.type == "S")
+            if(Singleton.instance.user.type == UserType.student)
             _buildAttendance,
             const SizedBox(height: 20,),
             _buildExplore,

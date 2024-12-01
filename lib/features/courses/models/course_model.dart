@@ -9,7 +9,7 @@ class CourseModel with _$CourseModel {
 
   factory CourseModel({
     int? id,
-    String? courseName,
+    String? subject,
     UserModel? teacher,
     String? description,
     String? img,
@@ -18,6 +18,7 @@ class CourseModel with _$CourseModel {
     UserModel? updatedBy,
     DateTime? updatedAt,
     List<UserModel>? students,
+    String? status,
   }) = _CourseModel;
 
   factory CourseModel.fromJson(Map<String, dynamic> json) => _$CourseModelFromJson(json);

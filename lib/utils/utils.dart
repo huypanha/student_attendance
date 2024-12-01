@@ -1,10 +1,14 @@
+export 'enums/enum_converter.dart';
+export 'enums/enums.dart';
 export 'icons/icon_widget.dart';
 export 'icons/icon_data.dart';
+export 'image/pick_image.dart';
+export 'models/feature_model.dart';
 export 'widgets/buttons.dart';
 export 'widgets/custom_icons.dart';
 export 'widgets/text_form_field.dart';
 export 'widgets/widgets.dart';
-export 'enums.dart';
+export 'dialogs.dart';
 export 'extensions.dart';
 export 'singleton.dart';
 export 'style.dart';

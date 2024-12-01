@@ -22,13 +22,15 @@ extension UserModelExtension on UserModel {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size),
         child: Image.asset(
-          "assets/images/logo/angkor_system.jpg",
+          "assets/images/logo.png",
           fit: BoxFit.cover,
-          errorBuilder: (context, _, __) => noImageWidget(size: size / 2),
+          errorBuilder: (context, _, __) => noProfileWidget(size: size / 2),
         ),
       ),
     );
   }
+
+  String get fullName => "$fistName $lastName";
 }
 
 extension TimeOfDayExt on TimeOfDay {
@@ -68,6 +70,8 @@ extension StringExt on String {
     final minute = int.parse(parts[1]);
     return TimeOfDay(hour: hour, minute: minute);
   }
+
+  String get toCapitalized => substring(0,1).toString().toUpperCase() + substring(1);
 }
 
 extension ScheduleExt on ScheduleModel {

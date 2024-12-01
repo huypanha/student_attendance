@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:bouncing_button/bouncing_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bouncing_widgets/custom_bounce_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
@@ -25,7 +25,7 @@ class _CoursesViewState extends State<CoursesView> {
   List<CourseModel> courses = [
     CourseModel(
       id: 1,
-      courseName: "Flutter",
+      subject: "Flutter",
       img: "https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png",
       teacher: UserModel(
         id: 1,
@@ -36,7 +36,7 @@ class _CoursesViewState extends State<CoursesView> {
     ),
     CourseModel(
       id: 1,
-      courseName: "Python",
+      subject: "Python",
       img: "https://banner2.cleanpng.com/20190623/yp/kisspng-python-computer-icons-programming-language-executa-1713885634631.webp",
       teacher: UserModel(
         id: 1,
@@ -143,8 +143,9 @@ class _CoursesViewState extends State<CoursesView> {
     ),
     padding: EdgeInsets.all(20),
     itemBuilder: (context, index) {
-      return BouncingButton(
+      return CustomBounceWidget(
         scaleFactor: .3,
+        isScrollable: true,
         onPressed: (){
           context.push(Uri(path: ViewCourseDetails.routeName, queryParameters: {"item": jsonEncode(courses[index].toJson())}).toString());
         },
@@ -169,7 +170,7 @@ class _CoursesViewState extends State<CoursesView> {
                   fit: BoxFit.contain,
                 ),
               ),
-              Text(courses[index].courseName!, style: Style.txt16Bold,),
+              Text(courses[index].subject!, style: Style.txt16Bold,),
             ],
           ),
         ),
@@ -192,7 +193,7 @@ class _CoursesViewState extends State<CoursesView> {
         actions: [
           IconButton(
             onPressed: (){
-              context.push(CreateEditCourse.routeName, extra: {"item": CourseModel()});
+              context.push(CreateEditCourse.routeName);
             },
             icon: Icon(Icons.add_circle),
           ),

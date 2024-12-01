@@ -5,9 +5,12 @@ class ASIconData {
   static const String circleInfo = "\uf05a";
   static const String circlePlus = "\uf055";
   static const String editUser = "\uf4ff";
+  static const String educationCap = "\uf19d";
+  static const String images = "\uf302";
   static const String items = "\uf468";
   static const String language = "\uf1ab";
   static const String lock = "\uf023";
+  static const String logout = "\uf2f5";
   static const String medicalNote = "\uf481";
   static const String minus = "\uf068";
   static const String moneyTrendUp = "\ue529";

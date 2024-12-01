@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
+import 'package:student_attendance/features/courses/views/create_edit_course.dart';
 import 'package:student_attendance/utils/utils.dart';
 
 class ViewCourseDetails extends StatefulWidget {
@@ -51,6 +55,7 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
       backgroundColor: Colors.white,
       body: CustomScrollView(
         controller: scrollCon,
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             backgroundColor: pinnedTitle ? Colors.white : Colors.transparent,
@@ -68,13 +73,57 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
                 color: Colors.grey[200]!,
               ),
             ),
+            actions: [
+              PopupMenuButton(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                onSelected: (v) async {
+                  if(v == "edit"){
+                    context.push(Uri(path: CreateEditCourse.routeName, queryParameters: {"data": jsonEncode(widget.data.toJson())}).toString());
+                  } else if(v == "delete"){
+                  }
+                },
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: "edit",
+                      child: Row(
+                        children: [
+                          Text(ASIconData.pencil, style: Style.txtFAS(size: 20, color: Style.primaryColor)),
+                          const SizedBox(width: 10,),
+                          Text("Edit", style: Style.txt16,),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: "delete",
+                      child: Row(
+                        children: [
+                          Text(ASIconData.trashXMark, style: Style.txtFAS(size: 20, color: Colors.red)),
+                          const SizedBox(width: 10,),
+                          Text("Delete", style: Style.txt16,),
+                        ],
+                      ),
+                    ),
+                  ];
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ASIcon.solid(ASIconData.moreOptions, size: 16,),
+                ),
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: false,
               title: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.data.courseName ?? "", style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
+                  Text(widget.data.subject ?? "", style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
                   Text("${widget.data.teacher!.fistName} ${widget.data.teacher!.lastName}", style: pinnedTitle ? Style.txt12 : Style.txt12White,),
                 ],
               ),

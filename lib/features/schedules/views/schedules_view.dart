@@ -27,12 +27,12 @@ class _ScheduleViewState extends State<ScheduleView> {
   List<CourseModel> courses = [
     CourseModel(
       id: 1,
-      courseName: "Flutter",
+      subject: "Flutter",
       img: "https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png",
     ),
     CourseModel(
       id: 1,
-      courseName: "Python",
+      subject: "Python",
       img: "https://banner2.cleanpng.com/20190623/yp/kisspng-python-computer-icons-programming-language-executa-1713885634631.webp",
     ),
   ];
@@ -90,7 +90,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(isUpdate ? data!.course!.courseName.toString() : "Create Schedule", style: Style.txt20Bold,),
+                    Text(isUpdate ? data!.course!.subject.toString() : "Create Schedule", style: Style.txt20Bold,),
                     const SizedBox(width: 10,),
                     if(isUpdate)
                     IconButton(
@@ -138,7 +138,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                         hint: Text("Select a course", style: Style.txt16Grey,),
                         selectedItemBuilder: (context) => List.generate(courses.length, (index) => DropdownMenuItem(
                           value: courses[index],
-                          child: Text(courses[index].courseName.toString(), style: Style.txt16,),
+                          child: Text(courses[index].subject.toString(), style: Style.txt16,),
                         )),
                         dropdownColor: Colors.white,
                         decoration: InputDecoration(
@@ -174,7 +174,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                                 ),
                               ),
                               const SizedBox(width: 10,),
-                              Text(courses[index].courseName.toString(), style: Style.txt16,),
+                              Text(courses[index].subject.toString(), style: Style.txt16,),
                             ],
                           ),
                         )),

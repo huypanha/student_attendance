@@ -62,14 +62,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  bouncing_button:
-    dependency: "direct main"
-    description:
-      name: bouncing_button
-      sha256: e281c0af5e71ec53ffb1656060221930b121388ea21e3cb095b0bede8b596635
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1+2"
   build:
     dependency: transitive
     description:
@@ -331,6 +323,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bouncing_widgets:
+    dependency: "direct main"
+    description:
+      name: flutter_bouncing_widgets
+      sha256: "23c913215d3cb96d442153199f527f859e1a491b3d4a26bc852adc8a9c89aa02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -450,14 +450,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  hive_ce_generator:
-    dependency: "direct dev"
-    description:
-      name: hive_ce_generator
-      sha256: "182fb88273055e05ef0e630b5e32e5a30268722ed3bf46fdf5986792862975af"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.8.1"
   http:
     dependency: transitive
     description:
@@ -1151,14 +1143,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  yaml_writer:
-    dependency: transitive
-    description:
-      name: yaml_writer
-      sha256: "2ae2cd5f5a612a930ef2b1b40df540c819ab85e301f26dfaf0b6201b857db825"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
 sdks:
   dart: ">=3.5.3 <4.0.0"
   flutter: ">=3.24.0"

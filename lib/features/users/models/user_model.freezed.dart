@@ -21,16 +21,23 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserModel {
   int? get id => throw _privateConstructorUsedError;
+  String? get stuId => throw _privateConstructorUsedError;
   String? get fistName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
-  String? get type =>
-      throw _privateConstructorUsedError; // T: for teacher, S: for student
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  DateTime? get dob => throw _privateConstructorUsedError;
+  @UserTypeEnumConverter()
+  UserType? get type =>
+      throw _privateConstructorUsedError; // 0: for teacher, 1: for student
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
   UserModel? get createdBy => throw _privateConstructorUsedError;
   UserModel? get updatedBy => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get lastActive => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,15 +56,21 @@ abstract class $UserModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
+      String? stuId,
       String? fistName,
       String? lastName,
       String? email,
       String? password,
-      String? type,
+      String? phoneNumber,
+      DateTime? dob,
+      @UserTypeEnumConverter() UserType? type,
+      List<CourseModel>? courses,
       UserModel? createdBy,
       UserModel? updatedBy,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      DateTime? lastActive,
+      String? status});
 
   $UserModelCopyWith<$Res>? get createdBy;
   $UserModelCopyWith<$Res>? get updatedBy;
@@ -79,21 +92,31 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? stuId = freezed,
     Object? fistName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? password = freezed,
+    Object? phoneNumber = freezed,
+    Object? dob = freezed,
     Object? type = freezed,
+    Object? courses = freezed,
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? lastActive = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stuId: freezed == stuId
+          ? _value.stuId
+          : stuId // ignore: cast_nullable_to_non_nullable
+              as String?,
       fistName: freezed == fistName
           ? _value.fistName
           : fistName // ignore: cast_nullable_to_non_nullable
@@ -110,10 +133,22 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as UserType?,
+      courses: freezed == courses
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -130,6 +165,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      lastActive: freezed == lastActive
+          ? _value.lastActive
+          : lastActive // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -172,15 +215,21 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
+      String? stuId,
       String? fistName,
       String? lastName,
       String? email,
       String? password,
-      String? type,
+      String? phoneNumber,
+      DateTime? dob,
+      @UserTypeEnumConverter() UserType? type,
+      List<CourseModel>? courses,
       UserModel? createdBy,
       UserModel? updatedBy,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      DateTime? lastActive,
+      String? status});
 
   @override
   $UserModelCopyWith<$Res>? get createdBy;
@@ -202,21 +251,31 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? stuId = freezed,
     Object? fistName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? password = freezed,
+    Object? phoneNumber = freezed,
+    Object? dob = freezed,
     Object? type = freezed,
+    Object? courses = freezed,
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? lastActive = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stuId: freezed == stuId
+          ? _value.stuId
+          : stuId // ignore: cast_nullable_to_non_nullable
+              as String?,
       fistName: freezed == fistName
           ? _value.fistName
           : fistName // ignore: cast_nullable_to_non_nullable
@@ -233,10 +292,22 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as UserType?,
+      courses: freezed == courses
+          ? _value._courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -253,6 +324,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      lastActive: freezed == lastActive
+          ? _value.lastActive
+          : lastActive // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -262,21 +341,30 @@ class __$$UserModelImplCopyWithImpl<$Res>
 class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
       {this.id,
+      this.stuId,
       this.fistName,
       this.lastName,
       this.email,
       this.password,
-      this.type,
+      this.phoneNumber,
+      this.dob,
+      @UserTypeEnumConverter() this.type,
+      final List<CourseModel>? courses,
       this.createdBy,
       this.updatedBy,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.lastActive,
+      this.status})
+      : _courses = courses;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
   @override
   final int? id;
+  @override
+  final String? stuId;
   @override
   final String? fistName;
   @override
@@ -286,8 +374,24 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? password;
   @override
-  final String? type;
-// T: for teacher, S: for student
+  final String? phoneNumber;
+  @override
+  final DateTime? dob;
+  @override
+  @UserTypeEnumConverter()
+  final UserType? type;
+// 0: for teacher, 1: for student
+  final List<CourseModel>? _courses;
+// 0: for teacher, 1: for student
+  @override
+  List<CourseModel>? get courses {
+    final value = _courses;
+    if (value == null) return null;
+    if (_courses is EqualUnmodifiableListView) return _courses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final UserModel? createdBy;
   @override
@@ -296,10 +400,14 @@ class _$UserModelImpl implements _UserModel {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
+  @override
+  final DateTime? lastActive;
+  @override
+  final String? status;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fistName: $fistName, lastName: $lastName, email: $email, password: $password, type: $type, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(id: $id, stuId: $stuId, fistName: $fistName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status)';
   }
 
   @override
@@ -308,6 +416,7 @@ class _$UserModelImpl implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.stuId, stuId) || other.stuId == stuId) &&
             (identical(other.fistName, fistName) ||
                 other.fistName == fistName) &&
             (identical(other.lastName, lastName) ||
@@ -315,7 +424,11 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.type, type) || other.type == type) &&
+            const DeepCollectionEquality().equals(other._courses, _courses) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
             (identical(other.updatedBy, updatedBy) ||
@@ -323,13 +436,32 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.lastActive, lastActive) ||
+                other.lastActive == lastActive) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, fistName, lastName, email,
-      password, type, createdBy, updatedBy, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      stuId,
+      fistName,
+      lastName,
+      email,
+      password,
+      phoneNumber,
+      dob,
+      type,
+      const DeepCollectionEquality().hash(_courses),
+      createdBy,
+      updatedBy,
+      createdAt,
+      updatedAt,
+      lastActive,
+      status);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -350,21 +482,29 @@ class _$UserModelImpl implements _UserModel {
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {final int? id,
+      final String? stuId,
       final String? fistName,
       final String? lastName,
       final String? email,
       final String? password,
-      final String? type,
+      final String? phoneNumber,
+      final DateTime? dob,
+      @UserTypeEnumConverter() final UserType? type,
+      final List<CourseModel>? courses,
       final UserModel? createdBy,
       final UserModel? updatedBy,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$UserModelImpl;
+      final DateTime? updatedAt,
+      final DateTime? lastActive,
+      final String? status}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
   @override
   int? get id;
+  @override
+  String? get stuId;
   @override
   String? get fistName;
   @override
@@ -374,7 +514,14 @@ abstract class _UserModel implements UserModel {
   @override
   String? get password;
   @override
-  String? get type; // T: for teacher, S: for student
+  String? get phoneNumber;
+  @override
+  DateTime? get dob;
+  @override
+  @UserTypeEnumConverter()
+  UserType? get type; // 0: for teacher, 1: for student
+  @override
+  List<CourseModel>? get courses;
   @override
   UserModel? get createdBy;
   @override
@@ -383,6 +530,10 @@ abstract class _UserModel implements UserModel {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+  @override
+  DateTime? get lastActive;
+  @override
+  String? get status;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

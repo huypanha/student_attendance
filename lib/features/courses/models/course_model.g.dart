@@ -9,7 +9,7 @@ part of 'course_model.dart';
 _$CourseModelImpl _$$CourseModelImplFromJson(Map<String, dynamic> json) =>
     _$CourseModelImpl(
       id: (json['id'] as num?)?.toInt(),
-      courseName: json['courseName'] as String?,
+      subject: json['subject'] as String?,
       teacher: json['teacher'] == null
           ? null
           : UserModel.fromJson(json['teacher'] as Map<String, dynamic>),
@@ -30,12 +30,13 @@ _$CourseModelImpl _$$CourseModelImplFromJson(Map<String, dynamic> json) =>
       students: (json['students'] as List<dynamic>?)
           ?.map((e) => UserModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$$CourseModelImplToJson(_$CourseModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'courseName': instance.courseName,
+      'subject': instance.subject,
       'teacher': instance.teacher,
       'description': instance.description,
       'img': instance.img,
@@ -44,4 +45,5 @@ Map<String, dynamic> _$$CourseModelImplToJson(_$CourseModelImpl instance) =>
       'updatedBy': instance.updatedBy,
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'students': instance.students,
+      'status': instance.status,
     };

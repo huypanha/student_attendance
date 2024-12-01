@@ -16,3 +16,13 @@ enum CalendarRepeatType {
   daily,
   weekly,
 }
+
+enum UserType {
+  teacher,
+  student
+}
+
+enum ReturnPageType {
+  edited,
+  deleted
+}
