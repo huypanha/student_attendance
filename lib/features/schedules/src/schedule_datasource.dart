@@ -17,5 +17,5 @@ class ScheduleDataSource extends CalendarDataSource {
   Color getColor(int index) => Color(appointments![index].colorCode!);
 
   @override
-  String getSubject(int index) => appointments![index].course!.courseName!;
+  String getSubject(int index) => appointments![index].course!.subject!;
 }

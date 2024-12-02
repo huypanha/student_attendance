@@ -9,6 +9,7 @@ import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
 import 'package:student_attendance/features/courses/views/view_course_details.dart';
 import 'package:student_attendance/features/dashboard/dashboard.dart';
+import 'package:student_attendance/features/reports/views/report_for_teacher.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
 import 'package:student_attendance/features/students/views/students.dart';
 import 'package:student_attendance/features/students/views/view_student_details.dart';
@@ -94,6 +95,12 @@ final router = GoRouter(
       path: EditStudent.routeName,
       pageBuilder: (context, state) => CupertinoPage(
         child: EditStudent(data: UserModel.fromJson(jsonDecode(state.uri.queryParameters['data']!)),),
+      ),
+    ),
+    GoRoute(
+      path: ReportForTeacher.routeName,
+      pageBuilder: (context, state) => CupertinoPage(
+        child: const ReportForTeacher(),
       ),
     ),
   ],

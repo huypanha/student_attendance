@@ -37,6 +37,13 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['lastActive'] as String),
       status: json['status'] as String?,
+      attendances: (json['attendances'] as List<dynamic>?)
+          ?.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      attendanceCount: json['attendanceCount'] == null
+          ? null
+          : AttendanceCountModel.fromJson(
+              json['attendanceCount'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -58,6 +65,8 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'lastActive': instance.lastActive?.toIso8601String(),
       'status': instance.status,
+      'attendances': instance.attendances,
+      'attendanceCount': instance.attendanceCount,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

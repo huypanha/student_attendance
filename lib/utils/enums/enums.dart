@@ -26,3 +26,8 @@ enum ReturnPageType {
   edited,
   deleted
 }
+
+enum ScheduleType {
+  schedule,
+  day_off
+}

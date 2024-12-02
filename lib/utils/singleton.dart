@@ -41,4 +41,7 @@ class Singleton {
   String appDocPath = "";
 
   UserModel user = UserModel();
+
+  /// Count late after 15 minutes
+  int lateAfterMin = 15;
 }

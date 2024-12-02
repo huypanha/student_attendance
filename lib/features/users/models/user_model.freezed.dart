@@ -38,6 +38,9 @@ mixin _$UserModel {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get lastActive => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  List<AttendanceModel>? get attendances => throw _privateConstructorUsedError;
+  AttendanceCountModel? get attendanceCount =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -70,10 +73,13 @@ abstract class $UserModelCopyWith<$Res> {
       DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? lastActive,
-      String? status});
+      String? status,
+      List<AttendanceModel>? attendances,
+      AttendanceCountModel? attendanceCount});
 
   $UserModelCopyWith<$Res>? get createdBy;
   $UserModelCopyWith<$Res>? get updatedBy;
+  $AttendanceCountModelCopyWith<$Res>? get attendanceCount;
 }
 
 /// @nodoc
@@ -107,6 +113,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? updatedAt = freezed,
     Object? lastActive = freezed,
     Object? status = freezed,
+    Object? attendances = freezed,
+    Object? attendanceCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -173,6 +181,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      attendances: freezed == attendances
+          ? _value.attendances
+          : attendances // ignore: cast_nullable_to_non_nullable
+              as List<AttendanceModel>?,
+      attendanceCount: freezed == attendanceCount
+          ? _value.attendanceCount
+          : attendanceCount // ignore: cast_nullable_to_non_nullable
+              as AttendanceCountModel?,
     ) as $Val);
   }
 
@@ -203,6 +219,21 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       return _then(_value.copyWith(updatedBy: value) as $Val);
     });
   }
+
+  /// Create a copy of UserModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AttendanceCountModelCopyWith<$Res>? get attendanceCount {
+    if (_value.attendanceCount == null) {
+      return null;
+    }
+
+    return $AttendanceCountModelCopyWith<$Res>(_value.attendanceCount!,
+        (value) {
+      return _then(_value.copyWith(attendanceCount: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -229,12 +260,16 @@ abstract class _$$UserModelImplCopyWith<$Res>
       DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? lastActive,
-      String? status});
+      String? status,
+      List<AttendanceModel>? attendances,
+      AttendanceCountModel? attendanceCount});
 
   @override
   $UserModelCopyWith<$Res>? get createdBy;
   @override
   $UserModelCopyWith<$Res>? get updatedBy;
+  @override
+  $AttendanceCountModelCopyWith<$Res>? get attendanceCount;
 }
 
 /// @nodoc
@@ -266,6 +301,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? lastActive = freezed,
     Object? status = freezed,
+    Object? attendances = freezed,
+    Object? attendanceCount = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -332,6 +369,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      attendances: freezed == attendances
+          ? _value._attendances
+          : attendances // ignore: cast_nullable_to_non_nullable
+              as List<AttendanceModel>?,
+      attendanceCount: freezed == attendanceCount
+          ? _value.attendanceCount
+          : attendanceCount // ignore: cast_nullable_to_non_nullable
+              as AttendanceCountModel?,
     ));
   }
 }
@@ -355,8 +400,11 @@ class _$UserModelImpl implements _UserModel {
       this.createdAt,
       this.updatedAt,
       this.lastActive,
-      this.status})
-      : _courses = courses;
+      this.status,
+      final List<AttendanceModel>? attendances,
+      this.attendanceCount})
+      : _courses = courses,
+        _attendances = attendances;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -404,10 +452,22 @@ class _$UserModelImpl implements _UserModel {
   final DateTime? lastActive;
   @override
   final String? status;
+  final List<AttendanceModel>? _attendances;
+  @override
+  List<AttendanceModel>? get attendances {
+    final value = _attendances;
+    if (value == null) return null;
+    if (_attendances is EqualUnmodifiableListView) return _attendances;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final AttendanceCountModel? attendanceCount;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, stuId: $stuId, fistName: $fistName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status)';
+    return 'UserModel(id: $id, stuId: $stuId, fistName: $fistName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status, attendances: $attendances, attendanceCount: $attendanceCount)';
   }
 
   @override
@@ -439,7 +499,11 @@ class _$UserModelImpl implements _UserModel {
                 other.updatedAt == updatedAt) &&
             (identical(other.lastActive, lastActive) ||
                 other.lastActive == lastActive) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality()
+                .equals(other._attendances, _attendances) &&
+            (identical(other.attendanceCount, attendanceCount) ||
+                other.attendanceCount == attendanceCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -461,7 +525,9 @@ class _$UserModelImpl implements _UserModel {
       createdAt,
       updatedAt,
       lastActive,
-      status);
+      status,
+      const DeepCollectionEquality().hash(_attendances),
+      attendanceCount);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -496,7 +562,9 @@ abstract class _UserModel implements UserModel {
       final DateTime? createdAt,
       final DateTime? updatedAt,
       final DateTime? lastActive,
-      final String? status}) = _$UserModelImpl;
+      final String? status,
+      final List<AttendanceModel>? attendances,
+      final AttendanceCountModel? attendanceCount}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -534,6 +602,10 @@ abstract class _UserModel implements UserModel {
   DateTime? get lastActive;
   @override
   String? get status;
+  @override
+  List<AttendanceModel>? get attendances;
+  @override
+  AttendanceCountModel? get attendanceCount;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

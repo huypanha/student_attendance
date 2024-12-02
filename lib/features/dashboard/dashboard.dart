@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:student_attendance/features/auth/login.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
+import 'package:student_attendance/features/reports/views/report_for_teacher.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
 import 'package:student_attendance/features/students/views/students.dart';
 import 'package:student_attendance/utils/utils.dart';
@@ -41,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
     FeatureModel(
       title: "Reports",
       icon: Icon(CupertinoIcons.graph_square_fill, color: Style.primaryColor, size: 70,),
-      routeName: '/courses',
+      routeName: Singleton.instance.user.type == UserType.teacher ? ReportForTeacher.routeName : ReportForTeacher.routeName,
     ),
   ];
 
@@ -247,6 +248,7 @@ class _DashboardState extends State<Dashboard> {
                     child: CustomBounceWidget(
                       onPressed: (){},
                       scaleFactor: .5,
+                      duration: const Duration(milliseconds: 200),
                       child: Container(
                         width: 150,
                         height: 150,

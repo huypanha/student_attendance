@@ -2,6 +2,7 @@ class ASIconData {
   static const String address = "\uf3c5";
   static const String calendarDays = "\uf073";
   static const String camera = "\uf030";
+  static const String check = "\uf00c";
   static const String circleInfo = "\uf05a";
   static const String circlePlus = "\uf055";
   static const String editUser = "\uf4ff";
@@ -26,6 +27,7 @@ class ASIconData {
   static const String staffs = "\uf0c0";
   static const String shoppingCard = "\uf07a";
   static const String suitcaseMedical = "\uf0fa";
+  static const String timer = "\ue29e";
   static const String trashXMark = "\ue2b4";
   static const String user = "\uf007";
   static const String userLock = "\uf502";

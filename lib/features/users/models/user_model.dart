@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:student_attendance/features/attendances/models/attendance_count_model.dart';
+import 'package:student_attendance/features/attendances/models/attendance_model.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/utils/enums/enum_converter.dart';
 import 'package:student_attendance/utils/enums/enums.dart';
@@ -25,6 +27,8 @@ class UserModel with _$UserModel {
     DateTime? updatedAt,
     DateTime? lastActive,
     String? status,
+    List<AttendanceModel>? attendances,
+    AttendanceCountModel? attendanceCount,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

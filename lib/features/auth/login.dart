@@ -102,17 +102,28 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: primaryElevatedButton(
-                        onPressed: () async {
+                      child: GestureDetector(
+                        onLongPress: (){
                           Singleton.instance.user = UserModel(
                             id: 1,
                             fistName: "Huy",
                             lastName: "Panha",
-                            type: UserType.teacher,
+                            type: UserType.student,
                           );
                           context.go(Dashboard.routeName);
                         },
-                        child: Text("LOGIN", style: Style.txt16WhiteBold,),
+                        child: primaryElevatedButton(
+                          onPressed: () async {
+                            Singleton.instance.user = UserModel(
+                              id: 1,
+                              fistName: "Huy",
+                              lastName: "Panha",
+                              type: UserType.teacher,
+                            );
+                            context.go(Dashboard.routeName);
+                          },
+                          child: Text("LOGIN", style: Style.txt16WhiteBold,),
+                        ),
                       ),
                     ),
                   ],
