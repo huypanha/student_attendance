@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:student_attendance/features/app/app.dart';
 
 import '../../utils/utils.dart';
-import '../auth/login.dart';
+import '../auth/views/login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

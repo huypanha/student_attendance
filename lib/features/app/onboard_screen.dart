@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:student_attendance/features/auth/login.dart';
+import 'package:student_attendance/features/auth/views/login.dart';
 import 'package:student_attendance/utils/style.dart';
 import 'package:student_attendance/utils/widgets/buttons.dart';
 

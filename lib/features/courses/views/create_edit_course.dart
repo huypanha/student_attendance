@@ -31,34 +31,34 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
   List<UserModel> users = [
     UserModel(
       id: 1,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Panha",
     ),
     UserModel(
       id: 2,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Samrech",
     ),
     UserModel(
       id: 3,
-      fistName: "Om",
+      firstName: "Om",
       lastName: "Chanpiseth",
     ),
   ];
   List<UserModel> allStudents = [
     UserModel(
       id: 1,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Panha",
     ),
     UserModel(
       id: 2,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Samrech",
     ),
     UserModel(
       id: 3,
-      fistName: "Om",
+      firstName: "Om",
       lastName: "Chanpiseth",
     ),
   ];
@@ -183,7 +183,7 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                         hint: Text("Choose a teacher", style: Style.txt16Grey,),
                         selectedItemBuilder: (context) => List.generate(users.length, (index) => DropdownMenuItem(
                           value: users[index],
-                          child: Text("${users[index].fistName} ${users[index].lastName}", style: Style.txt16,),
+                          child: Text("${users[index].firstName} ${users[index].lastName}", style: Style.txt16,),
                         )),
                         dropdownColor: Colors.white,
                         decoration: InputDecoration(
@@ -213,7 +213,7 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                             children: [
                               users[index].avatar(size: 40),
                               const SizedBox(width: 10,),
-                              Text("${users[index].fistName} ${users[index].lastName}", style: Style.txt16,),
+                              Text("${users[index].firstName} ${users[index].lastName}", style: Style.txt16,),
                             ],
                           ),
                         )),
@@ -289,7 +289,7 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                                     children: [
                                       item.avatar(size: 40),
                                       const SizedBox(width: 10,),
-                                      Text("${item.fistName} ${item.lastName}", style: Style.txt16,),
+                                      Text("${item.firstName} ${item.lastName}", style: Style.txt16,),
                                     ],
                                   ),
                                 ),

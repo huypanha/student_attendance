@@ -39,7 +39,7 @@ class _EditStudentState extends State<EditStudent> {
   void initState() {
     super.initState();
     txtStuId.text = widget.data.stuId ?? "";
-    txtFirstName.text = widget.data.fistName ?? "";
+    txtFirstName.text = widget.data.firstName ?? "";
     txtLastName.text = widget.data.lastName ?? "";
     txtEmail.text = widget.data.email ?? "";
     txtPhone.text = widget.data.phoneNumber ?? "";

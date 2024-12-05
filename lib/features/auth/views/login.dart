@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:student_attendance/features/auth/register.dart';
 import 'package:student_attendance/features/dashboard/dashboard.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/enums/enums.dart';
 import 'package:student_attendance/utils/singleton.dart';
 import 'package:student_attendance/utils/style.dart';
 import 'package:student_attendance/utils/widgets/buttons.dart';
+
+import 'register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -104,9 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: GestureDetector(
                         onLongPress: (){
-                          Singleton.instance.user = UserModel(
+                          Singleton.instance.token = UserModel(
                             id: 1,
-                            fistName: "Huy",
+                            firstName: "Huy",
                             lastName: "Panha",
                             type: UserType.student,
                           );
@@ -114,9 +115,9 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: primaryElevatedButton(
                           onPressed: () async {
-                            Singleton.instance.user = UserModel(
+                            Singleton.instance.token = UserModel(
                               id: 1,
-                              fistName: "Huy",
+                              firstName: "Huy",
                               lastName: "Panha",
                               type: UserType.teacher,
                             );

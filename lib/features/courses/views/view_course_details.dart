@@ -124,7 +124,7 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.data.subject ?? "", style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
-                  Text("${widget.data.teacher!.fistName} ${widget.data.teacher!.lastName}", style: pinnedTitle ? Style.txt12 : Style.txt12White,),
+                  Text("${widget.data.teacher!.firstName} ${widget.data.teacher!.lastName}", style: pinnedTitle ? Style.txt12 : Style.txt12White,),
                 ],
               ),
               background: Stack(
@@ -182,7 +182,7 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
                             children: [
                               item.avatar(size: 50),
                               const SizedBox(width: 10,),
-                              Text("${item.fistName} ${item.lastName}", style: Style.txt16,),
+                              Text("${item.firstName} ${item.lastName}", style: Style.txt16,),
                             ],
                           ),
                         );

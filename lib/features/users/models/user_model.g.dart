@@ -10,7 +10,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
       id: (json['id'] as num?)?.toInt(),
       stuId: json['stuId'] as String?,
-      fistName: json['fistName'] as String?,
+      firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       email: json['email'] as String?,
       password: json['password'] as String?,
@@ -44,13 +44,14 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : AttendanceCountModel.fromJson(
               json['attendanceCount'] as Map<String, dynamic>),
+      accessToken: json['accessToken'] as String?,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'stuId': instance.stuId,
-      'fistName': instance.fistName,
+      'firstName': instance.firstName,
       'lastName': instance.lastName,
       'email': instance.email,
       'password': instance.password,
@@ -67,6 +68,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'status': instance.status,
       'attendances': instance.attendances,
       'attendanceCount': instance.attendanceCount,
+      'accessToken': instance.accessToken,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

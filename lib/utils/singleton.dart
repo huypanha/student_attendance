@@ -24,7 +24,7 @@ class Singleton {
   WidgetRef? widgetRef;
 
   /// user login info
-  // UserModel token = UserModel();
+  UserModel token = UserModel();
 
   /// context to pop from all pages
   BuildContext? rootContext;
@@ -37,11 +37,15 @@ class Singleton {
   var dateFormat = DateFormat("dd/MM/yyyy");
   var dateTimeFormat = DateFormat("dd/MM/yyyy HH:mm:ss");
 
-  // app document directory
+  /// App document directory
   String appDocPath = "";
-
-  UserModel user = UserModel();
 
   /// Count late after 15 minutes
   int lateAfterMin = 15;
+
+  /// API request auth
+  String defaultToken = "dhFdlDSFhdLDfhajfdHDFjhkajhsdfGDSFljkhsdalfahf";
+  String accessToken = "dhFdlDSFhdLDfhajfdHDFjhkajhsdfGDSFljkhsdalfahf";
+  String errorMsg = "";
+  String jwtSecret = "709d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7";
 }

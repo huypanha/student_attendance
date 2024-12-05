@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bouncing_widgets/custom_bounce_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:student_attendance/features/auth/login.dart';
+import 'package:student_attendance/configs/data/domain.dart';
+import 'package:student_attendance/features/auth/views/login.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/reports/views/report_for_teacher.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
@@ -42,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
     FeatureModel(
       title: "Reports",
       icon: Icon(CupertinoIcons.graph_square_fill, color: Style.primaryColor, size: 70,),
-      routeName: Singleton.instance.user.type == UserType.teacher ? ReportForTeacher.routeName : ReportForTeacher.routeName,
+      routeName: Singleton.instance.token.type == UserType.teacher ? ReportForTeacher.routeName : ReportForTeacher.routeName,
     ),
   ];
 
@@ -79,6 +81,8 @@ class _DashboardState extends State<Dashboard> {
                   child: Row(
                     children: [
                       Container(
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
@@ -87,7 +91,11 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                         child: ClipOval(
-                          child: Image.asset("assets/images/sample_profile.jpeg", width: 50,),
+                          child: CachedNetworkImage(
+                            imageUrl: Singleton.instance.token.profilePath,
+                            fit: BoxFit.cover,
+                            errorWidget: (_,__,___) => noProfileWidget(),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 20,),
@@ -95,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Hello,", style: Style.txt18White,),
-                          Text("Huy Panha", style: Style.txt20Bold.copyWith(color: Colors.white),),
+                          Text(Singleton.instance.token.fullName, style: Style.txt20Bold.copyWith(color: Colors.white),),
                         ],
                       ),
                     ],
@@ -132,7 +140,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const SizedBox(height: 10,),
                   (){
-                    if(Singleton.instance.user.type == UserType.student) {
+                    if(Singleton.instance.token.type == UserType.student) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -241,9 +249,9 @@ class _DashboardState extends State<Dashboard> {
                       );
                     }
                   }(),
-                  if(Singleton.instance.user.type == UserType.student)
+                  if(Singleton.instance.token.type == UserType.student)
                   const SizedBox(height: 30,),
-                  if(Singleton.instance.user.type == UserType.student)
+                  if(Singleton.instance.token.type == UserType.student)
                   Center(
                     child: CustomBounceWidget(
                       onPressed: (){},
@@ -452,9 +460,9 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           children: [
             _buildHeader,
-            if(Singleton.instance.user.type == UserType.student)
+            if(Singleton.instance.token.type == UserType.student)
             const SizedBox(height: 20,),
-            if(Singleton.instance.user.type == UserType.student)
+            if(Singleton.instance.token.type == UserType.student)
             _buildAttendance,
             const SizedBox(height: 20,),
             _buildExplore,

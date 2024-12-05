@@ -23,7 +23,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
   List<UserModel> students = [
     UserModel(
       id: 1,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Panha",
       email: "panha@test.com",
       type: UserType.student,
@@ -40,7 +40,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
     ),
     UserModel(
       id: 2,
-      fistName: "Huy",
+      firstName: "Huy",
       lastName: "Samrech",
       email: "samrech@test.com",
       type: UserType.student,
@@ -57,7 +57,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
     ),
     UserModel(
       id: 3,
-      fistName: "Om",
+      firstName: "Om",
       lastName: "Chanpiseth",
       email: "piseth@test.com",
       type: UserType.student,
@@ -74,7 +74,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
     ),
     UserModel(
       id: 3,
-      fistName: "Kong",
+      firstName: "Kong",
       lastName: "Leng",
       email: "leng@test.com",
       type: UserType.student,
@@ -91,7 +91,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
     ),
     UserModel(
       id: 3,
-      fistName: "Yourk",
+      firstName: "Yourk",
       lastName: "Chhunlay",
       email: "chhunlay@test.com",
       type: UserType.student,

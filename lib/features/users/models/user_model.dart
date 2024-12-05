@@ -13,7 +13,7 @@ class UserModel with _$UserModel {
   const factory UserModel({
     int? id,
     String? stuId,
-    String? fistName,
+    String? firstName,
     String? lastName,
     String? email,
     String? password,
@@ -29,6 +29,7 @@ class UserModel with _$UserModel {
     String? status,
     List<AttendanceModel>? attendances,
     AttendanceCountModel? attendanceCount,
+    String? accessToken,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

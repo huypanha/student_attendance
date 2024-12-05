@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:student_attendance/features/schedules/models/schedule.dart';
 
+import '../configs/data/domain.dart';
 import '../features/users/models/user_model.dart';
 import 'utils.dart';
 
@@ -30,7 +31,9 @@ extension UserModelExtension on UserModel {
     );
   }
 
-  String get fullName => "$fistName $lastName";
+  String get fullName => "$firstName $lastName";
+
+  String get profilePath => "${Domain.fileUrl}/users/profile/$id.png";
 }
 
 extension TimeOfDayExt on TimeOfDay {

@@ -22,7 +22,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   int? get id => throw _privateConstructorUsedError;
   String? get stuId => throw _privateConstructorUsedError;
-  String? get fistName => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
@@ -41,6 +41,7 @@ mixin _$UserModel {
   List<AttendanceModel>? get attendances => throw _privateConstructorUsedError;
   AttendanceCountModel? get attendanceCount =>
       throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,7 +61,7 @@ abstract class $UserModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? stuId,
-      String? fistName,
+      String? firstName,
       String? lastName,
       String? email,
       String? password,
@@ -75,7 +76,8 @@ abstract class $UserModelCopyWith<$Res> {
       DateTime? lastActive,
       String? status,
       List<AttendanceModel>? attendances,
-      AttendanceCountModel? attendanceCount});
+      AttendanceCountModel? attendanceCount,
+      String? accessToken});
 
   $UserModelCopyWith<$Res>? get createdBy;
   $UserModelCopyWith<$Res>? get updatedBy;
@@ -99,7 +101,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = freezed,
     Object? stuId = freezed,
-    Object? fistName = freezed,
+    Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? password = freezed,
@@ -115,6 +117,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? status = freezed,
     Object? attendances = freezed,
     Object? attendanceCount = freezed,
+    Object? accessToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -125,9 +128,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.stuId
           : stuId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fistName: freezed == fistName
-          ? _value.fistName
-          : fistName // ignore: cast_nullable_to_non_nullable
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
       lastName: freezed == lastName
           ? _value.lastName
@@ -189,6 +192,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.attendanceCount
           : attendanceCount // ignore: cast_nullable_to_non_nullable
               as AttendanceCountModel?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -247,7 +254,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? stuId,
-      String? fistName,
+      String? firstName,
       String? lastName,
       String? email,
       String? password,
@@ -262,7 +269,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
       DateTime? lastActive,
       String? status,
       List<AttendanceModel>? attendances,
-      AttendanceCountModel? attendanceCount});
+      AttendanceCountModel? attendanceCount,
+      String? accessToken});
 
   @override
   $UserModelCopyWith<$Res>? get createdBy;
@@ -287,7 +295,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? stuId = freezed,
-    Object? fistName = freezed,
+    Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? password = freezed,
@@ -303,6 +311,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? attendances = freezed,
     Object? attendanceCount = freezed,
+    Object? accessToken = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -313,9 +322,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.stuId
           : stuId // ignore: cast_nullable_to_non_nullable
               as String?,
-      fistName: freezed == fistName
-          ? _value.fistName
-          : fistName // ignore: cast_nullable_to_non_nullable
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
       lastName: freezed == lastName
           ? _value.lastName
@@ -377,6 +386,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.attendanceCount
           : attendanceCount // ignore: cast_nullable_to_non_nullable
               as AttendanceCountModel?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -387,7 +400,7 @@ class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
       {this.id,
       this.stuId,
-      this.fistName,
+      this.firstName,
       this.lastName,
       this.email,
       this.password,
@@ -402,7 +415,8 @@ class _$UserModelImpl implements _UserModel {
       this.lastActive,
       this.status,
       final List<AttendanceModel>? attendances,
-      this.attendanceCount})
+      this.attendanceCount,
+      this.accessToken})
       : _courses = courses,
         _attendances = attendances;
 
@@ -414,7 +428,7 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? stuId;
   @override
-  final String? fistName;
+  final String? firstName;
   @override
   final String? lastName;
   @override
@@ -464,10 +478,12 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   final AttendanceCountModel? attendanceCount;
+  @override
+  final String? accessToken;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, stuId: $stuId, fistName: $fistName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status, attendances: $attendances, attendanceCount: $attendanceCount)';
+    return 'UserModel(id: $id, stuId: $stuId, firstName: $firstName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status, attendances: $attendances, attendanceCount: $attendanceCount, accessToken: $accessToken)';
   }
 
   @override
@@ -477,8 +493,8 @@ class _$UserModelImpl implements _UserModel {
             other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.stuId, stuId) || other.stuId == stuId) &&
-            (identical(other.fistName, fistName) ||
-                other.fistName == fistName) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
@@ -503,31 +519,35 @@ class _$UserModelImpl implements _UserModel {
             const DeepCollectionEquality()
                 .equals(other._attendances, _attendances) &&
             (identical(other.attendanceCount, attendanceCount) ||
-                other.attendanceCount == attendanceCount));
+                other.attendanceCount == attendanceCount) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      stuId,
-      fistName,
-      lastName,
-      email,
-      password,
-      phoneNumber,
-      dob,
-      type,
-      const DeepCollectionEquality().hash(_courses),
-      createdBy,
-      updatedBy,
-      createdAt,
-      updatedAt,
-      lastActive,
-      status,
-      const DeepCollectionEquality().hash(_attendances),
-      attendanceCount);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        stuId,
+        firstName,
+        lastName,
+        email,
+        password,
+        phoneNumber,
+        dob,
+        type,
+        const DeepCollectionEquality().hash(_courses),
+        createdBy,
+        updatedBy,
+        createdAt,
+        updatedAt,
+        lastActive,
+        status,
+        const DeepCollectionEquality().hash(_attendances),
+        attendanceCount,
+        accessToken
+      ]);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -549,7 +569,7 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {final int? id,
       final String? stuId,
-      final String? fistName,
+      final String? firstName,
       final String? lastName,
       final String? email,
       final String? password,
@@ -564,7 +584,8 @@ abstract class _UserModel implements UserModel {
       final DateTime? lastActive,
       final String? status,
       final List<AttendanceModel>? attendances,
-      final AttendanceCountModel? attendanceCount}) = _$UserModelImpl;
+      final AttendanceCountModel? attendanceCount,
+      final String? accessToken}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -574,7 +595,7 @@ abstract class _UserModel implements UserModel {
   @override
   String? get stuId;
   @override
-  String? get fistName;
+  String? get firstName;
   @override
   String? get lastName;
   @override
@@ -606,6 +627,8 @@ abstract class _UserModel implements UserModel {
   List<AttendanceModel>? get attendances;
   @override
   AttendanceCountModel? get attendanceCount;
+  @override
+  String? get accessToken;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

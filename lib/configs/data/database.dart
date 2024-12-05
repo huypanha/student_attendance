@@ -1,18 +1,20 @@
-class Database {
+import 'package:dio/dio.dart';
 
-  Future<List?> get(String key) async {
+abstract class Database {
+
+  Future get(String route, {Map<String, dynamic>? where}) async {
     throw UnimplementedError();
   }
 
-  Future<String> create(String route, Map<String, dynamic> data) async {
+  Future create(String route, FormData data) async {
     throw UnimplementedError();
   }
 
-  Future update(Map<String, dynamic> data) async {
+  Future update(String? route, FormData data, {Map<String, dynamic>? where}) async {
     throw UnimplementedError();
   }
 
-  Future<bool> delete<T>(String collection, {Map<String, dynamic>? where, int? index}) async {
+  Future<bool> delete(String route, {Map<String, dynamic>? where}) async {
     throw UnimplementedError();
   }
 }

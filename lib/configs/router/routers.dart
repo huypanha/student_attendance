@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:student_attendance/features/auth/login.dart';
-import 'package:student_attendance/features/auth/register.dart';
+import 'package:student_attendance/features/auth/views/login.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
@@ -16,6 +15,7 @@ import 'package:student_attendance/features/students/views/view_student_details.
 import 'package:student_attendance/features/users/models/user_model.dart';
 
 import '../../features/app/app.dart';
+import '../../features/auth/views/register.dart';
 import '../../features/students/views/edit_student.dart';
 
 final router = GoRouter(

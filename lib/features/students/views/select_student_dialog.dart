@@ -31,7 +31,7 @@ Future<T?> showSelectStudentDialog<T>({
                 hintText: "Search (id, name)",
                 onChanged: (v) {
                   if(v.trim().isNotEmpty){
-                    listStudents = allStudents.where((e) => e.id!.toString().contains(v.toLowerCase()) || ("${e.fistName} ${e.lastName}").toLowerCase().contains(v.toLowerCase())).toList();
+                    listStudents = allStudents.where((e) => e.id!.toString().contains(v.toLowerCase()) || ("${e.firstName} ${e.lastName}").toLowerCase().contains(v.toLowerCase())).toList();
                   } else {
                     listStudents = [...allStudents];
                   }
@@ -99,7 +99,7 @@ Future<T?> showSelectStudentDialog<T>({
                                   children: [
                                     item.avatar(size: 40),
                                     const SizedBox(width: 10,),
-                                    Text("${item.fistName} ${item.lastName}", style: Style.txt16,),
+                                    Text("${item.firstName} ${item.lastName}", style: Style.txt16,),
                                   ],
                                 ),
                               ),
