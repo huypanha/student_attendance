@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:student_attendance/features/auth/repos/register_repos.dart';
+import 'package:student_attendance/features/auth/repos/auth_repos.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/utils.dart';
 
@@ -293,11 +293,11 @@ class _RegisterState extends State<Register> {
                             ).toJson();
 
                             showProgress(context);
-                            var re = await RegisterRepos().register(data, File(selectedProfileImg!.path));
+                            var re = await AuthRepos().register(data, File(selectedProfileImg!.path));
                             context.pop();
                             if(re != null){
                               log(re.toString());
-                              Singleton.instance.token = UserModel.fromJson(JWT.decode(re).payload);
+                              Singleton.instance.token = UserModel.fromJson(JWT.verify(re, Singleton.instance.jwtSecret).payload);
                               context.go(Dashboard.routeName);
                             } else {
                               showMessage(

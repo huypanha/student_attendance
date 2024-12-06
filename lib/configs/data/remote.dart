@@ -37,6 +37,7 @@ class RemoteDatabase extends Database {
   Future create(String route, FormData data) async {
     try {
       var res = await _dio.post("${Domain.baseUrl}/$route", data: data, onSendProgress: (r, t) {
+        log("Received: $r, Total: $t");
         Singleton.instance.widgetRef?.read(Singleton.instance.totalSendReceiveProgress.notifier).state = r.toDouble();
         Singleton.instance.widgetRef?.watch(Singleton.instance.totalProgress.notifier).state = t.toDouble();
       });

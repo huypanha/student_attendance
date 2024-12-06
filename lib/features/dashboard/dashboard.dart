@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bouncing_widgets/custom_bounce_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:student_attendance/configs/data/domain.dart';
 import 'package:student_attendance/features/auth/views/login.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/reports/views/report_for_teacher.dart';
@@ -14,16 +14,16 @@ import 'package:student_attendance/features/schedules/views/schedules_view.dart'
 import 'package:student_attendance/features/students/views/students.dart';
 import 'package:student_attendance/utils/utils.dart';
 
-class Dashboard extends StatefulWidget {
+class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({super.key});
 
   static String routeName = "/dashboard";
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  ConsumerState<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends ConsumerState<Dashboard> {
   late Timer timer;
   List<FeatureModel> options = [
     FeatureModel(
@@ -453,6 +453,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    Singleton.instance.widgetRef ??= ref;
+
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
