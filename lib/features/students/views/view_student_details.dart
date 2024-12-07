@@ -9,6 +9,8 @@ import 'package:student_attendance/features/students/views/edit_student.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/utils.dart';
 
+import '../../users/repos/user_repos.dart';
+
 class ViewStudentDetails extends StatefulWidget {
   final UserModel data;
 
@@ -26,6 +28,7 @@ class ViewStudentDetails extends StatefulWidget {
 class _ViewStudentDetailsState extends State<ViewStudentDetails> {
   var scrollCon = ScrollController();
   var pinnedTitle = false;
+  late UserModel data = widget.data;
 
   @override
   void initState() {
@@ -67,8 +70,8 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildInformation,
-                  const SizedBox(height: 20,),
-                  _buildCourses,
+                  // const SizedBox(height: 20,),
+                  // _buildCourses,
                   const SizedBox(height: 50,),
                 ],
               ),
@@ -103,8 +106,31 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
         ),
         onSelected: (v) async {
           if(v == "edit"){
-            context.push(Uri(path: EditStudent.routeName, queryParameters: {"data": jsonEncode(widget.data.toJson())}).toString());
+            var re = await context.push(Uri(path: EditStudent.routeName, queryParameters: {"data": jsonEncode(data.toJson())}).toString());
+            if(re != null){
+              await CachedNetworkImage.evictFromCache(data.profilePath);
+              data = re as UserModel;
+              setState(() {});
+            }
           } else if(v == "delete"){
+            var confirm = await showConfirmDialog(
+              context: context,
+              content: "Are you sure you want to delete this student?",
+              isDangerous: true,
+            );
+            if(!confirm) return;
+
+            showLoading(context);
+            var re = await UserRepos().deleteById(data.id!);
+            context.pop();
+            if(re != null && re){
+              context.pop(true);
+            } else {
+              showMessage(
+                context: context,
+                content: Singleton.instance.errorMsg,
+              );
+            }
           }
         },
         itemBuilder: (context) {
@@ -141,12 +167,12 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
     ],
     flexibleSpace: FlexibleSpaceBar(
       centerTitle: false,
-      title: Text(widget.data.fullName, style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
+      title: Text(data.fullName, style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
       background: Stack(
         children: [
           Positioned.fill(
             child: CachedNetworkImage(
-              imageUrl: "",
+              imageUrl: data.profilePath,
               fit: BoxFit.cover,
               errorWidget: (context, _, __) => noProfileWidget(size: MediaQuery.sizeOf(context).width / 3, color: Colors.grey[300]),
             ),
@@ -184,7 +210,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(widget.data.id.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(data.id.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -197,7 +223,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(widget.data.stuId == null ? "Not provided" : widget.data.stuId.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(data.stuId == null ? "Not provided" : data.stuId.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -210,7 +236,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(widget.data.phoneNumber == null ? "Not provided" : widget.data.phoneNumber.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(data.phoneNumber == null ? "Not provided" : data.phoneNumber.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -223,7 +249,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(widget.data.email.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(data.email.toString(), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -236,7 +262,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(widget.data.dob == null ? "Not provided" : DateFormat('dd-MM-yyyy hh:mm a').format(widget.data.dob!), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(data.dob == null ? "Not provided" : DateFormat('dd-MM-yyyy hh:mm a').format(data.dob!), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -249,7 +275,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(DateFormat('dd-MM-yyyy hh:mm a').format(widget.data.createdAt!), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(DateFormat('dd-MM-yyyy hh:mm a').format(data.createdAt!), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
       const SizedBox(height: 10,),
@@ -262,7 +288,7 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
           const SizedBox(width: 10,),
           Text(":", style: Style.txt16,),
           const SizedBox(width: 10,),
-          Expanded(child: Text(DateFormat('dd-MM-yyyy hh:mm a').format(widget.data.lastActive!), style: Style.txt16, textAlign: TextAlign.right,)),
+          Expanded(child: Text(DateFormat('dd-MM-yyyy hh:mm a').format(data.lastActive!), style: Style.txt16, textAlign: TextAlign.right,)),
         ],
       ),
     ],
@@ -271,10 +297,10 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
   Widget get _buildCourses => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text("Courses (${widget.data.courses!.length})", style: Style.txt18Bold,),
+      Text("Courses (${data.courses!.length})", style: Style.txt18Bold,),
       const SizedBox(height: 20,),
       (){
-        if(widget.data.courses!.isEmpty){
+        if(data.courses!.isEmpty){
           return notFoundWidget();
         } else {
           return SingleChildScrollView(
@@ -282,8 +308,8 @@ class _ViewStudentDetailsState extends State<ViewStudentDetails> {
             physics: BouncingScrollPhysics(),
             padding: const EdgeInsets.only(right: 10),
             child: Row(
-              children: List.generate(widget.data.courses!.length, (index) {
-                var item = widget.data.courses![index];
+              children: List.generate(data.courses!.length, (index) {
+                var item = data.courses![index];
 
                 return Container(
                   margin: const EdgeInsets.all(10),

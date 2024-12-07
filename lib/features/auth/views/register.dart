@@ -273,6 +273,8 @@ class _RegisterState extends State<Register> {
                       Expanded(
                         child: primaryElevatedButton(
                           onPressed: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
+
                             if(selectedProfileImg == null){
                               showMessage(
                                 context: context,
@@ -283,6 +285,9 @@ class _RegisterState extends State<Register> {
                             }
 
                             if(!formKey.currentState!.validate()) return;
+
+                            var confirm = await showConfirmDialog(context: context);
+                            if(!confirm) return;
 
                             var data = UserModel(
                               firstName: txtFirstName.text,
@@ -298,6 +303,9 @@ class _RegisterState extends State<Register> {
                             if(re != null){
                               log(re.toString());
                               Singleton.instance.token = UserModel.fromJson(JWT.verify(re, Singleton.instance.jwtSecret).payload);
+                              Singleton.instance.token = Singleton.instance.token.copyWith(
+                                accessToken: re,
+                              );
                               context.go(Dashboard.routeName);
                             } else {
                               showMessage(

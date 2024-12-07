@@ -10,11 +10,11 @@ abstract class Database {
     throw UnimplementedError();
   }
 
-  Future update(String? route, FormData data, {Map<String, dynamic>? where}) async {
+  Future update(String? route, FormData data) async {
     throw UnimplementedError();
   }
 
-  Future<bool> delete(String route, {Map<String, dynamic>? where}) async {
+  Future<bool> delete(String route, FormData where) async {
     throw UnimplementedError();
   }
 }

@@ -9,11 +9,13 @@ class AuthRepos {
   final RemoteDatabase _remote = RemoteDatabase();
 
   Future register(Map<String, dynamic> data, File profileImg) async {
+    await Singleton.instance.useDefaultToken();
     data['profileImg'] = await MultipartFile.fromFile(profileImg.path);
     return await _remote.create('auth/register', FormData.fromMap(data));
   }
 
   Future login(Map<String, dynamic> data) async {
+    await Singleton.instance.useDefaultToken();
     return await _remote.create('auth/login', FormData.fromMap({
       "token": JWT(data).sign(Singleton.instance.jwtSecret, expiresIn: Duration(minutes: 1))
     }));

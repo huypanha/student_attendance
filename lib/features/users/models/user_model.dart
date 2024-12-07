@@ -20,17 +20,27 @@ class UserModel with _$UserModel {
     String? phoneNumber,
     DateTime? dob,
     @UserTypeEnumConverter() UserType? type, // 0: for teacher, 1: for student
-    List<CourseModel>? courses,
-    UserModel? createdBy,
-    UserModel? updatedBy,
+    int? createdBy,
+    int? updatedBy,
+    UserModel? createdByModel,
+    UserModel? updatedByModel,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? lastActive,
-    String? status,
-    List<AttendanceModel>? attendances,
-    AttendanceCountModel? attendanceCount,
     String? accessToken,
+    AttendanceCountModel? attendanceCount,
+
+    @Default(<CourseModel>[])
+    List<CourseModel>? courses,
+
+    @Default('A')
+    String? status,
+
+    @Default(<AttendanceModel>[])
+    List<AttendanceModel>? attendances,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
+  static List<UserModel> fromJsonArray(List json) => json.map((e) => UserModel.fromJson(Map<String, dynamic>.from(e))).toList();
 }

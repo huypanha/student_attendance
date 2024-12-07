@@ -111,7 +111,16 @@ class _DashboardState extends ConsumerState<Dashboard> {
                 ),
                 const SizedBox(width: 10,),
                 IconButton(
-                  onPressed: (){
+                  onPressed: () async {
+                    var confirm = await showConfirmDialog(
+                      context: context,
+                      content: "Are you sure you want to log out?",
+                      confirmText: "Log out",
+                      isDangerous: true,
+                    );
+                    if(!confirm) return;
+
+                    Singleton.instance.widgetRef = null;
                     context.go(LoginPage.routeName);
                   },
                   tooltip: "Log Out",

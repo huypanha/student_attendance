@@ -28,6 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    // txtEmailId.text = "a@b.c";
+    // txtPassword.text = "a";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -91,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       Expanded(
                         child: primaryElevatedButton(
                           onPressed: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             if(!formKey.currentState!.validate()) return;
 
                             showLoading(context);
@@ -102,6 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                             if(re != null){
                               log(re.toString());
                               Singleton.instance.token = UserModel.fromJson(JWT.verify(re, Singleton.instance.jwtSecret).payload);
+                              Singleton.instance.token = Singleton.instance.token.copyWith(
+                                accessToken: re,
+                              );
                               context.go(Dashboard.routeName);
                             } else {
                               showMessage(

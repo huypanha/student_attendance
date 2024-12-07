@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bouncing_widgets/custom_bounce_widget.dart';
 import 'package:go_router/go_router.dart';
-import 'package:student_attendance/features/courses/models/course_model.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:student_attendance/features/students/views/view_student_details.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
+import 'package:student_attendance/features/users/repos/user_repos.dart';
 import 'package:student_attendance/utils/utils.dart';
 
 class Students extends StatefulWidget {
@@ -20,117 +21,34 @@ class Students extends StatefulWidget {
 }
 
 class _StudentsState extends State<Students> {
-  List<UserModel> datas = [
-    UserModel(
-      id: 1,
-      firstName: "Huy",
-      lastName: "Panha",
-      email: "panha@test.com",
-      type: UserType.student,
-      stuId: "SS1001",
-      phoneNumber: "0123456789",
-      dob: DateTime.now(),
-      courses: [
-        CourseModel(
-          id: 1,
-          subject: "Flutter",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "Python",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "Linux",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "JAVA",
-        ),
-      ],
-      createdAt: DateTime.now(),
-      lastActive: DateTime.now(),
-    ),
-    UserModel(
-      id: 2,
-      firstName: "Huy",
-      lastName: "Samrech",
-      email: "samrech@test.com",
-      type: UserType.student,
-      stuId: "SS1002",
-      phoneNumber: "0123456789",
-      dob: DateTime.now(),
-      courses: [
-        CourseModel(
-          id: 1,
-          subject: "Flutter",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "Python",
-        ),
-      ],
-      createdAt: DateTime.now(),
-      lastActive: DateTime.now(),
-    ),
-    UserModel(
-      id: 3,
-      firstName: "Om",
-      lastName: "Chanpiseth",
-      email: "piseth@test.com",
-      type: UserType.student,
-      stuId: "SS1003",
-      phoneNumber: "0123456789",
-      dob: DateTime.now(),
-      courses: [
-        CourseModel(
-          id: 1,
-          subject: "Flutter",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "Python",
-        ),
-      ],
-      createdAt: DateTime.now(),
-      lastActive: DateTime.now(),
-    ),
-    UserModel(
-      id: 3,
-      firstName: "Kong",
-      lastName: "Leng",
-      email: "leng@test.com",
-      type: UserType.student,
-      stuId: "SS1004",
-      phoneNumber: "0123456789",
-      dob: DateTime.now(),
-      courses: [
-        CourseModel(
-          id: 1,
-          subject: "Flutter",
-        ),
-        CourseModel(
-          id: 1,
-          subject: "Python",
-        ),
-      ],
-      createdAt: DateTime.now(),
-      lastActive: DateTime.now(),
-    ),
-    UserModel(
-      id: 3,
-      firstName: "Yourk",
-      lastName: "Chhunlay",
-      email: "chhunlay@test.com",
-      type: UserType.student,
-      stuId: "SS1005",
-      phoneNumber: "0123456789",
-      dob: DateTime.now(),
-      courses: [],
-      createdAt: DateTime.now(),
-      lastActive: DateTime.now(),
-    ),
-  ];
+  List<UserModel> datas = [];
+  bool isLoading = true;
+  RefreshController refreshController = RefreshController();
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  Future<bool> initData() async {
+    isLoading = true;
+    setState(() {});
+
+    var re = await UserRepos().get({
+      "type": 1,
+      "status": 'A'
+    });
+
+    if(re != null){
+      print(re);
+      datas = UserModel.fromJsonArray(re);
+    }
+
+    isLoading = false;
+    setState(() {});
+    return re != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,20 +64,28 @@ class _StudentsState extends State<Students> {
         elevation: 0,
         title: Text("Students", style: Style.txt20Bold,),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            _buildStudents,
-          ],
-        ),
+      body: isLoading ? loadingWidget() : SmartRefresher(
+        controller: refreshController,
+        enablePullDown: true,
+        enablePullUp: true,
+        header: ClassicHeader(),
+        onRefresh: () async {
+          datas.clear();
+          var re = await initData();
+          if(re){
+            refreshController.refreshCompleted();
+          } else {
+            refreshController.refreshFailed();
+          }
+        },
+        child: datas.isNotEmpty ? _buildStudents : notFoundWidget(),
       ),
     );
   }
 
   Widget get _buildStudents => ListView.builder(
     itemCount: datas.length,
-    shrinkWrap: true,
+    padding: EdgeInsets.all(10),
     itemBuilder: (context, index) {
       var data = datas[index];
 
@@ -167,8 +93,11 @@ class _StudentsState extends State<Students> {
         isScrollable: true,
         scaleFactor: .4,
         duration: const Duration(milliseconds: 200),
-        onPressed: (){
-          context.push(Uri(path: ViewStudentDetails.routeName, queryParameters: {"data": jsonEncode(data.toJson())}).toString());
+        onPressed: () async {
+          var re = await context.push(Uri(path: ViewStudentDetails.routeName, queryParameters: {"data": jsonEncode(data.toJson())}).toString());
+          if(re != null && re == true) {
+            refreshController.requestRefresh();
+          }
         },
         child: Container(
           decoration: BoxDecoration(

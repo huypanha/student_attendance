@@ -23,6 +23,7 @@ enum UserType {
 }
 
 enum ReturnPageType {
+  none,
   edited,
   deleted
 }

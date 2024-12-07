@@ -18,15 +18,14 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       type: _$JsonConverterFromJson<int, UserType>(
           json['type'], const UserTypeEnumConverter().fromJson),
-      courses: (json['courses'] as List<dynamic>?)
-          ?.map((e) => CourseModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      createdBy: json['createdBy'] == null
+      createdBy: (json['createdBy'] as num?)?.toInt(),
+      updatedBy: (json['updatedBy'] as num?)?.toInt(),
+      createdByModel: json['createdByModel'] == null
           ? null
-          : UserModel.fromJson(json['createdBy'] as Map<String, dynamic>),
-      updatedBy: json['updatedBy'] == null
+          : UserModel.fromJson(json['createdByModel'] as Map<String, dynamic>),
+      updatedByModel: json['updatedByModel'] == null
           ? null
-          : UserModel.fromJson(json['updatedBy'] as Map<String, dynamic>),
+          : UserModel.fromJson(json['updatedByModel'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -36,15 +35,20 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       lastActive: json['lastActive'] == null
           ? null
           : DateTime.parse(json['lastActive'] as String),
-      status: json['status'] as String?,
-      attendances: (json['attendances'] as List<dynamic>?)
-          ?.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      accessToken: json['accessToken'] as String?,
       attendanceCount: json['attendanceCount'] == null
           ? null
           : AttendanceCountModel.fromJson(
               json['attendanceCount'] as Map<String, dynamic>),
-      accessToken: json['accessToken'] as String?,
+      courses: (json['courses'] as List<dynamic>?)
+              ?.map((e) => CourseModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <CourseModel>[],
+      status: json['status'] as String? ?? 'A',
+      attendances: (json['attendances'] as List<dynamic>?)
+              ?.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <AttendanceModel>[],
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -59,16 +63,18 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'dob': instance.dob?.toIso8601String(),
       'type': _$JsonConverterToJson<int, UserType>(
           instance.type, const UserTypeEnumConverter().toJson),
-      'courses': instance.courses,
       'createdBy': instance.createdBy,
       'updatedBy': instance.updatedBy,
+      'createdByModel': instance.createdByModel,
+      'updatedByModel': instance.updatedByModel,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'lastActive': instance.lastActive?.toIso8601String(),
+      'accessToken': instance.accessToken,
+      'attendanceCount': instance.attendanceCount,
+      'courses': instance.courses,
       'status': instance.status,
       'attendances': instance.attendances,
-      'attendanceCount': instance.attendanceCount,
-      'accessToken': instance.accessToken,
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

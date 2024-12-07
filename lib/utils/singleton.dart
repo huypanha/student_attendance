@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce/hive.dart';
@@ -45,8 +46,21 @@ class Singleton {
   int lateAfterMin = 15;
 
   /// API request auth
-  String defaultToken = "dhFdlDSFhdLDfhajfdHDFjhkajhsdfGDSFljkhsdalfahf";
-  String accessToken = "dhFdlDSFhdLDfhajfdHDFjhkajhsdfGDSFljkhsdalfahf";
+  Dio dio = Dio()
+  ..options.headers = {
+    "Authorization": "",
+    "Content-Type": "application/json"
+  }
+  ..options.connectTimeout = Duration(seconds: 10)
+  ..options.validateStatus = (_) => true;
   String errorMsg = "";
   SecretKey jwtSecret = SecretKey("709d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7");
+
+  Future useDefaultToken() async {
+    dio.options.headers['Authorization'] = "Bearer dhFdlDSFhdLDfhajfdHDFjhkajhsdfGDSFljkhsdalfahf";
+  }
+
+  Future useUserToken() async {
+    dio.options.headers['Authorization'] = "Bearer ${token.accessToken}";
+  }
 }

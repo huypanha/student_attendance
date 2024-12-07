@@ -31,17 +31,19 @@ mixin _$UserModel {
   @UserTypeEnumConverter()
   UserType? get type =>
       throw _privateConstructorUsedError; // 0: for teacher, 1: for student
-  List<CourseModel>? get courses => throw _privateConstructorUsedError;
-  UserModel? get createdBy => throw _privateConstructorUsedError;
-  UserModel? get updatedBy => throw _privateConstructorUsedError;
+  int? get createdBy => throw _privateConstructorUsedError;
+  int? get updatedBy => throw _privateConstructorUsedError;
+  UserModel? get createdByModel => throw _privateConstructorUsedError;
+  UserModel? get updatedByModel => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get lastActive => throw _privateConstructorUsedError;
-  String? get status => throw _privateConstructorUsedError;
-  List<AttendanceModel>? get attendances => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
   AttendanceCountModel? get attendanceCount =>
       throw _privateConstructorUsedError;
-  String? get accessToken => throw _privateConstructorUsedError;
+  List<CourseModel>? get courses => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  List<AttendanceModel>? get attendances => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,19 +70,21 @@ abstract class $UserModelCopyWith<$Res> {
       String? phoneNumber,
       DateTime? dob,
       @UserTypeEnumConverter() UserType? type,
-      List<CourseModel>? courses,
-      UserModel? createdBy,
-      UserModel? updatedBy,
+      int? createdBy,
+      int? updatedBy,
+      UserModel? createdByModel,
+      UserModel? updatedByModel,
       DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? lastActive,
-      String? status,
-      List<AttendanceModel>? attendances,
+      String? accessToken,
       AttendanceCountModel? attendanceCount,
-      String? accessToken});
+      List<CourseModel>? courses,
+      String? status,
+      List<AttendanceModel>? attendances});
 
-  $UserModelCopyWith<$Res>? get createdBy;
-  $UserModelCopyWith<$Res>? get updatedBy;
+  $UserModelCopyWith<$Res>? get createdByModel;
+  $UserModelCopyWith<$Res>? get updatedByModel;
   $AttendanceCountModelCopyWith<$Res>? get attendanceCount;
 }
 
@@ -108,16 +112,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? phoneNumber = freezed,
     Object? dob = freezed,
     Object? type = freezed,
-    Object? courses = freezed,
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
+    Object? createdByModel = freezed,
+    Object? updatedByModel = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? lastActive = freezed,
+    Object? accessToken = freezed,
+    Object? attendanceCount = freezed,
+    Object? courses = freezed,
     Object? status = freezed,
     Object? attendances = freezed,
-    Object? attendanceCount = freezed,
-    Object? accessToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -156,17 +162,21 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as UserType?,
-      courses: freezed == courses
-          ? _value.courses
-          : courses // ignore: cast_nullable_to_non_nullable
-              as List<CourseModel>?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as UserModel?,
+              as int?,
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
+      updatedByModel: freezed == updatedByModel
+          ? _value.updatedByModel
+          : updatedByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -180,6 +190,18 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.lastActive
           : lastActive // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attendanceCount: freezed == attendanceCount
+          ? _value.attendanceCount
+          : attendanceCount // ignore: cast_nullable_to_non_nullable
+              as AttendanceCountModel?,
+      courses: freezed == courses
+          ? _value.courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -188,14 +210,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.attendances
           : attendances // ignore: cast_nullable_to_non_nullable
               as List<AttendanceModel>?,
-      attendanceCount: freezed == attendanceCount
-          ? _value.attendanceCount
-          : attendanceCount // ignore: cast_nullable_to_non_nullable
-              as AttendanceCountModel?,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 
@@ -203,13 +217,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get createdBy {
-    if (_value.createdBy == null) {
+  $UserModelCopyWith<$Res>? get createdByModel {
+    if (_value.createdByModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.createdBy!, (value) {
-      return _then(_value.copyWith(createdBy: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.createdByModel!, (value) {
+      return _then(_value.copyWith(createdByModel: value) as $Val);
     });
   }
 
@@ -217,13 +231,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get updatedBy {
-    if (_value.updatedBy == null) {
+  $UserModelCopyWith<$Res>? get updatedByModel {
+    if (_value.updatedByModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.updatedBy!, (value) {
-      return _then(_value.copyWith(updatedBy: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.updatedByModel!, (value) {
+      return _then(_value.copyWith(updatedByModel: value) as $Val);
     });
   }
 
@@ -261,21 +275,23 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? phoneNumber,
       DateTime? dob,
       @UserTypeEnumConverter() UserType? type,
-      List<CourseModel>? courses,
-      UserModel? createdBy,
-      UserModel? updatedBy,
+      int? createdBy,
+      int? updatedBy,
+      UserModel? createdByModel,
+      UserModel? updatedByModel,
       DateTime? createdAt,
       DateTime? updatedAt,
       DateTime? lastActive,
-      String? status,
-      List<AttendanceModel>? attendances,
+      String? accessToken,
       AttendanceCountModel? attendanceCount,
-      String? accessToken});
+      List<CourseModel>? courses,
+      String? status,
+      List<AttendanceModel>? attendances});
 
   @override
-  $UserModelCopyWith<$Res>? get createdBy;
+  $UserModelCopyWith<$Res>? get createdByModel;
   @override
-  $UserModelCopyWith<$Res>? get updatedBy;
+  $UserModelCopyWith<$Res>? get updatedByModel;
   @override
   $AttendanceCountModelCopyWith<$Res>? get attendanceCount;
 }
@@ -302,16 +318,18 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? phoneNumber = freezed,
     Object? dob = freezed,
     Object? type = freezed,
-    Object? courses = freezed,
     Object? createdBy = freezed,
     Object? updatedBy = freezed,
+    Object? createdByModel = freezed,
+    Object? updatedByModel = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? lastActive = freezed,
+    Object? accessToken = freezed,
+    Object? attendanceCount = freezed,
+    Object? courses = freezed,
     Object? status = freezed,
     Object? attendances = freezed,
-    Object? attendanceCount = freezed,
-    Object? accessToken = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -350,17 +368,21 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as UserType?,
-      courses: freezed == courses
-          ? _value._courses
-          : courses // ignore: cast_nullable_to_non_nullable
-              as List<CourseModel>?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as UserModel?,
+              as int?,
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
+      updatedByModel: freezed == updatedByModel
+          ? _value.updatedByModel
+          : updatedByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -374,6 +396,18 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.lastActive
           : lastActive // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attendanceCount: freezed == attendanceCount
+          ? _value.attendanceCount
+          : attendanceCount // ignore: cast_nullable_to_non_nullable
+              as AttendanceCountModel?,
+      courses: freezed == courses
+          ? _value._courses
+          : courses // ignore: cast_nullable_to_non_nullable
+              as List<CourseModel>?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -382,14 +416,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value._attendances
           : attendances // ignore: cast_nullable_to_non_nullable
               as List<AttendanceModel>?,
-      attendanceCount: freezed == attendanceCount
-          ? _value.attendanceCount
-          : attendanceCount // ignore: cast_nullable_to_non_nullable
-              as AttendanceCountModel?,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -407,16 +433,18 @@ class _$UserModelImpl implements _UserModel {
       this.phoneNumber,
       this.dob,
       @UserTypeEnumConverter() this.type,
-      final List<CourseModel>? courses,
       this.createdBy,
       this.updatedBy,
+      this.createdByModel,
+      this.updatedByModel,
       this.createdAt,
       this.updatedAt,
       this.lastActive,
-      this.status,
-      final List<AttendanceModel>? attendances,
+      this.accessToken,
       this.attendanceCount,
-      this.accessToken})
+      final List<CourseModel>? courses = const <CourseModel>[],
+      this.status = 'A',
+      final List<AttendanceModel>? attendances = const <AttendanceModel>[]})
       : _courses = courses,
         _attendances = attendances;
 
@@ -443,9 +471,27 @@ class _$UserModelImpl implements _UserModel {
   @UserTypeEnumConverter()
   final UserType? type;
 // 0: for teacher, 1: for student
-  final List<CourseModel>? _courses;
-// 0: for teacher, 1: for student
   @override
+  final int? createdBy;
+  @override
+  final int? updatedBy;
+  @override
+  final UserModel? createdByModel;
+  @override
+  final UserModel? updatedByModel;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? lastActive;
+  @override
+  final String? accessToken;
+  @override
+  final AttendanceCountModel? attendanceCount;
+  final List<CourseModel>? _courses;
+  @override
+  @JsonKey()
   List<CourseModel>? get courses {
     final value = _courses;
     if (value == null) return null;
@@ -455,19 +501,11 @@ class _$UserModelImpl implements _UserModel {
   }
 
   @override
-  final UserModel? createdBy;
-  @override
-  final UserModel? updatedBy;
-  @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
-  @override
-  final DateTime? lastActive;
-  @override
+  @JsonKey()
   final String? status;
   final List<AttendanceModel>? _attendances;
   @override
+  @JsonKey()
   List<AttendanceModel>? get attendances {
     final value = _attendances;
     if (value == null) return null;
@@ -477,13 +515,8 @@ class _$UserModelImpl implements _UserModel {
   }
 
   @override
-  final AttendanceCountModel? attendanceCount;
-  @override
-  final String? accessToken;
-
-  @override
   String toString() {
-    return 'UserModel(id: $id, stuId: $stuId, firstName: $firstName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, courses: $courses, createdBy: $createdBy, updatedBy: $updatedBy, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, status: $status, attendances: $attendances, attendanceCount: $attendanceCount, accessToken: $accessToken)';
+    return 'UserModel(id: $id, stuId: $stuId, firstName: $firstName, lastName: $lastName, email: $email, password: $password, phoneNumber: $phoneNumber, dob: $dob, type: $type, createdBy: $createdBy, updatedBy: $updatedBy, createdByModel: $createdByModel, updatedByModel: $updatedByModel, createdAt: $createdAt, updatedAt: $updatedAt, lastActive: $lastActive, accessToken: $accessToken, attendanceCount: $attendanceCount, courses: $courses, status: $status, attendances: $attendances)';
   }
 
   @override
@@ -504,24 +537,28 @@ class _$UserModelImpl implements _UserModel {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._courses, _courses) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
             (identical(other.updatedBy, updatedBy) ||
                 other.updatedBy == updatedBy) &&
+            (identical(other.createdByModel, createdByModel) ||
+                other.createdByModel == createdByModel) &&
+            (identical(other.updatedByModel, updatedByModel) ||
+                other.updatedByModel == updatedByModel) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.lastActive, lastActive) ||
                 other.lastActive == lastActive) &&
-            (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality()
-                .equals(other._attendances, _attendances) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
             (identical(other.attendanceCount, attendanceCount) ||
                 other.attendanceCount == attendanceCount) &&
-            (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken));
+            const DeepCollectionEquality().equals(other._courses, _courses) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality()
+                .equals(other._attendances, _attendances));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -537,16 +574,18 @@ class _$UserModelImpl implements _UserModel {
         phoneNumber,
         dob,
         type,
-        const DeepCollectionEquality().hash(_courses),
         createdBy,
         updatedBy,
+        createdByModel,
+        updatedByModel,
         createdAt,
         updatedAt,
         lastActive,
-        status,
-        const DeepCollectionEquality().hash(_attendances),
+        accessToken,
         attendanceCount,
-        accessToken
+        const DeepCollectionEquality().hash(_courses),
+        status,
+        const DeepCollectionEquality().hash(_attendances)
       ]);
 
   /// Create a copy of UserModel
@@ -576,16 +615,18 @@ abstract class _UserModel implements UserModel {
       final String? phoneNumber,
       final DateTime? dob,
       @UserTypeEnumConverter() final UserType? type,
-      final List<CourseModel>? courses,
-      final UserModel? createdBy,
-      final UserModel? updatedBy,
+      final int? createdBy,
+      final int? updatedBy,
+      final UserModel? createdByModel,
+      final UserModel? updatedByModel,
       final DateTime? createdAt,
       final DateTime? updatedAt,
       final DateTime? lastActive,
-      final String? status,
-      final List<AttendanceModel>? attendances,
+      final String? accessToken,
       final AttendanceCountModel? attendanceCount,
-      final String? accessToken}) = _$UserModelImpl;
+      final List<CourseModel>? courses,
+      final String? status,
+      final List<AttendanceModel>? attendances}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -610,11 +651,13 @@ abstract class _UserModel implements UserModel {
   @UserTypeEnumConverter()
   UserType? get type; // 0: for teacher, 1: for student
   @override
-  List<CourseModel>? get courses;
+  int? get createdBy;
   @override
-  UserModel? get createdBy;
+  int? get updatedBy;
   @override
-  UserModel? get updatedBy;
+  UserModel? get createdByModel;
+  @override
+  UserModel? get updatedByModel;
   @override
   DateTime? get createdAt;
   @override
@@ -622,13 +665,15 @@ abstract class _UserModel implements UserModel {
   @override
   DateTime? get lastActive;
   @override
-  String? get status;
-  @override
-  List<AttendanceModel>? get attendances;
+  String? get accessToken;
   @override
   AttendanceCountModel? get attendanceCount;
   @override
-  String? get accessToken;
+  List<CourseModel>? get courses;
+  @override
+  String? get status;
+  @override
+  List<AttendanceModel>? get attendances;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:student_attendance/features/schedules/models/schedule.dart';
@@ -22,10 +23,10 @@ extension UserModelExtension on UserModel {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size),
-        child: Image.asset(
-          "assets/images/logo.png",
+        child: CachedNetworkImage(
+          imageUrl: profilePath,
           fit: BoxFit.cover,
-          errorBuilder: (context, _, __) => noProfileWidget(size: size / 2),
+          errorWidget: (_,__,___) => noProfileWidget(size: size / 2),
         ),
       ),
     );

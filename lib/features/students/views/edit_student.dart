@@ -4,10 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
+import 'package:student_attendance/features/users/repos/user_repos.dart';
 import 'package:student_attendance/utils/utils.dart';
+
 
 class EditStudent extends StatefulWidget {
   final UserModel data;
@@ -34,6 +37,7 @@ class _EditStudentState extends State<EditStudent> {
   bool hidePass = true;
   XFile? selectedProfileImg;
   DateTime? dob;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -64,184 +68,145 @@ class _EditStudentState extends State<EditStudent> {
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20,),
-                Center(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () async {
-                      var img = await pickImage(context: context);
-                      if(img != null){
-                        selectedProfileImg = img;
-                        setState(() {});
-                      }
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.grey[200]!
-                            ),
-                          ),
-                          child: ClipOval(
-                            child: (){
-                              if(selectedProfileImg != null){
-                                return Image.file(
-                                  File(selectedProfileImg!.path),
-                                  fit: BoxFit.cover,
-                                );
-                              }else{
-                                return CachedNetworkImage(
-                                  imageUrl: "",
-                                  fit: BoxFit.cover,
-                                  errorWidget: (_, __, ___) => noProfileWidget(size: 70,),
-                                );
-                              }
-                            }(),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20,),
+                  Center(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () async {
+                        var img = await pickImage(context: context);
+                        if(img != null){
+                          selectedProfileImg = img;
+                          setState(() {});
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 150,
+                            height: 150,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white,
                               border: Border.all(
-                                color: Colors.grey[200]!,
+                                color: Colors.grey[200]!
                               ),
                             ),
-                            padding: EdgeInsets.all(10),
-                            child: ASIcon.solid(ASIconData.camera, size: 25, color: Style.primaryColor,),
+                            child: ClipOval(
+                              child: (){
+                                if(selectedProfileImg != null){
+                                  return Image.file(
+                                    File(selectedProfileImg!.path),
+                                    fit: BoxFit.cover,
+                                  );
+                                }else{
+                                  return CachedNetworkImage(
+                                    imageUrl: widget.data.profilePath,
+                                    fit: BoxFit.cover,
+                                    errorWidget: (_, __, ___) => noProfileWidget(size: 70,),
+                                  );
+                                }
+                              }(),
+                            ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.grey[200]!,
+                                ),
+                              ),
+                              padding: EdgeInsets.all(10),
+                              child: ASIcon.solid(ASIconData.camera, size: 25, color: Style.primaryColor,),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 50,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Student ID", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: txtStuId,
-                  decoration: InputDecoration(
+                  const SizedBox(height: 50,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Student ID", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  textFormField(
+                    controller: txtStuId,
                     hintText: 'Enter student ID',
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey[300]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Style.primaryColor,
-                      ),
-                    ),
+                    validator: (v){
+                      if(v.isEmpty){
+                        return "Required";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("First Name", style: Style.txt16,),
-                          ),
-                          const SizedBox(height: 10,),
-                          TextField(
-                            controller: txtFirstName,
-                            decoration: InputDecoration(
+                  const SizedBox(height: 20,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("First Name", style: Style.txt16,),
+                            ),
+                            const SizedBox(height: 10,),
+                            textFormField(
+                              controller: txtFirstName,
                               hintText: 'Enter first name',
-                              border: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey[300]!,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Style.primaryColor,
-                                ),
-                              ),
+                              validator: (v){
+                                if(v.isEmpty){
+                                  return "Required";
+                                }
+                                return null;
+                              },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 20,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Last Name", style: Style.txt16,),
-                          ),
-                          const SizedBox(height: 10,),
-                          TextField(
-                            controller: txtLastName,
-                            decoration: InputDecoration(
+                      const SizedBox(width: 20,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("Last Name", style: Style.txt16,),
+                            ),
+                            const SizedBox(height: 10,),
+                            textFormField(
+                              controller: txtLastName,
                               hintText: 'Enter last name',
-                              border: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Colors.grey[300]!,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Style.primaryColor,
-                                ),
-                              ),
+                              validator: (v){
+                                if(v.isEmpty){
+                                  return "Required";
+                                }
+                                return null;
+                              },
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("New Password", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: txtPassword,
-                  obscureText: hidePass,
-                  decoration: InputDecoration(
+                    ],
+                  ),
+                  const SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("New Password", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  textFormField(
+                    controller: txtPassword,
+                    obscureText: hidePass,
                     hintText: 'Enter a new password',
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey[300]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Style.primaryColor,
-                      ),
-                    ),
                     suffixIcon: InkWell(
                       onTap: (){
                         setState(() {
@@ -250,32 +215,25 @@ class _EditStudentState extends State<EditStudent> {
                       },
                       child: Icon(hidePass ? CupertinoIcons.eye_slash_fill : CupertinoIcons.eye_fill, color: Style.primaryColor,),
                     ),
+                      validator: (v){
+                        if(v.isNotEmpty && txtConPassword.text.isEmpty){
+                          return "Please enter confirm password";
+                        } else if(v.isNotEmpty && v != txtConPassword.text){
+                          return "Both password does not match";
+                        }
+                        return null;
+                      }
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Confirm Password", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: txtConPassword,
-                  obscureText: hidePass,
-                  decoration: InputDecoration(
+                  const SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Confirm Password", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  textFormField(
+                    controller: txtConPassword,
+                    obscureText: hidePass,
                     hintText: 'Enter new password again',
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey[300]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Style.primaryColor,
-                      ),
-                    ),
                     suffixIcon: InkWell(
                       onTap: (){
                         setState(() {
@@ -284,120 +242,147 @@ class _EditStudentState extends State<EditStudent> {
                       },
                       child: Icon(hidePass ? CupertinoIcons.eye_slash_fill : CupertinoIcons.eye_fill, color: Style.primaryColor,),
                     ),
+                      validator: (v){
+                        if(v.isNotEmpty && txtPassword.text.isEmpty){
+                          return "Please enter a new password";
+                        } else if(v.isNotEmpty && v != txtPassword.text){
+                          return "Both password does not match";
+                        }
+                        return null;
+                      }
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Phone Number", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: txtPhone,
-                  decoration: InputDecoration(
+                  const SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Phone Number", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  textFormField(
+                    controller: txtPhone,
                     hintText: 'Enter phone number',
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey[300]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Style.primaryColor,
-                      ),
-                    ),
+                    validator: (v){
+                      if(v.isEmpty){
+                        return "Required";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Email", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: txtEmail,
-                  decoration: InputDecoration(
+                  const SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Email", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  textFormField(
+                    controller: txtEmail,
                     hintText: 'Enter email',
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Colors.grey[300]!,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: Style.primaryColor,
-                      ),
-                    ),
+                    validator: (v){
+                      if(v.isEmpty){
+                        return "Required";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Date of Birth", style: Style.txt16,),
-                ),
-                const SizedBox(height: 10,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () async {
-                          var newDob = await showDatePicker(
-                            context: context,
-                            firstDate: DateTime(1800),
-                            lastDate: DateTime.now(),
-                            initialDate: dob ?? DateTime.now(),
-                          );
-                          if(newDob != null){
-                            dob = newDob;
-                            setState(() {});
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                dob == null ? "Select Date of Birth" : DateFormat("dd-MM-yyyy").format(dob!),
-                                style: Style.txt16,
-                              ),
-                              const SizedBox(width: 10,),
-                              Icon(CupertinoIcons.calendar, color: Style.primaryColor,)
-                            ],
+                  const SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Date of Birth", style: Style.txt16,),
+                  ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () async {
+                            var newDob = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(1800),
+                              lastDate: DateTime.now(),
+                              initialDate: dob ?? DateTime.now(),
+                            );
+                            if(newDob != null){
+                              dob = newDob;
+                              setState(() {});
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dob == null ? "Select Date of Birth" : DateFormat("dd-MM-yyyy").format(dob!),
+                                  style: Style.txt16,
+                                ),
+                                const SizedBox(width: 10,),
+                                Icon(CupertinoIcons.calendar, color: Style.primaryColor,)
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: primaryElevatedButton(
-                        onPressed: () async {
+                    ],
+                  ),
+                  const SizedBox(height: 50,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: primaryElevatedButton(
+                          onPressed: () async {
+                            if(!formKey.currentState!.validate()) return;
 
-                        },
-                        child: Text("Save", style: Style.txt16WhiteBold,),
+                            if(dob == null){
+                              showMessage(
+                                context: context,
+                                content: "Please select date of birth",
+                                status: 2,
+                              );
+                              return;
+                            }
+
+                            var confirm = await showConfirmDialog(context: context);
+                            if(!confirm) return;
+
+                            var data = widget.data.copyWith(
+                              stuId: txtStuId.text.trim(),
+                              firstName: txtFirstName.text.trim(),
+                              lastName: txtLastName.text.trim(),
+                              password: txtPassword.text.trim().isNotEmpty ? txtPassword.text.trim() : null,
+                              phoneNumber: txtPhone.text.trim(),
+                              email: txtEmail.text.trim(),
+                              dob: dob,
+                              updatedAt: DateTime.now(),
+                              updatedByModel: Singleton.instance.token,
+                            );
+
+                            showProgress(context);
+                            var re = await UserRepos().update(data.toJson(), selectedProfileImg != null ? File(selectedProfileImg!.path) : null);
+                            context.pop();
+                            if(re != null){
+                              context.pop(data);
+                            } else {
+                              showMessage(
+                                context: context,
+                                content: Singleton.instance.errorMsg,
+                                status: 0,
+                              );
+                            }
+                          },
+                          child: Text("Save", style: Style.txt16WhiteBold,),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50,),
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 50,),
+                ],
+              ),
             ),
           ),
         ),

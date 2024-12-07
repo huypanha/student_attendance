@@ -7,19 +7,12 @@ import 'package:student_attendance/utils/singleton.dart';
 
 class RemoteDatabase extends Database {
 
-  final Dio _dio = Dio()
-    ..options.headers = {
-      "authentication": Singleton.instance.accessToken,
-      "Content-Type": "application/json"
-    }
-    ..options.validateStatus = (_) => true;
-
   @override
   Future get(String route, {Map<String, dynamic>? where}) async {
     try {
-      var res = await _dio.get("${Domain.baseUrl}/$route", data: where);
+      var res = await Singleton.instance.dio.get("${Domain.baseUrl}/$route", data: where);
       if(res.statusCode == 200){
-        return res;
+        return res.data;
       } else {
         Singleton.instance.errorMsg = res.data['detail'];
       }
@@ -36,7 +29,7 @@ class RemoteDatabase extends Database {
   @override
   Future create(String route, FormData data) async {
     try {
-      var res = await _dio.post("${Domain.baseUrl}/$route", data: data, onSendProgress: (r, t) {
+      var res = await Singleton.instance.dio.post("${Domain.baseUrl}/$route", data: data, onSendProgress: (r, t) {
         log("Received: $r, Total: $t");
         Singleton.instance.widgetRef?.read(Singleton.instance.totalSendReceiveProgress.notifier).state = r.toDouble();
         Singleton.instance.widgetRef?.watch(Singleton.instance.totalProgress.notifier).state = t.toDouble();
@@ -56,12 +49,9 @@ class RemoteDatabase extends Database {
   }
 
   @override
-  Future update(String? route, FormData data, {Map<String, dynamic>? where}) async {
+  Future update(String? route, FormData data) async {
     try {
-      var res = await _dio.put("${Domain.baseUrl}/$route", data: {
-        "data": data,
-        "where": where,
-      }, onSendProgress: (r, t) {
+      var res = await Singleton.instance.dio.put("${Domain.baseUrl}/$route", data: data, onSendProgress: (r, t) {
         Singleton.instance.widgetRef?.read(Singleton.instance.totalSendReceiveProgress.notifier).state = r.toDouble();
         Singleton.instance.widgetRef?.watch(Singleton.instance.totalProgress.notifier).state = t.toDouble();
       });
@@ -79,9 +69,9 @@ class RemoteDatabase extends Database {
   }
 
   @override
-  Future<bool> delete(String route, {Map<String, dynamic>? where}) async {
+  Future<bool> delete(String route, FormData where) async {
     try {
-      var res = await _dio.delete("${Domain.baseUrl}/$route", data: where);
+      var res = await Singleton.instance.dio.delete("${Domain.baseUrl}/$route", data: where);
 
       if(res.statusCode == 200){
         return true;
