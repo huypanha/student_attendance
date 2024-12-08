@@ -32,3 +32,8 @@ enum ScheduleType {
   schedule,
   day_off
 }
+
+enum AttendanceType {
+  checkIn,
+  checkOut
+}

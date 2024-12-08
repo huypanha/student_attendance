@@ -77,6 +77,7 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
               ),
             ),
             actions: [
+              if(Singleton.instance.token.type == UserType.teacher)
               PopupMenuButton(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(

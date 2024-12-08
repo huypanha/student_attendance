@@ -21,9 +21,13 @@ AttendanceModel _$AttendanceModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AttendanceModel {
   int? get id => throw _privateConstructorUsedError;
+  int? get stuId => throw _privateConstructorUsedError;
   UserModel? get student => throw _privateConstructorUsedError;
+  int? get courseId => throw _privateConstructorUsedError;
   CourseModel? get course => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  @AttendanceTypeEnumConverter()
+  AttendanceType? get type => throw _privateConstructorUsedError;
 
   /// Serializes this AttendanceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +46,13 @@ abstract class $AttendanceModelCopyWith<$Res> {
       _$AttendanceModelCopyWithImpl<$Res, AttendanceModel>;
   @useResult
   $Res call(
-      {int? id, UserModel? student, CourseModel? course, DateTime? createdAt});
+      {int? id,
+      int? stuId,
+      UserModel? student,
+      int? courseId,
+      CourseModel? course,
+      DateTime? createdAt,
+      @AttendanceTypeEnumConverter() AttendanceType? type});
 
   $UserModelCopyWith<$Res>? get student;
   $CourseModelCopyWith<$Res>? get course;
@@ -64,19 +74,30 @@ class _$AttendanceModelCopyWithImpl<$Res, $Val extends AttendanceModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? stuId = freezed,
     Object? student = freezed,
+    Object? courseId = freezed,
     Object? course = freezed,
     Object? createdAt = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stuId: freezed == stuId
+          ? _value.stuId
+          : stuId // ignore: cast_nullable_to_non_nullable
+              as int?,
       student: freezed == student
           ? _value.student
           : student // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
       course: freezed == course
           ? _value.course
           : course // ignore: cast_nullable_to_non_nullable
@@ -85,6 +106,10 @@ class _$AttendanceModelCopyWithImpl<$Res, $Val extends AttendanceModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as AttendanceType?,
     ) as $Val);
   }
 
@@ -126,7 +151,13 @@ abstract class _$$AttendanceModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id, UserModel? student, CourseModel? course, DateTime? createdAt});
+      {int? id,
+      int? stuId,
+      UserModel? student,
+      int? courseId,
+      CourseModel? course,
+      DateTime? createdAt,
+      @AttendanceTypeEnumConverter() AttendanceType? type});
 
   @override
   $UserModelCopyWith<$Res>? get student;
@@ -148,19 +179,30 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? stuId = freezed,
     Object? student = freezed,
+    Object? courseId = freezed,
     Object? course = freezed,
     Object? createdAt = freezed,
+    Object? type = freezed,
   }) {
     return _then(_$AttendanceModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stuId: freezed == stuId
+          ? _value.stuId
+          : stuId // ignore: cast_nullable_to_non_nullable
+              as int?,
       student: freezed == student
           ? _value.student
           : student // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
       course: freezed == course
           ? _value.course
           : course // ignore: cast_nullable_to_non_nullable
@@ -169,6 +211,10 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as AttendanceType?,
     ));
   }
 }
@@ -176,7 +222,14 @@ class __$$AttendanceModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AttendanceModelImpl implements _AttendanceModel {
-  _$AttendanceModelImpl({this.id, this.student, this.course, this.createdAt});
+  _$AttendanceModelImpl(
+      {this.id,
+      this.stuId,
+      this.student,
+      this.courseId,
+      this.course,
+      this.createdAt,
+      @AttendanceTypeEnumConverter() this.type});
 
   factory _$AttendanceModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AttendanceModelImplFromJson(json);
@@ -184,15 +237,22 @@ class _$AttendanceModelImpl implements _AttendanceModel {
   @override
   final int? id;
   @override
+  final int? stuId;
+  @override
   final UserModel? student;
+  @override
+  final int? courseId;
   @override
   final CourseModel? course;
   @override
   final DateTime? createdAt;
+  @override
+  @AttendanceTypeEnumConverter()
+  final AttendanceType? type;
 
   @override
   String toString() {
-    return 'AttendanceModel(id: $id, student: $student, course: $course, createdAt: $createdAt)';
+    return 'AttendanceModel(id: $id, stuId: $stuId, student: $student, courseId: $courseId, course: $course, createdAt: $createdAt, type: $type)';
   }
 
   @override
@@ -201,15 +261,20 @@ class _$AttendanceModelImpl implements _AttendanceModel {
         (other.runtimeType == runtimeType &&
             other is _$AttendanceModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.stuId, stuId) || other.stuId == stuId) &&
             (identical(other.student, student) || other.student == student) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
             (identical(other.course, course) || other.course == course) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, student, course, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, stuId, student, courseId, course, createdAt, type);
 
   /// Create a copy of AttendanceModel
   /// with the given fields replaced by the non-null parameter values.
@@ -230,10 +295,14 @@ class _$AttendanceModelImpl implements _AttendanceModel {
 
 abstract class _AttendanceModel implements AttendanceModel {
   factory _AttendanceModel(
-      {final int? id,
-      final UserModel? student,
-      final CourseModel? course,
-      final DateTime? createdAt}) = _$AttendanceModelImpl;
+          {final int? id,
+          final int? stuId,
+          final UserModel? student,
+          final int? courseId,
+          final CourseModel? course,
+          final DateTime? createdAt,
+          @AttendanceTypeEnumConverter() final AttendanceType? type}) =
+      _$AttendanceModelImpl;
 
   factory _AttendanceModel.fromJson(Map<String, dynamic> json) =
       _$AttendanceModelImpl.fromJson;
@@ -241,11 +310,18 @@ abstract class _AttendanceModel implements AttendanceModel {
   @override
   int? get id;
   @override
+  int? get stuId;
+  @override
   UserModel? get student;
+  @override
+  int? get courseId;
   @override
   CourseModel? get course;
   @override
   DateTime? get createdAt;
+  @override
+  @AttendanceTypeEnumConverter()
+  AttendanceType? get type;
 
   /// Create a copy of AttendanceModel
   /// with the given fields replaced by the non-null parameter values.

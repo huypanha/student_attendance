@@ -59,11 +59,12 @@ class _CoursesViewState extends State<CoursesView> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
         ),
         title: Text("Courses", style: Style.txt20Bold,),
         actions: [
+          if(Singleton.instance.token.type == UserType.teacher)
           IconButton(
             onPressed: () async {
               var re = await context.push(CreateEditCourse.routeName);

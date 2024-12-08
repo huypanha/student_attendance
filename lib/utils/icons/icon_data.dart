@@ -7,6 +7,8 @@ class ASIconData {
   static const String circlePlus = "\uf055";
   static const String editUser = "\uf4ff";
   static const String educationCap = "\uf19d";
+  static const String handMiddleFinger = "\uf806";
+  static const String handPointUp = "\ue1a2";
   static const String images = "\uf302";
   static const String items = "\uf468";
   static const String language = "\uf1ab";

@@ -61,7 +61,7 @@ class _StudentsState extends State<Students> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
         ),
         elevation: 0,
@@ -118,7 +118,7 @@ class _StudentsState extends State<Students> {
           child: ListTile(
             leading: data.avatar(),
             title: Text(data.fullName, style: Style.txt16,),
-            subtitle: Text("${data.courses!.length} courses", style: Style.txt14Grey,),
+            subtitle: Text(data.stuId ?? 'No student id', style: Style.txt14Grey,),
             trailing: Icon(CupertinoIcons.chevron_right, color: Colors.grey[400],),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

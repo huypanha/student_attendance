@@ -133,7 +133,7 @@ class _ReportForTeacherState extends State<ReportForTeacher> {
           title: Text("Reports", style: Style.txt20Bold,),
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
-            statusBarBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
           ),
           actions: [

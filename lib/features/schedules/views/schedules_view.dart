@@ -66,7 +66,7 @@ class _ScheduleViewState extends State<ScheduleView> {
     setState(() {});
   }
 
-  Future onScheduleClicked(CalendarTapDetails d) async {
+  Future onScheduleClickedForTeacher(CalendarTapDetails d) async {
     bool isUpdate = d.appointments != null;
     var data = isUpdate ? (d.appointments!.first as ScheduleModel) : null;
 
@@ -641,6 +641,83 @@ class _ScheduleViewState extends State<ScheduleView> {
     );
   }
 
+  Future onScheduleClickedForStudent(CalendarTapDetails d) async {
+    if(d.appointments != null){
+      var data = d.appointments!.first as ScheduleModel;
+
+      showCupertinoDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          scrollable: true,
+          backgroundColor: Colors.white,
+          title: Text(data.courseModel!.subject.toString(), style: Style.txt20Bold,),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: data.courseModel!.imgUrl,
+                  fit: BoxFit.cover,
+                  errorWidget: (_,__,___) => noImageWidget(),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text("Teacher", style: Style.txt16,),
+                  ),
+                  Text(":", style: Style.txt16,),
+                  const SizedBox(width: 10,),
+                  Expanded(child: Text(data.courseModel!.teacherModel!.fullName, style: Style.txt16,)),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text("Start Time", style: Style.txt16,),
+                  ),
+                  Text(":", style: Style.txt16,),
+                  const SizedBox(width: 10,),
+                  Expanded(child: Text(DateFormat("hh:mm a").format(data.startTime!), style: Style.txt16,)),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text("End Time", style: Style.txt16,),
+                  ),
+                  Text(":", style: Style.txt16,),
+                  const SizedBox(width: 10,),
+                  Expanded(child: Text(DateFormat("hh:mm a").format(data.endTime!), style: Style.txt16,)),
+                ],
+              ),
+              const SizedBox(height: 30,),
+              Row(
+                children: [
+                  Expanded(
+                    child: primaryElevatedButton(
+                      onPressed: () => context.pop(),
+                      backgroundColor: Color(int.parse(data.colorCode!)),
+                      child: Text("Close", style: Style.txt16White,),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -649,7 +726,7 @@ class _ScheduleViewState extends State<ScheduleView> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
         ),
         title: Text("Schedule", style: Style.txt20Bold,),
@@ -669,6 +746,6 @@ class _ScheduleViewState extends State<ScheduleView> {
   Widget get _buildCourses => SfCalendar(
     view: CalendarView.week,
     dataSource: ScheduleDataSource(datas),
-    onTap: onScheduleClicked,
+    onTap: Singleton.instance.token.type == UserType.teacher ? onScheduleClickedForTeacher : onScheduleClickedForStudent,
   );
 }

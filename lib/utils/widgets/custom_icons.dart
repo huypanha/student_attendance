@@ -4,11 +4,13 @@ import '../style.dart';
 
 Widget clockInIcon({
   double size = 40,
+  Color? color,
 }) {
+  color ??= Colors.grey[300];
   return Stack(
     clipBehavior: Clip.none,
     children: [
-      Text('\ue29e', style: Style.txtFAS(size: size, color: Colors.grey[400]),),
+      Text('\ue29e', style: Style.txtFAS(size: size, color: color),),
       Positioned(
         right: -3,
         bottom: -3,
@@ -27,11 +29,13 @@ Widget clockInIcon({
 
 Widget clockOutIcon({
   double size = 40,
+  Color? color,
 }) {
+  color ??= Colors.grey[300];
   return Stack(
     clipBehavior: Clip.none,
     children: [
-      Text('\ue29e', style: Style.txtFAS(size: size, color: Colors.grey[400]),),
+      Text('\ue29e', style: Style.txtFAS(size: size, color: color),),
       Positioned(
         right: -3,
         bottom: -3,
@@ -50,11 +54,13 @@ Widget clockOutIcon({
 
 Widget clockCheckIcon({
   double size = 40,
+  Color? color,
 }) {
+  color ??= Colors.grey[300];
   return Stack(
     clipBehavior: Clip.none,
     children: [
-      Text('\ue29e', style: Style.txtFAS(size: size, color: Colors.grey[400]),),
+      Text('\ue29e', style: Style.txtFAS(size: size, color: color),),
       Positioned(
         right: -3,
         bottom: -3,

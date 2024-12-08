@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_attendance/features/auth/repos/auth_repos.dart';
-import 'package:student_attendance/features/dashboard/dashboard.dart';
+import 'package:student_attendance/features/dashboard/views/dashboard.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/utils.dart';
 
@@ -30,8 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    txtEmailId.text = "a@b.c";
-    txtPassword.text = "a";
   }
 
   @override
@@ -108,7 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                             });
                             context.pop();
                             if(re != null){
-                              log(re.toString());
                               Singleton.instance.token = UserModel.fromJson(JWT.verify(re, Singleton.instance.jwtSecret).payload);
                               Singleton.instance.token = Singleton.instance.token.copyWith(
                                 accessToken: re,

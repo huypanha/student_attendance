@@ -11,7 +11,7 @@ import 'package:student_attendance/features/auth/repos/auth_repos.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
 import 'package:student_attendance/utils/utils.dart';
 
-import '../../dashboard/dashboard.dart';
+import '../../dashboard/views/dashboard.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});

@@ -7,7 +7,7 @@ import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/features/courses/views/courses.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
 import 'package:student_attendance/features/courses/views/view_course_details.dart';
-import 'package:student_attendance/features/dashboard/dashboard.dart';
+import 'package:student_attendance/features/dashboard/views/dashboard.dart';
 import 'package:student_attendance/features/reports/views/report_for_teacher.dart';
 import 'package:student_attendance/features/schedules/views/schedules_view.dart';
 import 'package:student_attendance/features/students/views/students.dart';

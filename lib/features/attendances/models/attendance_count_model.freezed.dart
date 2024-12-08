@@ -23,6 +23,11 @@ mixin _$AttendanceCountModel {
   int? get p => throw _privateConstructorUsedError;
   int? get l => throw _privateConstructorUsedError;
   int? get a => throw _privateConstructorUsedError;
+  int? get total => throw _privateConstructorUsedError;
+  int? get clockIn => throw _privateConstructorUsedError;
+  int? get clockOut => throw _privateConstructorUsedError;
+  int? get late => throw _privateConstructorUsedError;
+  int? get earlyLeave => throw _privateConstructorUsedError;
 
   /// Serializes this AttendanceCountModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +45,15 @@ abstract class $AttendanceCountModelCopyWith<$Res> {
           $Res Function(AttendanceCountModel) then) =
       _$AttendanceCountModelCopyWithImpl<$Res, AttendanceCountModel>;
   @useResult
-  $Res call({int? p, int? l, int? a});
+  $Res call(
+      {int? p,
+      int? l,
+      int? a,
+      int? total,
+      int? clockIn,
+      int? clockOut,
+      int? late,
+      int? earlyLeave});
 }
 
 /// @nodoc
@@ -62,6 +75,11 @@ class _$AttendanceCountModelCopyWithImpl<$Res,
     Object? p = freezed,
     Object? l = freezed,
     Object? a = freezed,
+    Object? total = freezed,
+    Object? clockIn = freezed,
+    Object? clockOut = freezed,
+    Object? late = freezed,
+    Object? earlyLeave = freezed,
   }) {
     return _then(_value.copyWith(
       p: freezed == p
@@ -76,6 +94,26 @@ class _$AttendanceCountModelCopyWithImpl<$Res,
           ? _value.a
           : a // ignore: cast_nullable_to_non_nullable
               as int?,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clockIn: freezed == clockIn
+          ? _value.clockIn
+          : clockIn // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clockOut: freezed == clockOut
+          ? _value.clockOut
+          : clockOut // ignore: cast_nullable_to_non_nullable
+              as int?,
+      late: freezed == late
+          ? _value.late
+          : late // ignore: cast_nullable_to_non_nullable
+              as int?,
+      earlyLeave: freezed == earlyLeave
+          ? _value.earlyLeave
+          : earlyLeave // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -88,7 +126,15 @@ abstract class _$$AttendanceCountModelImplCopyWith<$Res>
       __$$AttendanceCountModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? p, int? l, int? a});
+  $Res call(
+      {int? p,
+      int? l,
+      int? a,
+      int? total,
+      int? clockIn,
+      int? clockOut,
+      int? late,
+      int? earlyLeave});
 }
 
 /// @nodoc
@@ -107,6 +153,11 @@ class __$$AttendanceCountModelImplCopyWithImpl<$Res>
     Object? p = freezed,
     Object? l = freezed,
     Object? a = freezed,
+    Object? total = freezed,
+    Object? clockIn = freezed,
+    Object? clockOut = freezed,
+    Object? late = freezed,
+    Object? earlyLeave = freezed,
   }) {
     return _then(_$AttendanceCountModelImpl(
       p: freezed == p
@@ -121,6 +172,26 @@ class __$$AttendanceCountModelImplCopyWithImpl<$Res>
           ? _value.a
           : a // ignore: cast_nullable_to_non_nullable
               as int?,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clockIn: freezed == clockIn
+          ? _value.clockIn
+          : clockIn // ignore: cast_nullable_to_non_nullable
+              as int?,
+      clockOut: freezed == clockOut
+          ? _value.clockOut
+          : clockOut // ignore: cast_nullable_to_non_nullable
+              as int?,
+      late: freezed == late
+          ? _value.late
+          : late // ignore: cast_nullable_to_non_nullable
+              as int?,
+      earlyLeave: freezed == earlyLeave
+          ? _value.earlyLeave
+          : earlyLeave // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -128,21 +199,47 @@ class __$$AttendanceCountModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AttendanceCountModelImpl implements _AttendanceCountModel {
-  _$AttendanceCountModelImpl({this.p, this.l, this.a});
+  _$AttendanceCountModelImpl(
+      {this.p = 0,
+      this.l = 0,
+      this.a = 0,
+      this.total = 0,
+      this.clockIn = 0,
+      this.clockOut = 0,
+      this.late = 0,
+      this.earlyLeave = 0});
 
   factory _$AttendanceCountModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AttendanceCountModelImplFromJson(json);
 
   @override
+  @JsonKey()
   final int? p;
   @override
+  @JsonKey()
   final int? l;
   @override
+  @JsonKey()
   final int? a;
+  @override
+  @JsonKey()
+  final int? total;
+  @override
+  @JsonKey()
+  final int? clockIn;
+  @override
+  @JsonKey()
+  final int? clockOut;
+  @override
+  @JsonKey()
+  final int? late;
+  @override
+  @JsonKey()
+  final int? earlyLeave;
 
   @override
   String toString() {
-    return 'AttendanceCountModel(p: $p, l: $l, a: $a)';
+    return 'AttendanceCountModel(p: $p, l: $l, a: $a, total: $total, clockIn: $clockIn, clockOut: $clockOut, late: $late, earlyLeave: $earlyLeave)';
   }
 
   @override
@@ -152,12 +249,20 @@ class _$AttendanceCountModelImpl implements _AttendanceCountModel {
             other is _$AttendanceCountModelImpl &&
             (identical(other.p, p) || other.p == p) &&
             (identical(other.l, l) || other.l == l) &&
-            (identical(other.a, a) || other.a == a));
+            (identical(other.a, a) || other.a == a) &&
+            (identical(other.total, total) || other.total == total) &&
+            (identical(other.clockIn, clockIn) || other.clockIn == clockIn) &&
+            (identical(other.clockOut, clockOut) ||
+                other.clockOut == clockOut) &&
+            (identical(other.late, late) || other.late == late) &&
+            (identical(other.earlyLeave, earlyLeave) ||
+                other.earlyLeave == earlyLeave));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, p, l, a);
+  int get hashCode => Object.hash(
+      runtimeType, p, l, a, total, clockIn, clockOut, late, earlyLeave);
 
   /// Create a copy of AttendanceCountModel
   /// with the given fields replaced by the non-null parameter values.
@@ -178,8 +283,15 @@ class _$AttendanceCountModelImpl implements _AttendanceCountModel {
 }
 
 abstract class _AttendanceCountModel implements AttendanceCountModel {
-  factory _AttendanceCountModel({final int? p, final int? l, final int? a}) =
-      _$AttendanceCountModelImpl;
+  factory _AttendanceCountModel(
+      {final int? p,
+      final int? l,
+      final int? a,
+      final int? total,
+      final int? clockIn,
+      final int? clockOut,
+      final int? late,
+      final int? earlyLeave}) = _$AttendanceCountModelImpl;
 
   factory _AttendanceCountModel.fromJson(Map<String, dynamic> json) =
       _$AttendanceCountModelImpl.fromJson;
@@ -190,6 +302,16 @@ abstract class _AttendanceCountModel implements AttendanceCountModel {
   int? get l;
   @override
   int? get a;
+  @override
+  int? get total;
+  @override
+  int? get clockIn;
+  @override
+  int? get clockOut;
+  @override
+  int? get late;
+  @override
+  int? get earlyLeave;
 
   /// Create a copy of AttendanceCountModel
   /// with the given fields replaced by the non-null parameter values.

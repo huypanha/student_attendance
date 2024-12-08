@@ -77,14 +77,17 @@ Widget primaryElevatedButton({
   required Function() onPressed,
   required Widget child,
   double width = 130,
+  Color? backgroundColor,
 }) {
+  backgroundColor ??= Style.primaryColor;
+
   return ElevatedButton(
     onPressed: onPressed,
     style: ButtonStyle(
       shape: WidgetStatePropertyAll(RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       )),
-      backgroundColor: WidgetStatePropertyAll(Style.primaryColor),
+      backgroundColor: WidgetStatePropertyAll(backgroundColor),
       foregroundColor: const WidgetStatePropertyAll(Colors.white),
       padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 10,)),
       overlayColor: WidgetStatePropertyAll(Colors.white.withOpacity(.1)),

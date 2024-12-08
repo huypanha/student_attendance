@@ -60,7 +60,7 @@ class _EditStudentState extends State<EditStudent> {
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
           ),
           title: Text("Edit Student", style: Style.txt20Bold,),

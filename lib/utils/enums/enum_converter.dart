@@ -14,3 +14,17 @@ class UserTypeEnumConverter implements JsonConverter<UserType, int> {
     return object.index; // Convert Enum to index
   }
 }
+
+class AttendanceTypeEnumConverter implements JsonConverter<AttendanceType, int> {
+  const AttendanceTypeEnumConverter();
+
+  @override
+  AttendanceType fromJson(int json) {
+    return AttendanceType.values[json]; // Convert index to Enum
+  }
+
+  @override
+  int toJson(AttendanceType object) {
+    return object.index; // Convert Enum to index
+  }
+}
