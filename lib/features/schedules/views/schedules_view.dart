@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +13,8 @@ import 'package:student_attendance/utils/utils.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../courses/models/course_model.dart';
-import '../../users/models/user_model.dart';
+import '../../courses/repos/course_repos.dart';
+import '../repos/schedule_repos.dart';
 import '../src/schedule_datasource.dart';
 
 class ScheduleView extends StatefulWidget {
@@ -23,30 +27,44 @@ class ScheduleView extends StatefulWidget {
 }
 
 class _ScheduleViewState extends State<ScheduleView> {
-  List<ScheduleModel> schedules = [];
-  List<CourseModel> courses = [
-    CourseModel(
-      id: 1,
-      subject: "Flutter",
-      img: "https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png",
-    ),
-    CourseModel(
-      id: 1,
-      subject: "Python",
-      img: "https://banner2.cleanpng.com/20190623/yp/kisspng-python-computer-icons-programming-language-executa-1713885634631.webp",
-    ),
-  ];
+  List<ScheduleModel> datas = [];
+  List<CourseModel> courses = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    getData();
+    getCourses();
   }
 
-  Widget get _buildCourses => SfCalendar(
-    view: CalendarView.week,
-    dataSource: ScheduleDataSource(schedules),
-    onTap: onScheduleClicked,
-  );
+  Future<bool> getData({bool refresh = false}) async {
+    if(!refresh){
+      isLoading = true;
+      setState(() {});
+    }
+
+    var res = await ScheduleRepos().get({});
+    if(res != null){
+      log(res.toString());
+      datas = res;
+    }
+
+    if(!refresh){
+      isLoading = false;
+    }
+    setState(() {});
+    return res != null;
+  }
+
+  Future getCourses({bool refresh = false}) async {
+    var res = await CourseRepos().get({});
+    if(res != null){
+      log(res.toString());
+      courses = res;
+    }
+    setState(() {});
+  }
 
   Future onScheduleClicked(CalendarTapDetails d) async {
     bool isUpdate = d.appointments != null;
@@ -69,10 +87,10 @@ class _ScheduleViewState extends State<ScheduleView> {
     };
 
     if(isUpdate) {
-      selectedCourse = data!.course;
-      selectedStartTime = data.startTime;
+      selectedCourse = courses.firstWhere((e) => e.id == data!.courseModel!.id);
+      selectedStartTime = data!.startTime;
       selectedEndTime = data.endTime;
-      selectedColor = Color(data.colorCode!);
+      selectedColor = Color(int.parse(data.colorCode!));
     } else {
       selectedStartTime = d.date;
       selectedEndTime = d.date!.add(const Duration(hours: 1));
@@ -90,31 +108,59 @@ class _ScheduleViewState extends State<ScheduleView> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(isUpdate ? data!.course!.subject.toString() : "Create Schedule", style: Style.txt20Bold,),
+                    Text(isUpdate ? data!.courseModel!.subject.toString() : "Create Schedule", style: Style.txt20Bold,),
                     const SizedBox(width: 10,),
                     if(isUpdate)
                     IconButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        var confirm = await showConfirmDialog(
+                          context: context,
+                          content: "Are you sure to delete this schedule?",
+                        );
+                        if(!confirm) return;
+
+                        List<int> toDeleteIds = [];
                         if(selectedRepeatType == CalendarRepeatType.daily){
-                          schedules.removeWhere((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
-                          e.course!.id == data.course!.id &&
+                          toDeleteIds = datas.where((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
+                          e.courseModel!.id == data.courseModel!.id &&
                           DateFormat("hh:mm a").format(e.startTime!) == DateFormat("hh:mm a").format(data.startTime!) &&
-                          DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!));
+                          DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!) &&
+                          repeatUntilDate.difference(e.startTime!).inDays >= 0)
+                          .map((e) => e.id!).toList();
                         } else if(selectedRepeatType == CalendarRepeatType.weekly){
-                          var toDelete = [...schedules.where((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
-                          e.course!.id == data.course!.id &&
-                          DateFormat("hh:mm a").format(e.startTime!) == DateFormat("hh:mm a").format(data.startTime!) &&
-                          DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!))];
+                          var toDelete = [
+                            ...datas.where((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
+                            e.courseModel!.id == data.courseModel!.id &&
+                            DateFormat("hh:mm a").format(e.startTime!) == DateFormat("hh:mm a").format(data.startTime!) &&
+                            DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!) &&
+                            repeatUntilDate.difference(e.startTime!).inDays >= 0)
+                          ];
+
                           for(var i in toDelete){
                             if(selectedRepeatWeekDays.contains(i.startTime!.weekday)){
-                              schedules.removeWhere((e) => e.id == i.id);
+                              toDeleteIds.add(i.id!);
                             }
                           }
                         } else {
-                          schedules.removeWhere((e) => e.id == data!.id);
+                          toDeleteIds.add(data!.id!);
                         }
-                        setState(() {});
+
+                        showLoading(context);
+                        var re = await ScheduleRepos().delete(toDeleteIds);
                         context.pop();
+                        if(re != null){
+                          for(var id in toDeleteIds){
+                            datas.removeWhere((e) => e.id == id);
+                          }
+                          setState(() {});
+                          context.pop();
+                        } else {
+                          showMessage(
+                            context: context,
+                            content: Singleton.instance.errorMsg,
+                            status: 0,
+                          );
+                        }
                       },
                       icon: ASIcon.solid(ASIconData.trashXMark, color: Colors.red,),
                     ),
@@ -164,18 +210,23 @@ class _ScheduleViewState extends State<ScheduleView> {
                         ),
                         items: List.generate(courses.length, (index) => DropdownMenuItem(
                           value: courses[index],
-                          child: Row(
-                            children: [
-                              ClipOval(
-                                child: CachedNetworkImage(
-                                  imageUrl: courses[index].img!,
-                                  width: 50,
-                                  height: 50,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              children: [
+                                ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: courses[index].imgUrl,
+                                    width: 50,
+                                    height: 50,
+                                    fit: BoxFit.cover,
+                                    errorWidget: (_, __, ___) => noImageWidget(size: 30,),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10,),
-                              Text(courses[index].subject.toString(), style: Style.txt16,),
-                            ],
+                                const SizedBox(width: 10,),
+                                Text(courses[index].subject.toString(), style: Style.txt16,),
+                              ],
+                            ),
                           ),
                         )),
                         onChanged: (v) async {
@@ -450,48 +501,102 @@ class _ScheduleViewState extends State<ScheduleView> {
                     child: Text("Cancel"),
                   ),
                   primaryTextButton(
-                    onPressed: () {
-                      if(isUpdate){
-                        var toUpdateItems = [...schedules.where((e) => e.course!.id == data!.course!.id &&
-                            DateFormat("HH:mm").format(e.startTime!) == DateFormat("HH:mm").format(data.startTime!) &&
-                            DateFormat("HH:mm").format(e.endTime!) == DateFormat("HH:mm").format(data.endTime!) &&
-                            e.startTime!.difference(data.startTime!).inDays >= 0
-                        )];
+                    onPressed: () async {
+                      if(selectedCourse == null){
+                        showMessage(
+                          context: context,
+                          content: "Please select a course",
+                          status: 2,
+                        );
+                        return;
+                      }
 
-                        for(int i = 0; i < toUpdateItems.length; i++){
-                          schedules[schedules.indexWhere((e) => e.id == toUpdateItems[i].id)] = toUpdateItems[i].copyWith(
-                            course: selectedCourse,
-                            startTime: selectedStartTime!.add(Duration(days: i)),
-                            endTime: selectedEndTime!.add(Duration(days: i)),
-                            colorCode: int.parse("0x${selectedColor.toHexString()}"),
-                            createdDate: DateTime.now(),
-                            createdBy: UserModel(),
-                          );
+                      if(isUpdate){
+                        List<ScheduleModel> toUpdateItemsTemp = [];
+                        if(selectedRepeatType == CalendarRepeatType.daily){
+                          toUpdateItemsTemp = datas.where((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
+                            e.courseModel!.id == data.courseModel!.id &&
+                            DateFormat("hh:mm a").format(e.startTime!) == DateFormat("hh:mm a").format(data.startTime!) &&
+                            DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!) &&
+                            repeatUntilDate.difference(e.startTime!).inDays >= 0
+                          ).toList();
+                        } else if(selectedRepeatType == CalendarRepeatType.weekly){
+                          var toUpdate = [
+                            ...datas.where((e) => e.startTime!.difference(data!.startTime!).inDays >= 0 &&
+                              e.courseModel!.id == data.courseModel!.id &&
+                              DateFormat("hh:mm a").format(e.startTime!) == DateFormat("hh:mm a").format(data.startTime!) &&
+                              DateFormat("hh:mm a").format(e.endTime!) == DateFormat("hh:mm a").format(data.endTime!) &&
+                              repeatUntilDate.difference(e.startTime!).inDays >= 0)
+                          ];
+
+                          for(var i in toUpdate){
+                            if(selectedRepeatWeekDays.contains(i.startTime!.weekday)){
+                              toUpdateItemsTemp.add(i);
+                            }
+                          }
+                        } else {
+                          toUpdateItemsTemp.add(data!);
                         }
 
-                        setState(() {});
+                        List<ScheduleModel> toUpdateItems = [];
+                        for(int i = 0; i < toUpdateItemsTemp.length; i++){
+
+                          toUpdateItems.add(toUpdateItemsTemp[i].copyWith(
+                            courseId: selectedCourse?.id,
+                            startTime: DateTime(
+                              toUpdateItemsTemp[i].startTime!.year,
+                              toUpdateItemsTemp[i].startTime!.month,
+                              toUpdateItemsTemp[i].startTime!.day,
+                              selectedStartTime!.hour,
+                              selectedStartTime!.minute
+                            ),
+                            endTime: DateTime(
+                              toUpdateItemsTemp[i].endTime!.year,
+                              toUpdateItemsTemp[i].endTime!.month,
+                              toUpdateItemsTemp[i].endTime!.day,
+                              selectedEndTime!.hour,
+                              selectedEndTime!.minute
+                            ),
+                            colorCode: "0x${selectedColor.toHexString()}",
+                          ));
+                        }
+
+                        var confirm = await showConfirmDialog(context: context);
+                        if(!confirm) return;
+
+                        showLoading(context);
+                        var re = await ScheduleRepos().update(toUpdateItems);
                         context.pop();
+                        if(re != null){
+                          getData();
+                          context.pop();
+                        } else {
+                          showMessage(
+                            context: context,
+                            content: Singleton.instance.errorMsg,
+                            status: 0,
+                          );
+                        }
 
                         return;
                       }
 
                       // create
+                      List<ScheduleModel> newDatas = [];
                       var newSchedule = ScheduleModel(
-                        id: schedules.length + 1,
+                        id: datas.length + newDatas.length + 1,
                         startTime: selectedStartTime,
                         endTime: selectedEndTime,
-                        course: selectedCourse,
-                        colorCode: int.parse("0x${selectedColor.toHexString()}"),
-                        createdBy: UserModel(),
-                        createdDate: DateTime.now(),
+                        courseId: selectedCourse?.id,
+                        colorCode: "0x${selectedColor.toHexString()}",
                       );
-                      schedules.add(newSchedule);
+                      newDatas.add(newSchedule);
 
                       // repeat
                       if(selectedRepeatType == CalendarRepeatType.daily){
                         for(var i = 0; i <= repeatUntilDate.difference(selectedStartTime!).inDays; i++){
-                          schedules.add(newSchedule.copyWith(
-                            id: schedules.length + 1,
+                          newDatas.add(newSchedule.copyWith(
+                            id: datas.length + newDatas.length + 1,
                             startTime: selectedStartTime!.add(Duration(days: i + 1)),
                             endTime: selectedEndTime!.add(Duration(days: i + 1)),
                           ));
@@ -499,16 +604,31 @@ class _ScheduleViewState extends State<ScheduleView> {
                       } else if(selectedRepeatType == CalendarRepeatType.weekly){
                         for(var i = 0; i <= repeatUntilDate.difference(selectedStartTime!).inDays; i++){
                           if(selectedRepeatWeekDays.contains(selectedStartTime!.add(Duration(days: i + 1)).weekday)){
-                            schedules.add(newSchedule.copyWith(
-                              id: schedules.length + 1,
+                            newDatas.add(newSchedule.copyWith(
+                              id: datas.length + newDatas.length + 1,
                               startTime: selectedStartTime!.add(Duration(days: i + 1)),
                               endTime: selectedEndTime!.add(Duration(days: i + 1)),
                             ));
                           }
                         }
                       }
-                      setState(() {});
+
+                      var confirm = await showConfirmDialog(context: context);
+                      if(!confirm) return;
+
+                      showLoading(context);
+                      var re = await ScheduleRepos().create(jsonEncode(newDatas.map((e) => e.toJson()).toList()));
                       context.pop();
+                      if(re != null){
+                        getData();
+                        context.pop();
+                      } else {
+                        showMessage(
+                          context: context,
+                          content: Singleton.instance.errorMsg,
+                          status: 0,
+                        );
+                      }
                     },
                     child: Text(isUpdate ? "Update" : "Create"),
                   ),
@@ -533,8 +653,22 @@ class _ScheduleViewState extends State<ScheduleView> {
           statusBarIconBrightness: Brightness.dark,
         ),
         title: Text("Schedule", style: Style.txt20Bold,),
+        actions: [
+          IconButton(
+            onPressed: (){
+              getData();
+            }, 
+            icon: Icon(Icons.refresh),
+          ),
+        ],
       ),
-      body: _buildCourses,
+      body: isLoading ? loadingWidget() : _buildCourses,
     );
   }
+
+  Widget get _buildCourses => SfCalendar(
+    view: CalendarView.week,
+    dataSource: ScheduleDataSource(datas),
+    onTap: onScheduleClicked,
+  );
 }

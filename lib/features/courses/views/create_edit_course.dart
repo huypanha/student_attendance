@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -390,7 +388,7 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                            description: txtDesc.text,
                            teacherId: selectedTeacher!.id,
                            studentIds: selectedStudents.map((e) => e.id!).toList(),
-                           updatedBy: Singleton.instance.token!.id,
+                           updatedBy: Singleton.instance.token.id,
                            updatedAt: DateTime.now(),
                          ).toJson();
 

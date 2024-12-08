@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
-import 'package:student_attendance/features/schedules/models/schedule.dart';
 
 import '../configs/data/domain.dart';
 import '../features/users/models/user_model.dart';

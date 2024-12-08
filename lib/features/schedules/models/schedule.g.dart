@@ -15,13 +15,15 @@ _$ScheduleModelImpl _$$ScheduleModelImplFromJson(Map<String, dynamic> json) =>
       endTime: json['endTime'] == null
           ? null
           : DateTime.parse(json['endTime'] as String),
-      course: json['course'] == null
+      courseId: (json['courseId'] as num?)?.toInt(),
+      courseModel: json['courseModel'] == null
           ? null
-          : CourseModel.fromJson(json['course'] as Map<String, dynamic>),
-      colorCode: (json['colorCode'] as num?)?.toInt(),
-      createdBy: json['createdBy'] == null
+          : CourseModel.fromJson(json['courseModel'] as Map<String, dynamic>),
+      colorCode: json['colorCode'] as String?,
+      createdBy: (json['createdBy'] as num?)?.toInt(),
+      createdByModel: json['createdByModel'] == null
           ? null
-          : UserModel.fromJson(json['createdBy'] as Map<String, dynamic>),
+          : UserModel.fromJson(json['createdByModel'] as Map<String, dynamic>),
       createdDate: json['createdDate'] == null
           ? null
           : DateTime.parse(json['createdDate'] as String),
@@ -32,8 +34,10 @@ Map<String, dynamic> _$$ScheduleModelImplToJson(_$ScheduleModelImpl instance) =>
       'id': instance.id,
       'startTime': instance.startTime?.toIso8601String(),
       'endTime': instance.endTime?.toIso8601String(),
-      'course': instance.course,
+      'courseId': instance.courseId,
+      'courseModel': instance.courseModel,
       'colorCode': instance.colorCode,
       'createdBy': instance.createdBy,
+      'createdByModel': instance.createdByModel,
       'createdDate': instance.createdDate?.toIso8601String(),
     };

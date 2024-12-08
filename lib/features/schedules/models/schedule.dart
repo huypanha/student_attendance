@@ -12,9 +12,11 @@ class ScheduleModel with _$ScheduleModel {
     int? id,
     DateTime? startTime,
     DateTime? endTime,
-    CourseModel? course,
-    int? colorCode,
-    UserModel? createdBy,
+    int? courseId,
+    CourseModel? courseModel,
+    String? colorCode,
+    int? createdBy,
+    UserModel? createdByModel,
     DateTime? createdDate,
   }) = _ScheduleModel;
 

@@ -8,14 +8,14 @@ class ScheduleDataSource extends CalendarDataSource {
   }
 
   @override
-  DateTime getStartTime(int index) => appointments![index].startTime!;
+  DateTime getStartTime(int index) => (appointments![index] as ScheduleModel).startTime!;
 
   @override
-  DateTime getEndTime(int index) => appointments![index].endTime!;
+  DateTime getEndTime(int index) => (appointments![index] as ScheduleModel).endTime!;
 
   @override
-  Color getColor(int index) => Color(appointments![index].colorCode!);
+  Color getColor(int index) => Color(int.parse((appointments![index] as ScheduleModel).colorCode!));
 
   @override
-  String getSubject(int index) => appointments![index].course!.subject!;
+  String getSubject(int index) => (appointments![index] as ScheduleModel).courseModel!.subject!;
 }

@@ -30,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    // txtEmailId.text = "a@b.c";
-    // txtPassword.text = "a";
+    txtEmailId.text = "a@b.c";
+    txtPassword.text = "a";
   }
 
   @override

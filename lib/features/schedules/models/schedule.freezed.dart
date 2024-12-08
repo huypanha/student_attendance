@@ -23,9 +23,11 @@ mixin _$ScheduleModel {
   int? get id => throw _privateConstructorUsedError;
   DateTime? get startTime => throw _privateConstructorUsedError;
   DateTime? get endTime => throw _privateConstructorUsedError;
-  CourseModel? get course => throw _privateConstructorUsedError;
-  int? get colorCode => throw _privateConstructorUsedError;
-  UserModel? get createdBy => throw _privateConstructorUsedError;
+  int? get courseId => throw _privateConstructorUsedError;
+  CourseModel? get courseModel => throw _privateConstructorUsedError;
+  String? get colorCode => throw _privateConstructorUsedError;
+  int? get createdBy => throw _privateConstructorUsedError;
+  UserModel? get createdByModel => throw _privateConstructorUsedError;
   DateTime? get createdDate => throw _privateConstructorUsedError;
 
   /// Serializes this ScheduleModel to a JSON map.
@@ -48,13 +50,15 @@ abstract class $ScheduleModelCopyWith<$Res> {
       {int? id,
       DateTime? startTime,
       DateTime? endTime,
-      CourseModel? course,
-      int? colorCode,
-      UserModel? createdBy,
+      int? courseId,
+      CourseModel? courseModel,
+      String? colorCode,
+      int? createdBy,
+      UserModel? createdByModel,
       DateTime? createdDate});
 
-  $CourseModelCopyWith<$Res>? get course;
-  $UserModelCopyWith<$Res>? get createdBy;
+  $CourseModelCopyWith<$Res>? get courseModel;
+  $UserModelCopyWith<$Res>? get createdByModel;
 }
 
 /// @nodoc
@@ -75,9 +79,11 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
     Object? id = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? course = freezed,
+    Object? courseId = freezed,
+    Object? courseModel = freezed,
     Object? colorCode = freezed,
     Object? createdBy = freezed,
+    Object? createdByModel = freezed,
     Object? createdDate = freezed,
   }) {
     return _then(_value.copyWith(
@@ -93,17 +99,25 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      course: freezed == course
-          ? _value.course
-          : course // ignore: cast_nullable_to_non_nullable
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseModel: freezed == courseModel
+          ? _value.courseModel
+          : courseModel // ignore: cast_nullable_to_non_nullable
               as CourseModel?,
       colorCode: freezed == colorCode
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdDate: freezed == createdDate
           ? _value.createdDate
@@ -116,13 +130,13 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CourseModelCopyWith<$Res>? get course {
-    if (_value.course == null) {
+  $CourseModelCopyWith<$Res>? get courseModel {
+    if (_value.courseModel == null) {
       return null;
     }
 
-    return $CourseModelCopyWith<$Res>(_value.course!, (value) {
-      return _then(_value.copyWith(course: value) as $Val);
+    return $CourseModelCopyWith<$Res>(_value.courseModel!, (value) {
+      return _then(_value.copyWith(courseModel: value) as $Val);
     });
   }
 
@@ -130,13 +144,13 @@ class _$ScheduleModelCopyWithImpl<$Res, $Val extends ScheduleModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get createdBy {
-    if (_value.createdBy == null) {
+  $UserModelCopyWith<$Res>? get createdByModel {
+    if (_value.createdByModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.createdBy!, (value) {
-      return _then(_value.copyWith(createdBy: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.createdByModel!, (value) {
+      return _then(_value.copyWith(createdByModel: value) as $Val);
     });
   }
 }
@@ -153,15 +167,17 @@ abstract class _$$ScheduleModelImplCopyWith<$Res>
       {int? id,
       DateTime? startTime,
       DateTime? endTime,
-      CourseModel? course,
-      int? colorCode,
-      UserModel? createdBy,
+      int? courseId,
+      CourseModel? courseModel,
+      String? colorCode,
+      int? createdBy,
+      UserModel? createdByModel,
       DateTime? createdDate});
 
   @override
-  $CourseModelCopyWith<$Res>? get course;
+  $CourseModelCopyWith<$Res>? get courseModel;
   @override
-  $UserModelCopyWith<$Res>? get createdBy;
+  $UserModelCopyWith<$Res>? get createdByModel;
 }
 
 /// @nodoc
@@ -180,9 +196,11 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? course = freezed,
+    Object? courseId = freezed,
+    Object? courseModel = freezed,
     Object? colorCode = freezed,
     Object? createdBy = freezed,
+    Object? createdByModel = freezed,
     Object? createdDate = freezed,
   }) {
     return _then(_$ScheduleModelImpl(
@@ -198,17 +216,25 @@ class __$$ScheduleModelImplCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      course: freezed == course
-          ? _value.course
-          : course // ignore: cast_nullable_to_non_nullable
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      courseModel: freezed == courseModel
+          ? _value.courseModel
+          : courseModel // ignore: cast_nullable_to_non_nullable
               as CourseModel?,
       colorCode: freezed == colorCode
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdDate: freezed == createdDate
           ? _value.createdDate
@@ -225,9 +251,11 @@ class _$ScheduleModelImpl implements _ScheduleModel {
       {this.id,
       this.startTime,
       this.endTime,
-      this.course,
+      this.courseId,
+      this.courseModel,
       this.colorCode,
       this.createdBy,
+      this.createdByModel,
       this.createdDate});
 
   factory _$ScheduleModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -240,17 +268,21 @@ class _$ScheduleModelImpl implements _ScheduleModel {
   @override
   final DateTime? endTime;
   @override
-  final CourseModel? course;
+  final int? courseId;
   @override
-  final int? colorCode;
+  final CourseModel? courseModel;
   @override
-  final UserModel? createdBy;
+  final String? colorCode;
+  @override
+  final int? createdBy;
+  @override
+  final UserModel? createdByModel;
   @override
   final DateTime? createdDate;
 
   @override
   String toString() {
-    return 'ScheduleModel(id: $id, startTime: $startTime, endTime: $endTime, course: $course, colorCode: $colorCode, createdBy: $createdBy, createdDate: $createdDate)';
+    return 'ScheduleModel(id: $id, startTime: $startTime, endTime: $endTime, courseId: $courseId, courseModel: $courseModel, colorCode: $colorCode, createdBy: $createdBy, createdByModel: $createdByModel, createdDate: $createdDate)';
   }
 
   @override
@@ -262,19 +294,24 @@ class _$ScheduleModelImpl implements _ScheduleModel {
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            (identical(other.course, course) || other.course == course) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
+            (identical(other.courseModel, courseModel) ||
+                other.courseModel == courseModel) &&
             (identical(other.colorCode, colorCode) ||
                 other.colorCode == colorCode) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
+            (identical(other.createdByModel, createdByModel) ||
+                other.createdByModel == createdByModel) &&
             (identical(other.createdDate, createdDate) ||
                 other.createdDate == createdDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, startTime, endTime, course,
-      colorCode, createdBy, createdDate);
+  int get hashCode => Object.hash(runtimeType, id, startTime, endTime, courseId,
+      courseModel, colorCode, createdBy, createdByModel, createdDate);
 
   /// Create a copy of ScheduleModel
   /// with the given fields replaced by the non-null parameter values.
@@ -297,9 +334,11 @@ abstract class _ScheduleModel implements ScheduleModel {
       {final int? id,
       final DateTime? startTime,
       final DateTime? endTime,
-      final CourseModel? course,
-      final int? colorCode,
-      final UserModel? createdBy,
+      final int? courseId,
+      final CourseModel? courseModel,
+      final String? colorCode,
+      final int? createdBy,
+      final UserModel? createdByModel,
       final DateTime? createdDate}) = _$ScheduleModelImpl;
 
   factory _ScheduleModel.fromJson(Map<String, dynamic> json) =
@@ -312,11 +351,15 @@ abstract class _ScheduleModel implements ScheduleModel {
   @override
   DateTime? get endTime;
   @override
-  CourseModel? get course;
+  int? get courseId;
   @override
-  int? get colorCode;
+  CourseModel? get courseModel;
   @override
-  UserModel? get createdBy;
+  String? get colorCode;
+  @override
+  int? get createdBy;
+  @override
+  UserModel? get createdByModel;
   @override
   DateTime? get createdDate;
 
