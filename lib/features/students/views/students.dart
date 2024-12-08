@@ -31,9 +31,11 @@ class _StudentsState extends State<Students> {
     initData();
   }
 
-  Future<bool> initData() async {
-    isLoading = true;
-    setState(() {});
+  Future<bool> initData({bool refresh = false}) async {
+    if(!refresh){
+      isLoading = true;
+      setState(() {});
+    }
 
     var re = await UserRepos().get({
       "type": 1,
@@ -41,11 +43,12 @@ class _StudentsState extends State<Students> {
     });
 
     if(re != null){
-      print(re);
       datas = UserModel.fromJsonArray(re);
     }
 
-    isLoading = false;
+    if(!refresh){
+      isLoading = false;
+    }
     setState(() {});
     return re != null;
   }
@@ -71,7 +74,7 @@ class _StudentsState extends State<Students> {
         header: ClassicHeader(),
         onRefresh: () async {
           datas.clear();
-          var re = await initData();
+          var re = await initData(refresh: true);
           if(re){
             refreshController.refreshCompleted();
           } else {
@@ -90,6 +93,7 @@ class _StudentsState extends State<Students> {
       var data = datas[index];
 
       return CustomBounceWidget(
+        key: UniqueKey(),
         isScrollable: true,
         scaleFactor: .4,
         duration: const Duration(milliseconds: 200),

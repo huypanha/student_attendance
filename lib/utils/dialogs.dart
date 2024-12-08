@@ -108,6 +108,9 @@ void showProgress(BuildContext context, {ProgressType type = ProgressType.upload
                     return CircularProgressIndicator(
                       value: value.toDouble(),
                       strokeCap: StrokeCap.round,
+                      color: Style.primaryColor,
+                      backgroundColor: Colors.grey[200],
+                      strokeWidth: 5,
                     );
                   },
                   duration: const Duration(milliseconds: 500),

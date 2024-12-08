@@ -1,12 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
+import 'package:student_attendance/features/courses/repos/course_repos.dart';
 import 'package:student_attendance/features/students/views/select_student_dialog.dart';
 import 'package:student_attendance/features/users/models/user_model.dart';
+import 'package:student_attendance/features/users/repos/user_repos.dart';
 import 'package:student_attendance/utils/utils.dart';
 
 class CreateEditCourse extends StatefulWidget {
@@ -28,52 +33,46 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
   TextEditingController txtDesc = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   UserModel? selectedTeacher;
-  List<UserModel> users = [
-    UserModel(
-      id: 1,
-      firstName: "Huy",
-      lastName: "Panha",
-    ),
-    UserModel(
-      id: 2,
-      firstName: "Huy",
-      lastName: "Samrech",
-    ),
-    UserModel(
-      id: 3,
-      firstName: "Om",
-      lastName: "Chanpiseth",
-    ),
-  ];
-  List<UserModel> allStudents = [
-    UserModel(
-      id: 1,
-      firstName: "Huy",
-      lastName: "Panha",
-    ),
-    UserModel(
-      id: 2,
-      firstName: "Huy",
-      lastName: "Samrech",
-    ),
-    UserModel(
-      id: 3,
-      firstName: "Om",
-      lastName: "Chanpiseth",
-    ),
-  ];
+  List<UserModel> allTeachers = [];
+  List<UserModel> allStudents = [];
   List<UserModel> selectedStudents = [];
   XFile? selectedImg;
+  bool isGettingData = true;
 
   @override
   void initState() {
     super.initState();
+    getData();
+
     if(widget.data != null){
       txtSubject.text = widget.data!.subject ?? "";
       txtDesc.text = widget.data!.description ?? "";
-      selectedStudents = widget.data!.students ?? [];
-      selectedTeacher = widget.data!.teacher;
+      selectedStudents = [...widget.data!.students ?? []];
+      selectedTeacher = widget.data!.teacherModel;
     }
+  }
+
+  Future getData() async {
+    isGettingData = true;
+    setState(() {});
+
+    var t = await UserRepos().get({
+      "type": 0,
+      "status": 'A'
+    });
+    if(t != null){
+      allTeachers = UserModel.fromJsonArray(t);
+    }
+    var s = await UserRepos().get({
+      "type": 1,
+      "status": 'A'
+    });
+    if(s != null){
+      allStudents = UserModel.fromJsonArray(s);
+    }
+
+    isGettingData = false;
+    setState(() {});
   }
 
   @override
@@ -125,7 +124,7 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                           } else {
                             if(widget.data != null){
                               return CachedNetworkImage(
-                                imageUrl: widget.data!.img ?? "",
+                                imageUrl: widget.data!.imgUrl,
                                 fit: BoxFit.cover,
                                 errorWidget: (_, __, ___) => noImageWidget(size: 70, color: Colors.grey[200],),
                               );
@@ -180,10 +179,10 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                           }
                           return null;
                         },
-                        hint: Text("Choose a teacher", style: Style.txt16Grey,),
-                        selectedItemBuilder: (context) => List.generate(users.length, (index) => DropdownMenuItem(
-                          value: users[index],
-                          child: Text("${users[index].firstName} ${users[index].lastName}", style: Style.txt16,),
+                        hint: Text(isGettingData ? "Loading..." : "Choose a teacher", style: Style.txt16Grey,),
+                        selectedItemBuilder: (context) => List.generate(allTeachers.length, (index) => DropdownMenuItem(
+                          value: allTeachers[index],
+                          child: Text("${allTeachers[index].firstName} ${allTeachers[index].lastName}", style: Style.txt16,),
                         )),
                         dropdownColor: Colors.white,
                         decoration: InputDecoration(
@@ -207,13 +206,13 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                             ),
                           ),
                         ),
-                        items: List.generate(users.length, (index) => DropdownMenuItem(
-                          value: users[index],
+                        items: List.generate(allTeachers.length, (index) => DropdownMenuItem(
+                          value: allTeachers[index],
                           child: Row(
                             children: [
-                              users[index].avatar(size: 40),
+                              allTeachers[index].avatar(size: 40),
                               const SizedBox(width: 10,),
-                              Text("${users[index].firstName} ${users[index].lastName}", style: Style.txt16,),
+                              Text("${allTeachers[index].firstName} ${allTeachers[index].lastName}", style: Style.txt16,),
                             ],
                           ),
                         )),
@@ -230,18 +229,21 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                       children: [
                         Text("Students", style: Style.txt16,),
                         const SizedBox(width: 10,),
-                        IconButton(
-                          onPressed: () async {
-                            var re = await showSelectStudentDialog<List<UserModel>>(
-                              allStudents: allStudents,
-                              selectedStudents: selectedStudents,
-                            );
-                            if(re != null){
-                              selectedStudents = re;
-                              setState(() {});
-                            }
-                          },
-                          icon: ASIcon.solid(ASIconData.circlePlus, color: Style.primaryColor,),
+                        IgnorePointer(
+                          ignoring: isGettingData,
+                          child: IconButton(
+                            onPressed: () async {
+                              var re = await showSelectStudentDialog<List<UserModel>>(
+                                allStudents: allStudents,
+                                selectedStudents: selectedStudents,
+                              );
+                              if(re != null){
+                                selectedStudents = re;
+                                setState(() {});
+                              }
+                            },
+                            icon: ASIcon.solid(ASIconData.circlePlus, color: Style.primaryColor,),
+                          ),
                         ),
                       ],
                     ),
@@ -272,6 +274,12 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                       ),
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: (){
+                        FocusScope.of(context).requestFocus(FocusNode());
+
+                        if(isGettingData){
+                          return loadingWidget();
+                        }
+
                         if(selectedStudents.isEmpty){
                           return notFoundWidget();
                         }
@@ -331,10 +339,76 @@ class _CreateEditCourseState extends State<CreateEditCourse> {
                 children: [
                   Expanded(
                     child: primaryElevatedButton(
-                      onPressed: (){
-                        formKey.currentState?.validate();
+                      onPressed: () async {
+                       if(!formKey.currentState!.validate()) return;
+
+                       if(selectedTeacher == null) {
+                         showMessage(
+                           context: context,
+                           content: "Please select a teacher",
+                           status: 2,
+                         );
+                         return;
+                       }
+                       // if(selectedStudents.isEmpty) {
+                       //   showMessage(
+                       //     context: context,
+                       //     content: "Please select at least one student",
+                       //     status: 2,
+                       //   );
+                       //   return;
+                       // }
+
+                       var confirm = await showConfirmDialog(
+                         context: context,
+                       );
+                       if(!confirm) return;
+
+                       if(widget.data == null){
+                         var data = CourseModel(
+                           subject: txtSubject.text,
+                           description: txtDesc.text,
+                           teacherId: selectedTeacher!.id,
+                           studentIds: selectedStudents.map((e) => e.id!).toList(),
+                         ).toJson();
+
+                         showLoading(context);
+                         var re = await CourseRepos().create(data, selectedImg?.path);
+                         context.pop();
+                         if(re != null){
+                           context.pop(CourseModel.fromJson(re));
+                         } else {
+                           showMessage(
+                             context: context,
+                             content: Singleton.instance.errorMsg,
+                             status: 0,
+                           );
+                         }
+                       } else {
+                         var data = widget.data!.copyWith(
+                           subject: txtSubject.text,
+                           description: txtDesc.text,
+                           teacherId: selectedTeacher!.id,
+                           studentIds: selectedStudents.map((e) => e.id!).toList(),
+                           updatedBy: Singleton.instance.token!.id,
+                           updatedAt: DateTime.now(),
+                         ).toJson();
+
+                         showLoading(context);
+                         var re = await CourseRepos().update(data, selectedImg?.path);
+                         context.pop();
+                         if(re != null){
+                           context.pop(CourseModel.fromJson(re));
+                         } else {
+                           showMessage(
+                             context: context,
+                             content: Singleton.instance.errorMsg,
+                             status: 0,
+                           );
+                         }
+                       }
                       },
-                      child: Text("Create", style: Style.txt16White,),
+                      child: Text(widget.data != null ? "Save" : "Create", style: Style.txt16White,),
                     ),
                   ),
                 ],

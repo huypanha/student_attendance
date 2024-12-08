@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:student_attendance/features/courses/models/course_model.dart';
 import 'package:student_attendance/features/schedules/models/schedule.dart';
 
 import '../configs/data/domain.dart';
@@ -78,5 +79,6 @@ extension StringExt on String {
   String get toCapitalized => substring(0,1).toString().toUpperCase() + substring(1);
 }
 
-extension ScheduleExt on ScheduleModel {
+extension CourseExt on CourseModel {
+  String get imgUrl => "${Domain.fileUrl}/courses/$img";
 }

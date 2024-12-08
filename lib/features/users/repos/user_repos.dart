@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:dio/dio.dart';
 import 'package:student_attendance/configs/data/remote.dart';
 import 'package:student_attendance/utils/singleton.dart';

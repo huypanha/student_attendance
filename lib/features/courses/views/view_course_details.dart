@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:student_attendance/features/courses/models/course_model.dart';
+import 'package:student_attendance/features/courses/repos/course_repos.dart';
 import 'package:student_attendance/features/courses/views/create_edit_course.dart';
 import 'package:student_attendance/utils/utils.dart';
 
@@ -25,6 +27,7 @@ class ViewCourseDetails extends StatefulWidget {
 class _ViewCourseDetailsState extends State<ViewCourseDetails> {
   var scrollCon = ScrollController();
   var pinnedTitle = false;
+  late CourseModel data = widget.data;
 
   @override
   void initState() {
@@ -65,7 +68,7 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
             ),
             stretch: true,
             pinned: true,
-            expandedHeight: MediaQuery.sizeOf(context).height > MediaQuery.sizeOf(context).width 
+            expandedHeight: MediaQuery.sizeOf(context).height > MediaQuery.sizeOf(context).width
                 ? MediaQuery.sizeOf(context).width * .7
                 : MediaQuery.sizeOf(context).height * .7,
             shape: RoundedRectangleBorder(
@@ -81,8 +84,35 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
                 ),
                 onSelected: (v) async {
                   if(v == "edit"){
-                    context.push(Uri(path: CreateEditCourse.routeName, queryParameters: {"data": jsonEncode(widget.data.toJson())}).toString());
+                    var re = await context.push(Uri(path: CreateEditCourse.routeName, queryParameters: {"data": jsonEncode(data.toJson())}).toString());
+                    if(re != null){
+                      await CachedNetworkImage.evictFromCache(data.imgUrl);
+                      var newData = re as CourseModel;
+                      data = newData.copyWith(
+                        teacherModel: data.teacherModel,
+                        students: data.students,
+                      );
+                      setState(() {});
+                    }
                   } else if(v == "delete"){
+                    var confirm = await showConfirmDialog(
+                      context: context,
+                      content: "Are you sure you want to delete this student?",
+                      isDangerous: true,
+                    );
+                    if(!confirm) return;
+
+                    showLoading(context);
+                    var re = await CourseRepos().deleteById(data.id!);
+                    context.pop();
+                    if(re != null && re){
+                      context.pop(true);
+                    } else {
+                      showMessage(
+                        context: context,
+                        content: Singleton.instance.errorMsg,
+                      );
+                    }
                   }
                 },
                 itemBuilder: (context) {
@@ -123,16 +153,17 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.data.subject ?? "", style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
-                  Text("${widget.data.teacher!.firstName} ${widget.data.teacher!.lastName}", style: pinnedTitle ? Style.txt12 : Style.txt12White,),
+                  Text(data.subject ?? "", style: pinnedTitle ? Style.txt18Bold : Style.txt18WhiteBold,),
+                  Text("${data.teacherModel!.firstName} ${data.teacherModel!.lastName}", style: pinnedTitle ? Style.txt12 : Style.txt12White,),
                 ],
               ),
               background: Stack(
                 children: [
                   Positioned.fill(
                     child: CachedNetworkImage(
-                      imageUrl: widget.data.img ?? "",
+                      imageUrl: data.imgUrl,
                       fit: BoxFit.cover,
+                      errorWidget: (_,__,___) => noImageWidget(size: MediaQuery.sizeOf(context).width / 3),
                     ),
                   ),
                   Container(
@@ -159,23 +190,23 @@ class _ViewCourseDetailsState extends State<ViewCourseDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.data.description ?? "", style: Style.txt16, textAlign: TextAlign.justify,),
-                  // const SizedBox(height: 20,),
-                  // Text("Schedule", style: Style.txt16Bold,),
+                  Text(data.description ?? "", style: Style.txt16, textAlign: TextAlign.justify,),
                   const SizedBox(height: 20,),
-                  Text("Enrolled Students", style: Style.txt16Bold,),
-                  const SizedBox(height: 10,),
+                  Text(DateFormat('dd MMMM yyyy').format(data.createdAt!), style: Style.txt14Grey,),
+                  const SizedBox(height: 30,),
+                  Text("${data.students!.length} Students Enrolled", style: Style.txt16Bold,),
+                  const SizedBox(height: 20,),
                   (){
-                    if(widget.data.students == null || widget.data.students!.isEmpty){
+                    if(data.students!.isEmpty){
                       return notFoundWidget();
                     }
                     return ListView.builder(
-                      itemCount: widget.data.students!.length,
+                      itemCount: data.students!.length,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
-                        var item = widget.data.students![index];
+                        var item = data.students![index];
                         return Padding(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(

@@ -22,14 +22,18 @@ CourseModel _$CourseModelFromJson(Map<String, dynamic> json) {
 mixin _$CourseModel {
   int? get id => throw _privateConstructorUsedError;
   String? get subject => throw _privateConstructorUsedError;
-  UserModel? get teacher => throw _privateConstructorUsedError;
+  int? get teacherId => throw _privateConstructorUsedError;
+  UserModel? get teacherModel => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get img => throw _privateConstructorUsedError;
-  UserModel? get createdBy => throw _privateConstructorUsedError;
+  int? get createdBy => throw _privateConstructorUsedError;
+  UserModel? get createdByModel => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  UserModel? get updatedBy => throw _privateConstructorUsedError;
+  int? get updatedBy => throw _privateConstructorUsedError;
+  UserModel? get updatedByModel => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   List<UserModel>? get students => throw _privateConstructorUsedError;
+  List<int>? get studentIds => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
 
   /// Serializes this CourseModel to a JSON map.
@@ -51,19 +55,23 @@ abstract class $CourseModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? subject,
-      UserModel? teacher,
+      int? teacherId,
+      UserModel? teacherModel,
       String? description,
       String? img,
-      UserModel? createdBy,
+      int? createdBy,
+      UserModel? createdByModel,
       DateTime? createdAt,
-      UserModel? updatedBy,
+      int? updatedBy,
+      UserModel? updatedByModel,
       DateTime? updatedAt,
       List<UserModel>? students,
+      List<int>? studentIds,
       String? status});
 
-  $UserModelCopyWith<$Res>? get teacher;
-  $UserModelCopyWith<$Res>? get createdBy;
-  $UserModelCopyWith<$Res>? get updatedBy;
+  $UserModelCopyWith<$Res>? get teacherModel;
+  $UserModelCopyWith<$Res>? get createdByModel;
+  $UserModelCopyWith<$Res>? get updatedByModel;
 }
 
 /// @nodoc
@@ -83,14 +91,18 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
   $Res call({
     Object? id = freezed,
     Object? subject = freezed,
-    Object? teacher = freezed,
+    Object? teacherId = freezed,
+    Object? teacherModel = freezed,
     Object? description = freezed,
     Object? img = freezed,
     Object? createdBy = freezed,
+    Object? createdByModel = freezed,
     Object? createdAt = freezed,
     Object? updatedBy = freezed,
+    Object? updatedByModel = freezed,
     Object? updatedAt = freezed,
     Object? students = freezed,
+    Object? studentIds = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
@@ -102,9 +114,13 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
           ? _value.subject
           : subject // ignore: cast_nullable_to_non_nullable
               as String?,
-      teacher: freezed == teacher
-          ? _value.teacher
-          : teacher // ignore: cast_nullable_to_non_nullable
+      teacherId: freezed == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      teacherModel: freezed == teacherModel
+          ? _value.teacherModel
+          : teacherModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       description: freezed == description
           ? _value.description
@@ -117,6 +133,10 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -125,6 +145,10 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      updatedByModel: freezed == updatedByModel
+          ? _value.updatedByModel
+          : updatedByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
@@ -134,6 +158,10 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
           ? _value.students
           : students // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      studentIds: freezed == studentIds
+          ? _value.studentIds
+          : studentIds // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -145,13 +173,13 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get teacher {
-    if (_value.teacher == null) {
+  $UserModelCopyWith<$Res>? get teacherModel {
+    if (_value.teacherModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.teacher!, (value) {
-      return _then(_value.copyWith(teacher: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.teacherModel!, (value) {
+      return _then(_value.copyWith(teacherModel: value) as $Val);
     });
   }
 
@@ -159,13 +187,13 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get createdBy {
-    if (_value.createdBy == null) {
+  $UserModelCopyWith<$Res>? get createdByModel {
+    if (_value.createdByModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.createdBy!, (value) {
-      return _then(_value.copyWith(createdBy: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.createdByModel!, (value) {
+      return _then(_value.copyWith(createdByModel: value) as $Val);
     });
   }
 
@@ -173,13 +201,13 @@ class _$CourseModelCopyWithImpl<$Res, $Val extends CourseModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res>? get updatedBy {
-    if (_value.updatedBy == null) {
+  $UserModelCopyWith<$Res>? get updatedByModel {
+    if (_value.updatedByModel == null) {
       return null;
     }
 
-    return $UserModelCopyWith<$Res>(_value.updatedBy!, (value) {
-      return _then(_value.copyWith(updatedBy: value) as $Val);
+    return $UserModelCopyWith<$Res>(_value.updatedByModel!, (value) {
+      return _then(_value.copyWith(updatedByModel: value) as $Val);
     });
   }
 }
@@ -195,22 +223,26 @@ abstract class _$$CourseModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? subject,
-      UserModel? teacher,
+      int? teacherId,
+      UserModel? teacherModel,
       String? description,
       String? img,
-      UserModel? createdBy,
+      int? createdBy,
+      UserModel? createdByModel,
       DateTime? createdAt,
-      UserModel? updatedBy,
+      int? updatedBy,
+      UserModel? updatedByModel,
       DateTime? updatedAt,
       List<UserModel>? students,
+      List<int>? studentIds,
       String? status});
 
   @override
-  $UserModelCopyWith<$Res>? get teacher;
+  $UserModelCopyWith<$Res>? get teacherModel;
   @override
-  $UserModelCopyWith<$Res>? get createdBy;
+  $UserModelCopyWith<$Res>? get createdByModel;
   @override
-  $UserModelCopyWith<$Res>? get updatedBy;
+  $UserModelCopyWith<$Res>? get updatedByModel;
 }
 
 /// @nodoc
@@ -228,14 +260,18 @@ class __$$CourseModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? subject = freezed,
-    Object? teacher = freezed,
+    Object? teacherId = freezed,
+    Object? teacherModel = freezed,
     Object? description = freezed,
     Object? img = freezed,
     Object? createdBy = freezed,
+    Object? createdByModel = freezed,
     Object? createdAt = freezed,
     Object? updatedBy = freezed,
+    Object? updatedByModel = freezed,
     Object? updatedAt = freezed,
     Object? students = freezed,
+    Object? studentIds = freezed,
     Object? status = freezed,
   }) {
     return _then(_$CourseModelImpl(
@@ -247,9 +283,13 @@ class __$$CourseModelImplCopyWithImpl<$Res>
           ? _value.subject
           : subject // ignore: cast_nullable_to_non_nullable
               as String?,
-      teacher: freezed == teacher
-          ? _value.teacher
-          : teacher // ignore: cast_nullable_to_non_nullable
+      teacherId: freezed == teacherId
+          ? _value.teacherId
+          : teacherId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      teacherModel: freezed == teacherModel
+          ? _value.teacherModel
+          : teacherModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       description: freezed == description
           ? _value.description
@@ -262,6 +302,10 @@ class __$$CourseModelImplCopyWithImpl<$Res>
       createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdByModel: freezed == createdByModel
+          ? _value.createdByModel
+          : createdByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -270,6 +314,10 @@ class __$$CourseModelImplCopyWithImpl<$Res>
       updatedBy: freezed == updatedBy
           ? _value.updatedBy
           : updatedBy // ignore: cast_nullable_to_non_nullable
+              as int?,
+      updatedByModel: freezed == updatedByModel
+          ? _value.updatedByModel
+          : updatedByModel // ignore: cast_nullable_to_non_nullable
               as UserModel?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
@@ -279,6 +327,10 @@ class __$$CourseModelImplCopyWithImpl<$Res>
           ? _value._students
           : students // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      studentIds: freezed == studentIds
+          ? _value._studentIds
+          : studentIds // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -293,16 +345,21 @@ class _$CourseModelImpl implements _CourseModel {
   _$CourseModelImpl(
       {this.id,
       this.subject,
-      this.teacher,
+      this.teacherId,
+      this.teacherModel,
       this.description,
       this.img,
       this.createdBy,
+      this.createdByModel,
       this.createdAt,
       this.updatedBy,
+      this.updatedByModel,
       this.updatedAt,
-      final List<UserModel>? students,
-      this.status})
-      : _students = students;
+      final List<UserModel>? students = const [],
+      final List<int>? studentIds = const [],
+      this.status = 'A'})
+      : _students = students,
+        _studentIds = studentIds;
 
   factory _$CourseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CourseModelImplFromJson(json);
@@ -312,21 +369,28 @@ class _$CourseModelImpl implements _CourseModel {
   @override
   final String? subject;
   @override
-  final UserModel? teacher;
+  final int? teacherId;
+  @override
+  final UserModel? teacherModel;
   @override
   final String? description;
   @override
   final String? img;
   @override
-  final UserModel? createdBy;
+  final int? createdBy;
+  @override
+  final UserModel? createdByModel;
   @override
   final DateTime? createdAt;
   @override
-  final UserModel? updatedBy;
+  final int? updatedBy;
+  @override
+  final UserModel? updatedByModel;
   @override
   final DateTime? updatedAt;
   final List<UserModel>? _students;
   @override
+  @JsonKey()
   List<UserModel>? get students {
     final value = _students;
     if (value == null) return null;
@@ -335,12 +399,24 @@ class _$CourseModelImpl implements _CourseModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<int>? _studentIds;
   @override
+  @JsonKey()
+  List<int>? get studentIds {
+    final value = _studentIds;
+    if (value == null) return null;
+    if (_studentIds is EqualUnmodifiableListView) return _studentIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey()
   final String? status;
 
   @override
   String toString() {
-    return 'CourseModel(id: $id, subject: $subject, teacher: $teacher, description: $description, img: $img, createdBy: $createdBy, createdAt: $createdAt, updatedBy: $updatedBy, updatedAt: $updatedAt, students: $students, status: $status)';
+    return 'CourseModel(id: $id, subject: $subject, teacherId: $teacherId, teacherModel: $teacherModel, description: $description, img: $img, createdBy: $createdBy, createdByModel: $createdByModel, createdAt: $createdAt, updatedBy: $updatedBy, updatedByModel: $updatedByModel, updatedAt: $updatedAt, students: $students, studentIds: $studentIds, status: $status)';
   }
 
   @override
@@ -350,19 +426,28 @@ class _$CourseModelImpl implements _CourseModel {
             other is _$CourseModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.subject, subject) || other.subject == subject) &&
-            (identical(other.teacher, teacher) || other.teacher == teacher) &&
+            (identical(other.teacherId, teacherId) ||
+                other.teacherId == teacherId) &&
+            (identical(other.teacherModel, teacherModel) ||
+                other.teacherModel == teacherModel) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.img, img) || other.img == img) &&
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
+            (identical(other.createdByModel, createdByModel) ||
+                other.createdByModel == createdByModel) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedBy, updatedBy) ||
                 other.updatedBy == updatedBy) &&
+            (identical(other.updatedByModel, updatedByModel) ||
+                other.updatedByModel == updatedByModel) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             const DeepCollectionEquality().equals(other._students, _students) &&
+            const DeepCollectionEquality()
+                .equals(other._studentIds, _studentIds) &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -372,14 +457,18 @@ class _$CourseModelImpl implements _CourseModel {
       runtimeType,
       id,
       subject,
-      teacher,
+      teacherId,
+      teacherModel,
       description,
       img,
       createdBy,
+      createdByModel,
       createdAt,
       updatedBy,
+      updatedByModel,
       updatedAt,
       const DeepCollectionEquality().hash(_students),
+      const DeepCollectionEquality().hash(_studentIds),
       status);
 
   /// Create a copy of CourseModel
@@ -402,14 +491,18 @@ abstract class _CourseModel implements CourseModel {
   factory _CourseModel(
       {final int? id,
       final String? subject,
-      final UserModel? teacher,
+      final int? teacherId,
+      final UserModel? teacherModel,
       final String? description,
       final String? img,
-      final UserModel? createdBy,
+      final int? createdBy,
+      final UserModel? createdByModel,
       final DateTime? createdAt,
-      final UserModel? updatedBy,
+      final int? updatedBy,
+      final UserModel? updatedByModel,
       final DateTime? updatedAt,
       final List<UserModel>? students,
+      final List<int>? studentIds,
       final String? status}) = _$CourseModelImpl;
 
   factory _CourseModel.fromJson(Map<String, dynamic> json) =
@@ -420,21 +513,29 @@ abstract class _CourseModel implements CourseModel {
   @override
   String? get subject;
   @override
-  UserModel? get teacher;
+  int? get teacherId;
+  @override
+  UserModel? get teacherModel;
   @override
   String? get description;
   @override
   String? get img;
   @override
-  UserModel? get createdBy;
+  int? get createdBy;
+  @override
+  UserModel? get createdByModel;
   @override
   DateTime? get createdAt;
   @override
-  UserModel? get updatedBy;
+  int? get updatedBy;
+  @override
+  UserModel? get updatedByModel;
   @override
   DateTime? get updatedAt;
   @override
   List<UserModel>? get students;
+  @override
+  List<int>? get studentIds;
   @override
   String? get status;
 

@@ -10,14 +10,24 @@ class CourseModel with _$CourseModel {
   factory CourseModel({
     int? id,
     String? subject,
-    UserModel? teacher,
+    int? teacherId,
+    UserModel? teacherModel,
     String? description,
     String? img,
-    UserModel? createdBy,
+    int? createdBy,
+    UserModel? createdByModel,
     DateTime? createdAt,
-    UserModel? updatedBy,
+    int? updatedBy,
+    UserModel? updatedByModel,
     DateTime? updatedAt,
+
+    @Default([])
     List<UserModel>? students,
+
+    @Default([])
+    List<int>? studentIds,
+
+    @Default('A')
     String? status,
   }) = _CourseModel;
 

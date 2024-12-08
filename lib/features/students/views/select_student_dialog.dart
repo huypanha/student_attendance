@@ -15,6 +15,7 @@ Future<T?> showSelectStudentDialog<T>({
   return await showCupertinoDialog(
     context: Singleton.instance.rootContext!,
     builder: (context) => AlertDialog(
+      scrollable: true,
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.white,
       content: StatefulBuilder(
